@@ -2,7 +2,7 @@
     "name": "long",
     "version": "1.0.0",
     "author": "Daniel Wirtz <dcode@dcode.io>",
-    "description": "A Long class for representing a 64-bit two's-complement integer value derived from the Closure Library for stand-alone use.",
+    "description": "A Long class for representing a 64-bit two's-complement integer value.",
     "main": "Long.js",
     "repository": {
         "type": "git",

@@ -30,7 +30,7 @@ console.log(longVal.toString());
 #### RequireJS / AMD ####
 
 ````javascript
-require(["path/to/Long.js], function(Long) {
+require(["path/to/Long.js"], function(Long) {
     var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
     console.log(longVal.toString());
 });
