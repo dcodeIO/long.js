@@ -81,6 +81,7 @@
      * Returns a Long representing the given (32-bit) integer value.
      * @param {number} value The 32-bit integer in question.
      * @return {!Long} The corresponding Long value.
+     * @expose
      */
     Long.fromInt = function(value) {
         if (-128 <= value && value < 128) {
@@ -103,6 +104,7 @@
      * number.  Otherwise, zero is returned.
      * @param {number} value The number in question.
      * @return {!Long} The corresponding Long value.
+     * @expose
      */
     Long.fromNumber = function(value) {
         if (isNaN(value) || !isFinite(value)) {
@@ -127,6 +129,7 @@
      * @param {number} lowBits The low 32-bits.
      * @param {number} highBits The high 32-bits.
      * @return {!Long} The corresponding Long value.
+     * @expose
      */
     Long.fromBits = function(lowBits, highBits) {
         return new Long(lowBits, highBits);
@@ -139,6 +142,7 @@
      * @param {string} str The textual representation of the Long.
      * @param {number=} opt_radix The radix in which the text is written.
      * @return {!Long} The corresponding Long value.
+     * @expose
      */
     Long.fromString = function(str, opt_radix) {
         if (str.length == 0) {
@@ -236,24 +240,39 @@
         Long.TWO_PWR_64_DBL_ / 2;
 
 
-    /** @type {!Long} */
+    /**
+     * @type {!Long}
+     * @expose
+     */
     Long.ZERO = Long.fromInt(0);
 
 
-    /** @type {!Long} */
+    /**
+     * @type {!Long}
+     * @expose
+     */
     Long.ONE = Long.fromInt(1);
 
 
-    /** @type {!Long} */
+    /**
+     * @type {!Long}
+     * @expose
+     */
     Long.NEG_ONE = Long.fromInt(-1);
 
 
-    /** @type {!Long} */
+    /**
+     * @type {!Long}
+     * @expose
+     */
     Long.MAX_VALUE =
         Long.fromBits(0xFFFFFFFF | 0, 0x7FFFFFFF | 0);
 
 
-    /** @type {!Long} */
+    /**
+     * @type {!Long}
+     * @expose
+     */
     Long.MIN_VALUE = Long.fromBits(0, 0x80000000 | 0);
 
 
@@ -264,13 +283,19 @@
     Long.TWO_PWR_24_ = Long.fromInt(1 << 24);
 
 
-    /** @return {number} The value, assuming it is a 32-bit integer. */
+    /**
+     * @return {number} The value, assuming it is a 32-bit integer.
+     * @expose
+     */
     Long.prototype.toInt = function() {
         return this.low_;
     };
 
 
-    /** @return {number} The closest floating-point representation to this value. */
+    /**
+     * @return {number} The closest floating-point representation to this value.
+     * @expose
+     */
     Long.prototype.toNumber = function() {
         return this.high_ * Long.TWO_PWR_32_DBL_ +
             this.getLowBitsUnsigned();
@@ -281,6 +306,7 @@
      * @param {number=} opt_radix The radix in which the text should be written.
      * @return {string} The textual representation of this value.
      * @override
+     * @expose
      */
     Long.prototype.toString = function(opt_radix) {
         var radix = opt_radix || 10;
@@ -329,19 +355,28 @@
     };
 
 
-    /** @return {number} The high 32-bits as a signed value. */
+    /**
+     * @return {number} The high 32-bits as a signed value.
+     * @expose
+     */
     Long.prototype.getHighBits = function() {
         return this.high_;
     };
 
 
-    /** @return {number} The low 32-bits as a signed value. */
+    /**
+     * @return {number} The low 32-bits as a signed value.
+     * @expose
+     */
     Long.prototype.getLowBits = function() {
         return this.low_;
     };
 
 
-    /** @return {number} The low 32-bits as an unsigned value. */
+    /**
+     * @return {number} The low 32-bits as an unsigned value.
+     * @expose
+     */
     Long.prototype.getLowBitsUnsigned = function() {
         return (this.low_ >= 0) ?
             this.low_ : Long.TWO_PWR_32_DBL_ + this.low_;
@@ -351,6 +386,7 @@
     /**
      * @return {number} Returns the number of bits needed to represent the absolute
      *     value of this Long.
+     * @expose
      */
     Long.prototype.getNumBitsAbs = function() {
         if (this.isNegative()) {
@@ -371,19 +407,28 @@
     };
 
 
-    /** @return {boolean} Whether this value is zero. */
+    /**
+     * @return {boolean} Whether this value is zero.
+     * @expose
+     */
     Long.prototype.isZero = function() {
         return this.high_ == 0 && this.low_ == 0;
     };
 
 
-    /** @return {boolean} Whether this value is negative. */
+    /**
+     * @return {boolean} Whether this value is negative.
+     * @expose
+     */
     Long.prototype.isNegative = function() {
         return this.high_ < 0;
     };
 
 
-    /** @return {boolean} Whether this value is odd. */
+    /**
+     * @return {boolean} Whether this value is odd.
+     * @expose
+     */
     Long.prototype.isOdd = function() {
         return (this.low_ & 1) == 1;
     };
@@ -392,6 +437,7 @@
     /**
      * @param {Long} other Long to compare against.
      * @return {boolean} Whether this Long equals the other.
+     * @expose
      */
     Long.prototype.equals = function(other) {
         return (this.high_ == other.high_) && (this.low_ == other.low_);
@@ -401,6 +447,7 @@
     /**
      * @param {Long} other Long to compare against.
      * @return {boolean} Whether this Long does not equal the other.
+     * @expose
      */
     Long.prototype.notEquals = function(other) {
         return (this.high_ != other.high_) || (this.low_ != other.low_);
@@ -410,6 +457,7 @@
     /**
      * @param {Long} other Long to compare against.
      * @return {boolean} Whether this Long is less than the other.
+     * @expose
      */
     Long.prototype.lessThan = function(other) {
         return this.compare(other) < 0;
@@ -419,6 +467,7 @@
     /**
      * @param {Long} other Long to compare against.
      * @return {boolean} Whether this Long is less than or equal to the other.
+     * @expose
      */
     Long.prototype.lessThanOrEqual = function(other) {
         return this.compare(other) <= 0;
@@ -428,6 +477,7 @@
     /**
      * @param {Long} other Long to compare against.
      * @return {boolean} Whether this Long is greater than the other.
+     * @expose
      */
     Long.prototype.greaterThan = function(other) {
         return this.compare(other) > 0;
@@ -437,6 +487,7 @@
     /**
      * @param {Long} other Long to compare against.
      * @return {boolean} Whether this Long is greater than or equal to the other.
+     * @expose
      */
     Long.prototype.greaterThanOrEqual = function(other) {
         return this.compare(other) >= 0;
@@ -448,6 +499,7 @@
      * @param {Long} other Long to compare against.
      * @return {number} 0 if they are the same, 1 if the this is greater, and -1
      *     if the given one is greater.
+     * @expose
      */
     Long.prototype.compare = function(other) {
         if (this.equals(other)) {
@@ -472,7 +524,10 @@
     };
 
 
-    /** @return {!Long} The negation of this value. */
+    /**
+     * @return {!Long} The negation of this value.
+     * @expose
+     */
     Long.prototype.negate = function() {
         if (this.equals(Long.MIN_VALUE)) {
             return Long.MIN_VALUE;
@@ -486,6 +541,7 @@
      * Returns the sum of this and the given Long.
      * @param {Long} other Long to add to this one.
      * @return {!Long} The sum of this and the given Long.
+     * @expose
      */
     Long.prototype.add = function(other) {
         // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
@@ -520,6 +576,7 @@
      * Returns the difference of this and the given Long.
      * @param {Long} other Long to subtract from this.
      * @return {!Long} The difference of this and the given Long.
+     * @expose
      */
     Long.prototype.subtract = function(other) {
         return this.add(other.negate());
@@ -530,6 +587,7 @@
      * Returns the product of this and the given long.
      * @param {Long} other Long to multiply with this.
      * @return {!Long} The product of this and the other.
+     * @expose
      */
     Long.prototype.multiply = function(other) {
         if (this.isZero()) {
@@ -602,6 +660,7 @@
      * Returns this Long divided by the given one.
      * @param {Long} other Long by which to divide.
      * @return {!Long} This Long divided by the given one.
+     * @expose
      */
     Long.prototype.div = function(other) {
         if (other.isZero()) {
@@ -686,13 +745,17 @@
      * Returns this Long modulo the given one.
      * @param {Long} other Long by which to mod.
      * @return {!Long} This Long modulo the given one.
+     * @expose
      */
     Long.prototype.modulo = function(other) {
         return this.subtract(this.div(other).multiply(other));
     };
 
 
-    /** @return {!Long} The bitwise-NOT of this value. */
+    /**
+     * @return {!Long} The bitwise-NOT of this value.
+     * @expose
+     */
     Long.prototype.not = function() {
         return Long.fromBits(~this.low_, ~this.high_);
     };
@@ -702,6 +765,7 @@
      * Returns the bitwise-AND of this Long and the given one.
      * @param {Long} other The Long with which to AND.
      * @return {!Long} The bitwise-AND of this and the other.
+     * @expose
      */
     Long.prototype.and = function(other) {
         return Long.fromBits(this.low_ & other.low_,
@@ -713,6 +777,7 @@
      * Returns the bitwise-OR of this Long and the given one.
      * @param {Long} other The Long with which to OR.
      * @return {!Long} The bitwise-OR of this and the other.
+     * @expose
      */
     Long.prototype.or = function(other) {
         return Long.fromBits(this.low_ | other.low_,
@@ -724,6 +789,7 @@
      * Returns the bitwise-XOR of this Long and the given one.
      * @param {Long} other The Long with which to XOR.
      * @return {!Long} The bitwise-XOR of this and the other.
+     * @expose
      */
     Long.prototype.xor = function(other) {
         return Long.fromBits(this.low_ ^ other.low_,
@@ -735,6 +801,7 @@
      * Returns this Long with bits shifted to the left by the given amount.
      * @param {number} numBits The number of bits by which to shift.
      * @return {!Long} This shifted to the left by the given amount.
+     * @expose
      */
     Long.prototype.shiftLeft = function(numBits) {
         numBits &= 63;
@@ -758,6 +825,7 @@
      * Returns this Long with bits shifted to the right by the given amount.
      * @param {number} numBits The number of bits by which to shift.
      * @return {!Long} This shifted to the right by the given amount.
+     * @expose
      */
     Long.prototype.shiftRight = function(numBits) {
         numBits &= 63;
@@ -785,6 +853,7 @@
      * @param {number} numBits The number of bits by which to shift.
      * @return {!Long} This shifted to the right by the given amount, with
      *     zeros placed into the new leading bits.
+     * @expose
      */
     Long.prototype.shiftRightUnsigned = function(numBits) {
         numBits &= 63;

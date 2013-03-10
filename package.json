@@ -21,7 +21,7 @@
     },
     "scripts": {
         "make": "npm run-script compile && npm test && npm run-script jsdoc",
-        "compile": "ccjs Long.js --compilation_level=SIMPLE_OPTIMIZATIONS > Long.min.js",
+        "compile": "ccjs Long.js --compilation_level=ADVANCED_OPTIMIZATIONS > Long.min.js",
         "test": "nodeunit tests/suite.js",
         "jsdoc": "jsdoc -c jsdoc.json"
     }
