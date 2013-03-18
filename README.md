@@ -1,7 +1,13 @@
-Long
-====
+Long.js
+=======
 A Long class for representing a 64-bit two's-complement integer value derived from the [Closure Library](https://code.google.com/p/closure-library/)
 for stand-alone use.
+
+Why?
+----
+As of the [ECMAScript specification](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5), number types have a maximum value
+of 2^53. Beyond that, JavaScript falls back to double internally. However, in some use cases it is required to be able
+to perform reliable mathematical and/or bitwise operations on the full 64bits. This is where Long.js comes into play.
 
 Features
 --------
