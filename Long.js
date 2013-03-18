@@ -1,5 +1,6 @@
 /*
  Copyright 2013 Daniel Wirtz <dcode@dcode.io>
+ Copyright 2009 The Closure Library Authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,14 +16,21 @@
  */
 
 /**
- * @preserve Defines a Long class for representing a 64-bit two's-complement
- * integer value, which faithfully simulates the behavior of a Java "long". This
- * implementation is derived from LongLib in GWT.
- *
- * Derived from the Closure Library to be used stand-alone.
- * @see http://closure-library.googlecode.com/svn/docs/closure_goog_math_long.js.source.html
+ * @license Long.js (c) 2013 Daniel Wirtz <dcode@dcode.io>
+ * Released under the Apache License, Version 2.0
+ * see: https://github.com/dcodeIO/Long.js for details
+ * 
+ * Long.js is based on goog.math.Long from the Closure Library.
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ * Released under the Apache License, Version 2.0
+ * see: https://code.google.com/p/closure-library/ for details
  */
 
+/**
+ * Defines a Long class for representing a 64-bit two's-complement
+ * integer value, which faithfully simulates the behavior of a Java "long". This
+ * implementation is derived from LongLib in GWT.
+ */
 (function(global) {
 
     /**
@@ -448,7 +456,6 @@
     Long.prototype.equals = function(other) {
         return (this.high_ == other.high_) && (this.low_ == other.low_);
     };
-
 
     /**
      * @param {Long} other Long to compare against.

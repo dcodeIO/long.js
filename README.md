@@ -13,6 +13,24 @@ Features
 * Zero production dependencies
 * Small footprint
 
+Long
+----
+* Construction from high and low bits as 32bit integers (`new Long(low, high)` and `Long.fromBits(low, high)`)
+* ...from a 32bit integer (`Long.fromInt(value)`) including a cache for frequently used small numbers
+* ...from a number which may internally be a number or double type (`Long.fromNumber(value)`)
+* ...from a string (`Long.fromString(value[, radix=10])`)
+* Conversion to a 32bit integer (`Long#toInt()`)
+* ...to a number (`Long#toNumber()`)
+* ...to a string (`Long#toString([radix=10])`)
+* Getters for high and low bits as 32bit integers (`Long#getLowBits()`, `Long#getHighBits()`, `Long#getLowBitsUnsigned()`)
+* Comparison (`Long#equals(other)`, `Long#notEquals(other)`, `Long#lessThan(other)`, `Long#lessThanOrEqual(other)`,
+  `Long#greaterThan(other)`, `Long#greaterThanOrEqual(other)`, `Long#compare(other)`)
+* Tests (`Long#isZero()`, `Long#isNegative()`, `Long#isOdd()`, `Long#isEven()`)
+* Math (`Long#negate()`, `Long#add(other)`, `Long#subtract(other)`, `Long#multiply(other)`, `Long#div(other)`,
+  `Long#modulo(other)`)
+* Bitwise operations (`Long#not()`, `Long#and(other)`, `Long#or(other)`, `Long#xor(other)`, `Long#shiftLeft(numBits)`,
+  `Long#shiftRight(numBits)`, `Long#shiftRightUnsigned(numBits)`)
+
 Usage
 -----
 
