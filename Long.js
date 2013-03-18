@@ -433,6 +433,12 @@
         return (this.low_ & 1) == 1;
     };
 
+    /**
+     * @return {boolean} Whether this value is even.
+     */
+    Long.prototype.isEven = function() {
+        return (this.low_ & 1) == 0;
+    };
 
     /**
      * @param {Long} other Long to compare against.

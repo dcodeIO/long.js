@@ -1,6 +1,6 @@
 {
     "name": "long",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Daniel Wirtz <dcode@dcode.io>",
     "description": "Long.js: A Long class for representing a 64-bit two's-complement integer value derived from the Closure Library.",
     "main": "Long.js",

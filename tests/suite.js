@@ -17,10 +17,11 @@
 /**
  * A pretty simple Long.js Test Suite.
  */
-var Long = require(__dirname+"/../Long.min.js");
+var Long = require(__dirname+"/../Long.js");
 
 var suite = {
-    "test": function(test) {
+    
+    "basic": function(test) {
         var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
         test.equal(longVal.toString(), "9223372036854775807");
         test.done();
