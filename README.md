@@ -6,9 +6,9 @@ for stand-alone use and extended with unsigned support.
 Why?
 ----
 As of the [ECMAScript specification](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5), number types have a maximum value
-of 2^53. Beyond that, JavaScript falls back to double internally. Furthermore, bitwise operations are always performed
-on 32bit numbers. However, in some use cases it is required to be able to perform reliable mathematical and/or bitwise
-operations on the full 64bits. This is where Long.js comes into play.
+of 2^53. Beyond that, behaviour might be unexpected. Furthermore, bitwise operations are always performed on 32bit
+numbers. However, in some use cases it is required to be able to perform reliable mathematical and/or bitwise operations
+on the full 64bits. This is where Long.js comes into play.
 
 Long.js is based on the [goog.math.Long class](http://closure-library.googlecode.com/svn/docs/closure_goog_math_long.js.html)
 from the Closure Library. It uses two 32bit integers internally and provides methods for comparison, common tests, math

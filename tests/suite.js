@@ -34,6 +34,14 @@ var suite = {
     
     "unsigned": {
         
+        "min/max": function(test) {
+            test.equal(Long.MIN_SIGNED_VALUE.toString(), "-9223372036854775808");
+            test.equal(Long.MAX_SIGNED_VALUE.toString(), "9223372036854775807");
+            test.equal(Long.MIN_UNSIGNED_VALUE.toString(), "0");
+            test.equal(Long.MAX_UNSIGNED_VALUE.toString(), "18446744073709551615");
+            test.done();
+        },
+        
         "construct_negint": function(test) {
             var longVal = Long.fromInt(-1, true);
             test.equal(longVal.low, -1);
