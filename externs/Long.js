@@ -57,6 +57,15 @@ Long.fromNumber = function(value, unsigned) {};
 Long.fromBits = function(lowBits, highBits, unsigned) {};
 
 /**
+ * @param {number} part0
+ * @param {number} part1
+ * @param {number} part2
+ * @param {boolean=} unsigned
+ * @return {!Long}
+ */
+Long.from28Bits = function(part0, part1, part2, unsigned) {};
+
+/**
  * @param {string} str
  * @param {(boolean|number)=} unsigned
  * @param {number=} radix

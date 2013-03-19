@@ -160,16 +160,35 @@
     };
 
     /**
-     * Returns a Long representing the 64-bit integer that comes by concatenating
-     * the given high and low bits.  Each is assumed to use 32 bits.
-     * @param {number} lowBits The low 32-bits.
-     * @param {number} highBits The high 32-bits.
+     * Returns a Long representing the 64bit integer that comes by concatenating the given low and high bits. Each is
+     *  assumed to use 32 bits.
+     * @param {number} lowBits The low 32 bits.
+     * @param {number} highBits The high 32 bits.
      * @param {boolean=} unsigned Whether unsigned or not. Defaults to false (signed).
      * @return {!Long} The corresponding Long value.
      * @expose
      */
     Long.fromBits = function(lowBits, highBits, unsigned) {
         return new Long(lowBits, highBits, unsigned);
+    };
+
+    /**
+     * Returns a Long representing the 64bit integer that comes by concatenating the given low, middle and high bits.
+     *  Each is assumed to use 28 bits.
+     * @param {number} part0 The low 28 bits
+     * @param {number} part1 The middle 28 bits
+     * @param {number} part2 The high 28 (8) bits
+     * @param {boolean=} unsigned Whether unsigned or not. Defaults to false (signed).
+     * @return {!Long}
+     * @expose
+     */
+    Long.from28Bits = function(part0, part1, part2, unsigned) {
+        // 00000000000000000000000000001111 11111111111111111111111122222222 2222222222222
+        // LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+        part0 = (part0 & 0xFFFFFFF) >>> 0;
+        part1 = (part1 & 0xFFFFFFF) >>> 0;
+        part2 = (part2 & 0xFF) >>> 0;
+        return Long.fromBits(part0 | (part1 << 28), (part1 >>> 4) | (part2) << 24, unsigned);
     };
 
     /**
