@@ -35,14 +35,6 @@ var suite = {
     "from28Bits": function(test) {
         var val = Long.from28Bits(0xFFFFFFF, 0xFFFFFFF, 0xFF);
         test.equal(val.toString(), "-1");
-        val = Long.from28Bits(0xFFFFFFF, 0xFFFFFFF, 0x00);
-        test.equal(val.toString(), "72057594037927935");
-        val = Long.from28Bits(0xFFFFFFFFF, 0xFFFFFFFFFF, 0xFFFF); // capped
-        test.equal(val.toString(), "-1");
-        val = Long.from28Bits(0xFFFFFFF, 0xFFFFFFFFF, 0xFF00);
-        test.equal(val.toString(), "72057594037927935");
-        val = Long.from28Bits(0x00000FF, 0x00000FF, 0x0F);
-        test.equal(val.toString(), "1080863979019960575");
         test.done();
     },
     

@@ -185,9 +185,6 @@
     Long.from28Bits = function(part0, part1, part2, unsigned) {
         // 00000000000000000000000000001111 11111111111111111111111122222222 2222222222222
         // LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-        part0 = (part0 & 0xFFFFFFF) >>> 0;
-        part1 = (part1 & 0xFFFFFFF) >>> 0;
-        part2 = (part2 & 0xFF) >>> 0;
         return Long.fromBits(part0 | (part1 << 28), (part1 >>> 4) | (part2) << 24, unsigned);
     };
 
