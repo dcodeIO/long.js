@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="Long"><span class="type-signature"></span>new Long<span class="signature">(low, high)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Long"><span class="type-signature"></span>new Long<span class="signature">(low, high, <span class="optional">unsigned</span>)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -85,6 +85,8 @@ case would often result in infinite recursion.
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -110,6 +112,12 @@ case would often result in infinite recursion.
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
             
             
             
@@ -133,10 +141,47 @@ case would often result in infinite recursion.
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
             
             
             
             <td class="description last">The high (signed) 32 bits of the long.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>unsigned</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Whether unsigned or not. Defaults to false (signed).</td>
         </tr>
 	
 	
@@ -200,7 +245,175 @@ case would often result in infinite recursion.
         <dl>
             
 <dt>
+    <h4 class="name" id="MAX_SIGNED_VALUE"><span class="type-signature">&lt;static> </span>MAX_SIGNED_VALUE<span class="type-signature"> :<a href="Long.html">Long</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="MAX_UNSIGNED_VALUE"><span class="type-signature">&lt;static> </span>MAX_UNSIGNED_VALUE<span class="type-signature"> :<a href="Long.html">Long</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="MAX_VALUE"><span class="type-signature">&lt;static> </span>MAX_VALUE<span class="type-signature"> :<a href="Long.html">Long</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Alias of <a href="Long.html#MAX_SIGNED_VALUE">Long.MAX_SIGNED_VALUE</a> for goog.math.Long compatibility.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="MIN_SIGNED_VALUE"><span class="type-signature">&lt;static> </span>MIN_SIGNED_VALUE<span class="type-signature"> :<a href="Long.html">Long</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="MIN_UNSIGNED_VALUE"><span class="type-signature">&lt;static> </span>MIN_UNSIGNED_VALUE<span class="type-signature"> :<a href="Long.html">Long</a></span></h4>
     
     
 </dt>
@@ -246,6 +459,10 @@ case would often result in infinite recursion.
     
 </dt>
 <dd>
+    
+    <div class="description">
+        Alias of <a href="Long.html#MIN_SIGNED_VALUE">Long.MIN_SIGNED_VALUE</a>  for goog.math.Long compatibility.
+    </div>
     
     
     
@@ -402,6 +619,141 @@ case would often result in infinite recursion.
     
 </dd>
 
+        
+            
+<dt>
+    <h4 class="name" id="high"><span class="type-signature"></span>high<span class="type-signature"> :number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The high 32 bits as a signed value.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="low"><span class="type-signature"></span>low<span class="type-signature"> :number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The low 32 bits as a signed value.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="unsigned"><span class="type-signature"></span>unsigned<span class="type-signature"> :boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Whether unsigned or not.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
         </dl>
     
     
@@ -411,7 +763,7 @@ case would often result in infinite recursion.
         <dl>
             
 <dt>
-    <h4 class="name" id="fromBits"><span class="type-signature">&lt;static> </span>fromBits<span class="signature">(lowBits, highBits)</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
+    <h4 class="name" id="fromBits"><span class="type-signature">&lt;static> </span>fromBits<span class="signature">(lowBits, highBits, <span class="optional">unsigned</span>)</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
     
     
 </dt>
@@ -442,6 +794,8 @@ the given high and low bits.  Each is assumed to use 32 bits.
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -467,6 +821,12 @@ the given high and low bits.  Each is assumed to use 32 bits.
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
             
             
             
@@ -490,10 +850,47 @@ the given high and low bits.  Each is assumed to use 32 bits.
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
             
             
             
             <td class="description last">The high 32-bits.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>unsigned</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Whether unsigned or not. Defaults to false (signed).</td>
         </tr>
 	
 	
@@ -563,7 +960,7 @@ the given high and low bits.  Each is assumed to use 32 bits.
         
             
 <dt>
-    <h4 class="name" id="fromInt"><span class="type-signature">&lt;static> </span>fromInt<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
+    <h4 class="name" id="fromInt"><span class="type-signature">&lt;static> </span>fromInt<span class="signature">(value, <span class="optional">unsigned</span>)</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
     
     
 </dt>
@@ -593,6 +990,8 @@ the given high and low bits.  Each is assumed to use 32 bits.
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -618,10 +1017,47 @@ the given high and low bits.  Each is assumed to use 32 bits.
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
             
             
             
             <td class="description last">The 32-bit integer in question.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>unsigned</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Whether unsigned or not. Defaults to false (signed).</td>
         </tr>
 	
 	
@@ -691,7 +1127,7 @@ the given high and low bits.  Each is assumed to use 32 bits.
         
             
 <dt>
-    <h4 class="name" id="fromNumber"><span class="type-signature">&lt;static> </span>fromNumber<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
+    <h4 class="name" id="fromNumber"><span class="type-signature">&lt;static> </span>fromNumber<span class="signature">(value, <span class="optional">unsigned</span>)</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
     
     
 </dt>
@@ -722,6 +1158,8 @@ number.  Otherwise, zero is returned.
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -747,10 +1185,47 @@ number.  Otherwise, zero is returned.
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
             
             
             
             <td class="description last">The number in question.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>unsigned</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Whether unsigned or not. Defaults to false (signed).</td>
         </tr>
 	
 	
@@ -820,7 +1295,7 @@ number.  Otherwise, zero is returned.
         
             
 <dt>
-    <h4 class="name" id="fromString"><span class="type-signature">&lt;static> </span>fromString<span class="signature">(str, <span class="optional">opt_radix</span>)</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
+    <h4 class="name" id="fromString"><span class="type-signature">&lt;static> </span>fromString<span class="signature">(str, <span class="optional">unsigned</span>, <span class="optional">radix</span>)</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
     
     
 </dt>
@@ -894,7 +1369,41 @@ radix.
 	
         <tr>
             
-                <td class="name"><code>opt_radix</code></td>
+                <td class="name"><code>unsigned</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Whether unsigned or not. Defaults to false (signed).</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>radix</code></td>
             
             
             <td class="type">
@@ -1220,6 +1729,82 @@ radix.
             
 <div class="param-desc">
     The bitwise-AND of this and the other.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="Long.html">Long</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="clone"><span class="type-signature"></span>clone<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="Long.html">Long</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Cloned instance with the same low/high bits and unsigned flag.
 </div>
 
 
@@ -1676,7 +2261,83 @@ radix.
     
             
 <div class="param-desc">
-    The high 32-bits as a signed value.
+    The high 32 bits as a signed value.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">number</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getHighBitsUnsigned"><span class="type-signature"></span>getHighBitsUnsigned<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The high 32 bits as an unsigned value.
 </div>
 
 
@@ -1752,7 +2413,7 @@ radix.
     
             
 <div class="param-desc">
-    The low 32-bits as a signed value.
+    The low 32 bits as a signed value.
 </div>
 
 
@@ -1828,7 +2489,7 @@ radix.
     
             
 <div class="param-desc">
-    The low 32-bits as an unsigned value.
+    The low 32 bits as an unsigned value.
 </div>
 
 
@@ -4056,7 +4717,7 @@ the new top bits matching the current sign bit.
         
             
 <dt>
-    <h4 class="name" id="toString"><span class="type-signature"></span>toString<span class="signature">(<span class="optional">opt_radix</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="toString"><span class="type-signature"></span>toString<span class="signature">(<span class="optional">radix</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
     
 </dt>
@@ -4096,7 +4757,7 @@ the new top bits matching the current sign bit.
 	
         <tr>
             
-                <td class="name"><code>opt_radix</code></td>
+                <td class="name"><code>radix</code></td>
             
             
             <td class="type">
