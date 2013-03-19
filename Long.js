@@ -874,6 +874,26 @@
             }
         }
     };
+
+    /**
+     * @return {!Long} Signed long
+     * @expose
+     */
+    Long.prototype.toSigned = function() {
+        var l = this.clone();
+        l.unsigned = false;
+        return l;
+    };
+
+    /**
+     * @return {!Long} Unsigned long
+     * @expose
+     */
+    Long.prototype.toUnsigned = function() {
+        var l = this.clone();
+        l.unsigned = true;
+        return l;
+    };
     
     /**
      * @return {Long} Cloned instance with the same low/high bits and unsigned flag.

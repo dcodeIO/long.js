@@ -302,3 +302,18 @@ Long.prototype.shiftRight = function(numBits) {};
  * @return {!Long}
  */
 Long.prototype.shiftRightUnsigned = function(numBits) {};
+
+/**
+ * @return {!Long}
+ */
+Long.prototype.toSigned = function() {};
+
+/**
+ * @return {!Long}
+ */
+Long.prototype.toUnsigned = function() {};
+
+/**
+ * @return {!Long}
+ */
+Long.prototype.clone = function() {};

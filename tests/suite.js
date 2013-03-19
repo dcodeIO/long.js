@@ -33,6 +33,7 @@ var suite = {
     // So let's focus on my probably not-so-smart unsigned extension:
     
     "unsigned": {
+        
         "construct_negint": function(test) {
             var longVal = Long.fromInt(-1, true);
             test.equal(longVal.low, -1);
@@ -60,6 +61,16 @@ var suite = {
             test.equal(longVal.unsigned, true);
             test.equal(longVal.toNumber(), 18446744073709551615);
             test.equal(longVal.toString(), "18446744073709551615");
+            test.done();
+        },
+
+        "toSigned/Unsigned": function(test) {
+            var longVal = Long.fromNumber(-1, false);
+            test.equal(longVal.toNumber(), -1);
+            longVal = longVal.toUnsigned();
+            test.equal(longVal.toNumber(), 0xFFFFFFFFFFFFFFFF);
+            longVal = longVal.toSigned();
+            test.equal(longVal.toNumber(), -1);
             test.done();
         },
         
