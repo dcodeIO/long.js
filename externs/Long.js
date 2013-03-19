@@ -148,6 +148,11 @@ Long.prototype.getHighBits = function() {};
 /**
  * @return {number}
  */
+Long.prototype.getHighBitsUnsigned = function() {};
+
+/**
+ * @return {number}
+ */
 Long.prototype.getLowBits = function() {};
 
 /**
