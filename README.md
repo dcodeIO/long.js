@@ -44,6 +44,7 @@ Long
   `Long#modulo(other)`
 * Bitwise operations: `Long#not()`, `Long#and(other)`, `Long#or(other)`, `Long#xor(other)`, `Long#shiftLeft(numBits)`,
   `Long#shiftRight(numBits)`, `Long#shiftRightUnsigned(numBits)`
+* Conversion between signed and unsinged: `Long.toSigned()`, `Long.toUnsigned()`
 
 Usage
 -----
