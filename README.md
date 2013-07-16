@@ -54,7 +54,7 @@ Usage
 Install: `npm install long`
 
 ```javascript
-var Long = require("Long");
+var Long = require("long");
 var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
 console.log(longVal.toString());
 ...
