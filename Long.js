@@ -923,7 +923,7 @@
     if (typeof module != 'undefined' && module["exports"]) { // CommonJS
         module["exports"] = Long;
     } else if (typeof define != 'undefined' && define["amd"]) { // AMD
-        define("Math/Long", [], function() { return Long; });
+        define(function() { return Long; });
     } else { // Shim
         if (!global["dcodeIO"]) {
             global["dcodeIO"] = {};
