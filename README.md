@@ -1,4 +1,4 @@
-![Long.js -A Long class for representing a 64-bit two's-complement integer ](https://raw.github.com/dcodeIO/BLong.js/master/long.png)
+![Long.js -A Long class for representing a 64-bit two's-complement integer ](https://raw.github.com/dcodeIO/Long.js/master/long.png)
 =======
 A Long class for representing a 64-bit two's-complement integer value derived from the [Closure Library](https://code.google.com/p/closure-library/)
 for stand-alone use and extended with unsigned support.
