@@ -53,9 +53,10 @@
      * case would often result in infinite recursion.
      * 
      * @exports Long
+     * @class A Long class for representing a 64-bit two's-complement integer value.
      * @param {number} low The low (signed) 32 bits of the long.
      * @param {number} high The high (signed) 32 bits of the long.
-     * @param {boolean=} unsigned Whether unsigned or not. Defaults to false (signed).
+     * @param {boolean=} unsigned Whether unsigned or not. Defaults to `false` (signed).
      * @constructor
      */
     var Long = function(low, high, unsigned) {
@@ -107,13 +108,14 @@
      * @expose
      */
     Long.fromInt = function(value, unsigned) {
+        var obj, cachedObj;
         if (!unsigned) {
             value = value | 0;
             if (-128 <= value && value < 128) {
-                var cachedObj = INT_CACHE[value];
+                cachedObj = INT_CACHE[value];
                 if (cachedObj) return cachedObj;
             }
-            var obj = new Long(value, value < 0 ? -1 : 0, false);
+            obj = new Long(value, value < 0 ? -1 : 0, false);
             if (-128 <= value && value < 128) {
                 INT_CACHE[value] = obj;
             }
@@ -121,10 +123,10 @@
         } else {
             value = value >>> 0;
             if (0 <= value && value < 256) {
-                var cachedObj = UINT_CACHE[value];
+                cachedObj = UINT_CACHE[value];
                 if (cachedObj) return cachedObj;
             }
-            var obj = new Long(value, (value | 0) < 0 ? -1 : 0, true);
+            obj = new Long(value, (value | 0) < 0 ? -1 : 0, true);
             if (0 <= value && value < 256) {
                 UINT_CACHE[value] = obj;
             }
@@ -201,7 +203,10 @@
         if (str.length == 0) {
             throw(new Error('number format error: empty string'));
         }
-        if (typeof unsigned == 'number') { // For goog.math.Long compatibility
+        if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity") {
+            return Long.ZERO;
+        }
+        if (typeof unsigned === 'number') { // For goog.math.Long compatibility
             radix = unsigned;
             unsigned = false;
         }
@@ -370,13 +375,14 @@
         if (this.isZero()) {
             return '0';
         }
+        var rem;
         if (this.isNegative()) { // Unsigned Longs are never negative
             if (this.equals(Long.MIN_SIGNED_VALUE)) {
                 // We need to change the Long value before it can be negated, so we remove
                 // the bottom-most digit in this base and then recurse to do the rest.
                 var radixLong = Long.fromNumber(radix);
                 var div = this.div(radixLong);
-                var rem = div.multiply(radixLong).subtract(this);
+                rem = div.multiply(radixLong).subtract(this);
                 return div.toString(radix) + rem.toInt().toString(radix);
             } else {
                 return '-' + this.negate().toString(radix);
@@ -386,7 +392,7 @@
         // Do several (6) digits each time through the loop, so as to
         // minimize the calls to the very expensive emulated div.
         var radixToPower = Long.fromNumber(Math.pow(radix, 6));
-        var rem = this;
+        rem = this;
         var result = '';
         while (true) {
             var remDiv = rem.div(radixToPower);

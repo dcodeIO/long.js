@@ -17,6 +17,7 @@ Features
 * Shim compatible (include the script, then use var Long = dcodeIO.Long;)
 * [node.js](http://nodejs.org) compatible, also available via [npm](https://npmjs.org/package/long)
 * Fully documented using [jsdoc3](https://github.com/jsdoc3/jsdoc)
+* API-compatible to the Closure Library implementation
 * Zero production dependencies
 * Small footprint
 

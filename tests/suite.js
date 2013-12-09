@@ -128,6 +128,28 @@ var suite = {
             test.equal(longVal.toNumber(), -Long.MAX_SIGNED_VALUE);
             test.done();
         }
+    },
+
+    // FIXME: There is no support for NaN or +/-Infinity
+    // "NaN": function(test) {
+    //     test.ok(isNan(Long.fromNumber(NaN).toNumber());
+    //     test.strictEqual(Long.fromNumber(+Infinity).toNumber(), +Infinity);
+    //     test.strictEqual(Long.fromNumber(-Infinity).toNumber(), -Infinity);
+    //     test.done();
+    // }
+    // One option could be to store NaN, Infinity etc. in high and set low to 0, while making sure to convert it in a
+    // proper way as soon as any math is called upon it. This might be as simple as that each of these values always
+    // "infects" other values, thus remaining untouched respectively changing the base long to its value.
+    //
+    // To clarify that, it all becomes zero atm, which usually is good enough but not perfect:
+    "NaN": function(test) {
+        test.strictEqual(Long.fromNumber(NaN), Long.ZERO);
+        test.strictEqual(Long.fromNumber(+Infinity), Long.ZERO);
+        test.strictEqual(Long.fromNumber(-Infinity), Long.ZERO);
+        test.strictEqual(Long.fromString(NaN+""), Long.ZERO);
+        test.strictEqual(Long.fromString(+Infinity+""), Long.ZERO);
+        test.strictEqual(Long.fromString(-Infinity+""), Long.ZERO);
+        test.done();
     }
 };
 
