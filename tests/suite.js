@@ -127,6 +127,12 @@ var suite = {
             var longVal = Long.MAX_UNSIGNED_VALUE.div(Long.fromInt(-2));
             test.equal(longVal.toNumber(), -Long.MAX_SIGNED_VALUE);
             test.done();
+        },
+
+        "min_signed_div_one": function(test) {
+            var longVal = Long.MIN_SIGNED_VALUE.div(Long.ONE);
+            test.equal(longVal.toNumber(), Long.MIN_VALUE);
+            test.done();
         }
     },
 
