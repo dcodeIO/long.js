@@ -81,7 +81,17 @@ Long.ZERO;
 /**
  * @type {!Long}
  */
+Long.UZERO;
+
+/**
+ * @type {!Long}
+ */
 Long.ONE;
+
+/**
+ * @type {!Long}
+ */
+Long.UONE;
 
 /**
  * @type {!Long}

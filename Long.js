@@ -287,7 +287,19 @@
      * @type {!Long}
      * @expose
      */
+    Long.UZERO = Long.fromInt(0, true);
+
+    /**
+     * @type {!Long}
+     * @expose
+     */
     Long.ONE = Long.fromInt(1);
+
+    /**
+     * @type {!Long}
+     * @expose
+     */
+    Long.UONE = Long.fromInt(1);
 
     /**
      * @type {!Long}
@@ -702,27 +714,28 @@
         if (other.isZero()) {
             throw(new Error('division by zero'));
         } else if (this.isZero()) {
-            return Long.ZERO;
+            return this.unsigned ? Long.UZERO : Long.ZERO;
         }
+        var approx, rem, res;
         if (this.equals(Long.MIN_SIGNED_VALUE)) {
             if (other.equals(Long.ONE) || other.equals(Long.NEG_ONE)) {
-                return Long.MIN_VALUE;  // recall that -MIN_VALUE == MIN_VALUE
-            } else if (other.equals(Long.MIN_VALUE)) {
+                return Long.MIN_SIGNED_VALUE;  // recall that -MIN_VALUE == MIN_VALUE
+            } else if (other.equals(Long.MIN_SIGNED_VALUE)) {
                 return Long.ONE;
             } else {
                 // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
                 var halfThis = this.shiftRight(1);
-                var approx = halfThis.div(other).shiftLeft(1);
+                approx = halfThis.div(other).shiftLeft(1);
                 if (approx.equals(Long.ZERO)) {
                     return other.isNegative() ? Long.ONE : Long.NEG_ONE;
                 } else {
-                    var rem = this.subtract(other.multiply(approx));
-                    var result = approx.add(rem.div(other));
-                    return result;
+                    rem = this.subtract(other.multiply(approx));
+                    res = approx.add(rem.div(other));
+                    return res;
                 }
             }
-        } else if (other.equals(Long.MIN_VALUE)) {
-            return Long.ZERO;
+        } else if (other.equals(Long.MIN_SIGNED_VALUE)) {
+            return this.unsigned ? Long.UZERO : Long.ZERO;
         }
         if (this.isNegative()) {
             if (other.isNegative()) {
@@ -733,18 +746,18 @@
         } else if (other.isNegative()) {
             return this.div(other.negate()).negate();
         }
-
+        
         // Repeat the following until the remainder is less than other:  find a
         // floating-point that approximates remainder / other *from below*, add this
         // into the result, and subtract it from the remainder.  It is critical that
         // the approximate value is less than or equal to the real value so that the
         // remainder never becomes negative.
-        var res = Long.ZERO;
-        var rem = this;
+        res = Long.ZERO;
+        rem = this;
         while (rem.greaterThanOrEqual(other)) {
             // Approximate the result of division. This may be a little greater or
             // smaller than the actual value.
-            var approx = Math.max(1, Math.floor(rem.toNumber() / other.toNumber()));
+            approx = Math.max(1, Math.floor(rem.toNumber() / other.toNumber()));
 
             // We will tweak the approximate result by changing it in the 48-th digit or
             // the smallest non-fractional digit, whichever is larger.
