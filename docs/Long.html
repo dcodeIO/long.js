@@ -49,23 +49,7 @@
     
     
     <div class="description">
-        Constructs a 64-bit two's-complement integer, given its low and high 32-bit
-values as *signed* integers.  See the from* functions below for more
-convenient ways of constructing Longs.
-
-The internal representation of a long is the two given signed, 32-bit values.
-We use 32-bit pieces because these are the size of integers on which
-Javascript performs bit-operations.  For operations like addition and
-multiplication, we split each number into 16-bit pieces, which can easily be
-multiplied within Javascript's floating-point representation without overflow
-or change in sign.
-
-In the algorithms below, we frequently reduce the negative case to the
-positive case by negating the input(s) and then post-processing the result.
-Note that we must ALWAYS check specially whether those values are MIN_VALUE
-(-2^63) because -MIN_VALUE == MIN_VALUE (since 2^63 cannot be represented as
-a positive number, it overflows back into a negative).  Not handling this
-case would often result in infinite recursion.
+        Constructs a 64-bit two's-complement integer, given its low and high 32-bitvalues as *signed* integers.  See the from* functions below for moreconvenient ways of constructing Longs.The internal representation of a long is the two given signed, 32-bit values.We use 32-bit pieces because these are the size of integers on whichJavascript performs bit-operations.  For operations like addition andmultiplication, we split each number into 16-bit pieces, which can easily bemultiplied within Javascript's floating-point representation without overflowor change in sign.In the algorithms below, we frequently reduce the negative case to thepositive case by negating the input(s) and then post-processing the result.Note that we must ALWAYS check specially whether those values are MIN_VALUE(-2^63) because -MIN_VALUE == MIN_VALUE (since 2^63 cannot be represented asa positive number, it overflows back into a negative).  Not handling thiscase would often result in infinite recursion.
     </div>
     
 
@@ -773,8 +757,7 @@ case would often result in infinite recursion.
     
     
     <div class="description">
-        Returns a Long representing the 64bit integer that comes by concatenating the given low, middle and high bits.
- Each is assumed to use 28 bits.
+        Returns a Long representing the 64bit integer that comes by concatenating the given low, middle and high bits. Each is assumed to use 28 bits.
     </div>
     
 
@@ -995,8 +978,7 @@ case would often result in infinite recursion.
     
     
     <div class="description">
-        Returns a Long representing the 64bit integer that comes by concatenating the given low and high bits. Each is
- assumed to use 32 bits.
+        Returns a Long representing the 64bit integer that comes by concatenating the given low and high bits. Each is assumed to use 32 bits.
     </div>
     
 
@@ -1359,8 +1341,7 @@ case would often result in infinite recursion.
     
     
     <div class="description">
-        Returns a Long representing the given value, provided that it is a finite
-number.  Otherwise, zero is returned.
+        Returns a Long representing the given value, provided that it is a finitenumber.  Otherwise, zero is returned.
     </div>
     
 
@@ -1527,8 +1508,7 @@ number.  Otherwise, zero is returned.
     
     
     <div class="description">
-        Returns a Long representation of the given string, written using the given
-radix.
+        Returns a Long representation of the given string, written using the givenradix.
     </div>
     
 
@@ -2156,8 +2136,7 @@ radix.
     
             
 <div class="param-desc">
-    0 if they are the same, 1 if the this is greater, and -1
-    if the given one is greater.
+    0 if they are the same, 1 if the this is greater, and -1    if the given one is greater.
 </div>
 
 
@@ -2789,8 +2768,7 @@ radix.
     
             
 <div class="param-desc">
-    Returns the number of bits needed to represent the absolute
-    value of this Long.
+    Returns the number of bits needed to represent the absolute    value of this Long.
 </div>
 
 
@@ -4539,8 +4517,7 @@ radix.
     
     
     <div class="description">
-        Returns this Long with bits shifted to the right by the given amount, with
-the new top bits matching the current sign bit.
+        Returns this Long with bits shifted to the right by the given amount, withthe new top bits matching the current sign bit.
     </div>
     
 
@@ -4635,8 +4612,7 @@ the new top bits matching the current sign bit.
     
             
 <div class="param-desc">
-    This shifted to the right by the given amount, with
-    zeros placed into the new leading bits.
+    This shifted to the right by the given amount, with    zeros placed into the new leading bits.
 </div>
 
 

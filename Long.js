@@ -706,7 +706,7 @@
         }
         if (this.equals(Long.MIN_SIGNED_VALUE)) {
             if (other.equals(Long.ONE) || other.equals(Long.NEG_ONE)) {
-                return min;  // recall that -MIN_VALUE == MIN_VALUE
+                return Long.MIN_VALUE;  // recall that -MIN_VALUE == MIN_VALUE
             } else if (other.equals(Long.MIN_VALUE)) {
                 return Long.ONE;
             } else {
