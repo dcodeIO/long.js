@@ -299,7 +299,7 @@
      * @type {!Long}
      * @expose
      */
-    Long.UONE = Long.fromInt(1);
+    Long.UONE = Long.fromInt(1, true);
 
     /**
      * @type {!Long}
