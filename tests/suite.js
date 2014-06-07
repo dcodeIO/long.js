@@ -17,7 +17,7 @@
 /**
  * Long.js Pretty Simple Test Suite.
  */
-var Long = require(__dirname+"/../Long.min.js");
+var Long = require(__dirname+"/../index.js");
 
 var suite = {
     

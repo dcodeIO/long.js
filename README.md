@@ -67,6 +67,7 @@ Documentation
 
 Downloads
 ---------
+* [Distributions](https://github.com/dcodeIO/Long.js/tree/master/dist)
 * [ZIP-Archive](https://github.com/dcodeIO/Long.js/archive/master.zip)
 * [Tarball](https://github.com/dcodeIO/Long.js/tarball/master)
 
