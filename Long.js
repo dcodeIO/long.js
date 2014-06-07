@@ -14,24 +14,14 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-
 /**
  * @license Long.js (c) 2013 Daniel Wirtz <dcode@dcode.io>
  * Released under the Apache License, Version 2.0
+ * Derived from goog.math.Long from the Closure Library
  * see: https://github.com/dcodeIO/Long.js for details
- * 
- * Long.js is based on goog.math.Long from the Closure Library.
- * Copyright 2009 The Closure Library Authors. All Rights Reserved.
- * Released under the Apache License, Version 2.0
- * see: https://code.google.com/p/closure-library/ for details
- */
-
-/**
- * Defines a Long class for representing a 64-bit two's-complement
- * integer value, which faithfully simulates the behavior of a Java "long". This
- * implementation is derived from LongLib in GWT.
  */
 (function(global) {
+    "use strict";
 
     /**
      * Constructs a 64-bit two's-complement integer, given its low and high 32-bit
@@ -237,6 +227,7 @@
                 result = result.add(Long.fromNumber(value));
             }
         }
+        result.unsigned = unsigned;
         return result;
     };
 
