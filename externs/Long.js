@@ -27,8 +27,8 @@
  */
 
 /**
- * @param {number} low
- * @param {number} high
+ * @param {number|!{low: number, high: number, unsigned: boolean}} low
+ * @param {number=} high
  * @param {boolean=} unsigned
  * @constructor
  */

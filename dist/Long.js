@@ -44,12 +44,18 @@
      * 
      * @exports Long
      * @class A Long class for representing a 64-bit two's-complement integer value.
-     * @param {number} low The low (signed) 32 bits of the long.
-     * @param {number} high The high (signed) 32 bits of the long.
+     * @param {number|!{low: number, high: number, unsigned: boolean}} low The low (signed) 32 bits of the long.
+     *  Optionally accepts a Long-like object as the first parameter.
+     * @param {number=} high The high (signed) 32 bits of the long.
      * @param {boolean=} unsigned Whether unsigned or not. Defaults to `false` (signed).
      * @constructor
      */
     var Long = function(low, high, unsigned) {
+        if (low && typeof low === 'object') {
+            high = low.high;
+            unsigned = low.unsigned;
+            low = low.low;
+        }
         
         /**
          * The low 32 bits as a signed value.

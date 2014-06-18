@@ -25,6 +25,10 @@ var suite = {
         var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
         test.equal(longVal.toNumber(), 9223372036854775807);
         test.equal(longVal.toString(), "9223372036854775807");
+        var longVal2 = new Long(longVal);
+        test.equal(longVal2.toNumber(), 9223372036854775807);
+        test.equal(longVal2.toString(), "9223372036854775807");
+        test.equal(longVal2.unsigned, longVal.unsigned);
         test.done();
     },
     

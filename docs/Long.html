@@ -41,7 +41,7 @@
     
         
 <dt>
-    <h4 class="name" id="Long"><span class="type-signature"></span>new Long<span class="signature">(low, high, <span class="optional">unsigned</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Long"><span class="type-signature"></span>new Long<span class="signature">(low, <span class="optional">high</span>, <span class="optional">unsigned</span>)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -92,6 +92,9 @@
             
                 
 <span class="param-type">number</span>
+|
+
+<span class="param-type">!{low: number, high: number, unsigned: boolean}</span>
 
 
             
@@ -107,7 +110,7 @@
             
             
             
-            <td class="description last">The low (signed) 32 bits of the long.</td>
+            <td class="description last">The low (signed) 32 bits of the long. Optionally accepts a Long-like object as the first parameter.</td>
         </tr>
 	
 	
@@ -128,6 +131,8 @@
             
             
                 <td class="attributes">
+                
+                    &lt;optional><br>
                 
                     
                 
