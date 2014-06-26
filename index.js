@@ -14,7 +14,5 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-var path = require("path"),
-    Long = require(path.join(__dirname, "dist", "Long.js"));
 
-module.exports = Long;
+module.exports = require("./dist/Long.js");
