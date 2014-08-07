@@ -3,6 +3,7 @@
 A Long class for representing a 64-bit two's-complement integer value derived from the [Closure Library](https://code.google.com/p/closure-library/)
 for stand-alone use and extended with unsigned support.
 
+[![Build Status](https://travis-ci.org/dcodeIO/Long.js.svg)](https://travis-ci.org/dcodeIO/Long.js)
 **Looking for arbitrary byte size integers?** Try [IntN.js](https://github.com/dcodeIO/IntN.js)!
 
 Why?

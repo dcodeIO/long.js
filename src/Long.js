@@ -70,8 +70,6 @@
          * @expose
          */
         this.high = high | 0;
-        
-        this.sign = 0;
 
         /**
          * Whether unsigned or not.
@@ -380,12 +378,12 @@
 
         // Do several (6) digits each time through the loop, so as to
         // minimize the calls to the very expensive emulated div.
-        var radixToPower = Long.fromNumber(Math.pow(radix, 6));
+        var radixToPower = Long.fromNumber(Math.pow(radix, 6), this.unsigned);
         rem = this;
         var result = '';
         while (true) {
             var remDiv = rem.div(radixToPower);
-            var intval = rem.subtract(remDiv.multiply(radixToPower)).toInt();
+            var intval = rem.subtract(remDiv.multiply(radixToPower)).toInt() >>> 0;
             var digits = intval.toString(radix);
             rem = remDiv;
             if (rem.isZero()) {
@@ -752,7 +750,7 @@
 
             // Decrease the approximation until it is smaller than the remainder.  Note
             // that if it is too large, the product overflows and is negative.
-            var approxRes = Long.fromNumber(approx, this.unsigned);
+            var approxRes = Long.fromNumber(approx);
             var approxRem = approxRes.multiply(other);
             while (approxRem.isNegative() || approxRem.greaterThan(rem)) {
                 approx -= delta;

@@ -18,7 +18,7 @@
  * Long.js Pretty Simple Test Suite.
  */
 var Long = require(__dirname+"/../index.js"),
-    gmLong = require(__dirname+"/goog.math.long.js");
+    gmLong = require("./goog.math.long.js");
 
 var suite = {
     
@@ -37,14 +37,20 @@ var suite = {
     
     // So let's focus on my probably not-so-smart extensions:
     
-    /* "toString": function(test) {
+    "toString": function(test) {
         var longVal = Long.fromBits(0xFFFFFFFF, 0xFFFFFFFF, true);
-        var base10 = longVal.toString(10);
-        console.log("10: "+base10);
-        var base8 = longVal.toString(8);
-        console.log("8: "+base8);
-        var base16 = longVal.toString(16);
-        console.log("16: "+base16);
+        // #10
+        test.equal(longVal.toString(16), "ffffffffffffffff");
+        test.equal(longVal.toString(10), "18446744073709551615");
+        test.equal(longVal.toString(8), "1777777777777777777777");
+        // #7
+        test.equal(Long.fromString("zzzzzz", 36).toString(36), "zzzzzz");
+        test.done();
+    },
+    
+    // This one is obviously wrong in goog.math.long itself:
+    /* "base36": function(test) {
+        test.equal(gmLong.fromString("zzzzzz", 36).toString(36), "zzzzzz");
         test.done();
     }, */
     

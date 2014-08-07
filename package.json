@@ -1,6 +1,6 @@
 {
     "name": "long",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "author": "Daniel Wirtz <dcode@dcode.io>",
     "description": "A Long class for representing a 64-bit two's-complement integer value.",
     "main": "index.js",
@@ -12,6 +12,7 @@
     "dependencies": {
     },
     "devDependencies": {
+        "intn": "~1",
         "testjs": "latest",
         "closurecompiler": "latest"
     },
