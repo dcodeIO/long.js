@@ -1,7 +1,9 @@
-![Long.js -A Long class for representing a 64-bit two's-complement integer ](https://raw.github.com/dcodeIO/Long.js/master/long.png)
+![Long.js - A Long class for representing a 64-bit two's-complement integer ](https://raw.github.com/dcodeIO/Long.js/master/long.png)
 =======
 A Long class for representing a 64-bit two's-complement integer value derived from the [Closure Library](https://code.google.com/p/closure-library/)
 for stand-alone use and extended with unsigned support.
+
+**Looking for arbitrary byte size integers?** Try [IntN.js](https://github.com/dcodeIO/IntN.js)!
 
 Why?
 ----
@@ -63,7 +65,7 @@ alert(longVal.toString());
 
 Documentation
 -------------
-* [View the API documentation](http://htmlpreview.github.com/?http://github.com/dcodeIO/Long.js/master/docs/Long.html)
+* [View the API documentation](http://htmlpreview.github.io/?https://raw.githubusercontent.com/dcodeIO/Long.js/master/docs/Long.html)
 
 Downloads
 ---------

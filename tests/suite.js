@@ -17,7 +17,8 @@
 /**
  * Long.js Pretty Simple Test Suite.
  */
-var Long = require(__dirname+"/../index.js");
+var Long = require(__dirname+"/../index.js"),
+    gmLong = require(__dirname+"/goog.math.long.js");
 
 var suite = {
     
@@ -36,11 +37,16 @@ var suite = {
     
     // So let's focus on my probably not-so-smart extensions:
     
-    "from28Bits": function(test) {
-        var val = Long.from28Bits(0xFFFFFFF, 0xFFFFFFF, 0xFF);
-        test.equal(val.toString(), "-1");
+    /* "toString": function(test) {
+        var longVal = Long.fromBits(0xFFFFFFFF, 0xFFFFFFFF, true);
+        var base10 = longVal.toString(10);
+        console.log("10: "+base10);
+        var base8 = longVal.toString(8);
+        console.log("8: "+base8);
+        var base16 = longVal.toString(16);
+        console.log("16: "+base16);
         test.done();
-    },
+    }, */
     
     "unsigned": {
         

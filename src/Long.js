@@ -70,6 +70,8 @@
          * @expose
          */
         this.high = high | 0;
+        
+        this.sign = 0;
 
         /**
          * Whether unsigned or not.
@@ -144,14 +146,12 @@
             return Long.ZERO;
         } else if (!unsigned && value <= -TWO_PWR_63_DBL) {
             return Long.MIN_SIGNED_VALUE;
-        } else if (unsigned && value <= 0) {
-            return Long.MIN_UNSIGNED_VALUE;
         } else if (!unsigned && value + 1 >= TWO_PWR_63_DBL) {
             return Long.MAX_SIGNED_VALUE;
         } else if (unsigned && value >= TWO_PWR_64_DBL) {
             return Long.MAX_UNSIGNED_VALUE;
         } else if (value < 0) {
-            return Long.fromNumber(-value, false).negate();
+            return Long.fromNumber(-value, unsigned).negate();
         } else {
             return new Long((value % TWO_PWR_32_DBL) | 0, (value / TWO_PWR_32_DBL) | 0, unsigned);
         }
@@ -171,24 +171,7 @@
     };
 
     /**
-     * Returns a Long representing the 64bit integer that comes by concatenating the given low, middle and high bits.
-     *  Each is assumed to use 28 bits.
-     * @param {number} part0 The low 28 bits
-     * @param {number} part1 The middle 28 bits
-     * @param {number} part2 The high 28 (8) bits
-     * @param {boolean=} unsigned Whether unsigned or not. Defaults to false (signed).
-     * @return {!Long}
-     * @expose
-     */
-    Long.from28Bits = function(part0, part1, part2, unsigned) {
-        // 00000000000000000000000000001111 11111111111111111111111122222222 2222222222222
-        // LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-        return Long.fromBits(part0 | (part1 << 28), (part1 >>> 4) | (part2) << 24, unsigned);
-    };
-
-    /**
-     * Returns a Long representation of the given string, written using the given
-     * radix.
+     * Returns a Long representation of the given string, written using the given radix.
      * @param {string} str The textual representation of the Long.
      * @param {(boolean|number)=} unsigned Whether unsigned or not. Defaults to false (signed).
      * @param {number=} radix The radix in which the text is written.
@@ -196,26 +179,23 @@
      * @expose
      */
     Long.fromString = function(str, unsigned, radix) {
-        if (str.length == 0) {
-            throw(new Error('number format error: empty string'));
-        }
-        if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity") {
+        if (str.length === 0)
+            throw Error('number format error: empty string');
+        if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
             return Long.ZERO;
-        }
         if (typeof unsigned === 'number') { // For goog.math.Long compatibility
             radix = unsigned;
             unsigned = false;
         }
         radix = radix || 10;
-        if (radix < 2 || 36 < radix) {
-            throw(new Error('radix out of range: ' + radix));
-        }
+        if (radix < 2 || 36 < radix)
+            throw Error('radix out of range: ' + radix);
 
-        if (str.charAt(0) == '-') {
+        var p;
+        if ((p = str.indexOf('-')) > 0)
+            throw Error('number format error: interior "-" character: ' + str);
+        else if (p === 0)
             return Long.fromString(str.substring(1), unsigned, radix).negate();
-        } else if (str.indexOf('-') >= 0) {
-            throw(new Error('number format error: interior "-" character: ' + str));
-        }
 
         // Do several (8) digits each time through the loop, so as to
         // minimize the calls to the very expensive emulated div.
@@ -847,18 +827,12 @@
      * @expose
      */
     Long.prototype.shiftLeft = function(numBits) {
-        numBits &= 63;
-        if (numBits == 0) {
+        if ((numBits &= 63) === 0)
             return this;
-        } else {
-            var low = this.low;
-            if (numBits < 32) {
-                var high = this.high;
-                return Long.fromBits(low << numBits, (high << numBits) | (low >>> (32 - numBits)), this.unsigned);
-            } else {
-                return Long.fromBits(0, low << (numBits - 32), this.unsigned);
-            }
-        }
+        else if (numBits < 32)
+            return Long.fromBits(this.low << numBits, (this.high << numBits) | (this.low >>> (32 - numBits)), this.unsigned);
+        else
+            return Long.fromBits(0, this.low << (numBits - 32), this.unsigned);
     };
 
     /**
@@ -868,18 +842,12 @@
      * @expose
      */
     Long.prototype.shiftRight = function(numBits) {
-        numBits &= 63;
-        if (numBits == 0) {
+        if ((numBits &= 63) === 0)
             return this;
-        } else {
-            var high = this.high;
-            if (numBits < 32) {
-                var low = this.low;
-                return Long.fromBits((low >>> numBits) | (high << (32 - numBits)), high >> numBits, this.unsigned);
-            } else {
-                return Long.fromBits(high >> (numBits - 32), high >= 0 ? 0 : -1, this.unsigned);
-            }
-        }
+        else if (numBits < 32)
+            return Long.fromBits((this.low >>> numBits) | (this.high << (32 - numBits)), this.high >> numBits, this.unsigned);
+        else
+            return Long.fromBits(this.high >> (numBits - 32), this.high >= 0 ? 0 : -1, this.unsigned);
     };
 
     /**
