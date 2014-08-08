@@ -20,8 +20,9 @@
  */
 
 // goog.provide('goog.math.Long');
-var goog = {};
-goog.math = {};
+var goog = {}; goog.math = {};
+
+
 
 /**
  * Constructs a 64-bit two's-complement integer, given its low and high 32-bit
@@ -310,7 +311,8 @@ goog.math.Long.prototype.toString = function(opt_radix) {
     var result = '';
     while (true) {
         var remDiv = rem.div(radixToPower);
-        var intval = rem.subtract(remDiv.multiply(radixToPower)).toInt();
+        var intval = rem.subtract(remDiv.multiply(radixToPower)).toInt() >>> 0; // wraps around for base 36 (dcode)
+        console.log(intval);
         var digits = intval.toString(radix);
 
         rem = remDiv;

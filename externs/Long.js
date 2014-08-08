@@ -35,6 +35,12 @@
 var Long = function(low, high, unsigned) {};
 
 /**
+ * @param {*} obj
+ * @returns {boolean}
+ */
+Long.isLong = function(obj) {};
+
+/**
  * @param {number} value
  * @param {boolean=} unsigned
  * @return {!Long}
@@ -57,21 +63,18 @@ Long.fromNumber = function(value, unsigned) {};
 Long.fromBits = function(lowBits, highBits, unsigned) {};
 
 /**
- * @param {number} part0
- * @param {number} part1
- * @param {number} part2
- * @param {boolean=} unsigned
- * @return {!Long}
- */
-Long.from28Bits = function(part0, part1, part2, unsigned) {};
-
-/**
  * @param {string} str
  * @param {(boolean|number)=} unsigned
  * @param {number=} radix
  * @return {!Long}
  */
 Long.fromString = function(str, unsigned, radix) {};
+
+/**
+ * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val
+ * @return {!Long}
+ */
+Long.valueOf = function(val) {};
 
 /**
  * @type {!Long}
@@ -101,32 +104,17 @@ Long.NEG_ONE;
 /**
  * @type {!Long}
  */
-Long.MAX_SIGNED_VALUE;
-
-/**
- * @type {!Long}
- */
-Long.MIN_SIGNED_VALUE;
-
-/**
- * @type {!Long}
- */
-Long.MAX_UNSIGNED_VALUE;
-
-/**
- * @type {!Long}
- */
-Long.MIN_UNSIGNED_VALUE;
-
-/**
- * @type {!Long}
- */
 Long.MAX_VALUE;
 
 /**
  * @type {!Long}
  */
 Long.MIN_VALUE;
+
+/**
+ * @type {!Long}
+ */
+Long.MAX_UNSIGNED_VALUE;
 
 /**
  * @type {number}
@@ -205,43 +193,43 @@ Long.prototype.isOdd = function() {};
 Long.prototype.isEven = function() {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {boolean}
  */
 Long.prototype.equals = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {boolean}
  */
 Long.prototype.notEquals = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {boolean}
  */
 Long.prototype.lessThan = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {boolean}
  */
 Long.prototype.lessThanOrEqual = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {boolean}
  */
 Long.prototype.greaterThan = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {boolean}
  */
 Long.prototype.greaterThanOrEqual = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {number}
  */
 Long.prototype.compare = function(other) {};
@@ -252,31 +240,31 @@ Long.prototype.compare = function(other) {};
 Long.prototype.negate = function() {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {!Long}
  */
 Long.prototype.add = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {!Long}
  */
 Long.prototype.subtract = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {!Long}
  */
 Long.prototype.multiply = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {!Long}
  */
 Long.prototype.div = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {!Long}
  */
 Long.prototype.modulo = function(other) {};
@@ -287,37 +275,37 @@ Long.prototype.modulo = function(other) {};
 Long.prototype.not = function() {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {!Long}
  */
 Long.prototype.and = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {!Long}
  */
 Long.prototype.or = function(other) {};
 
 /**
- * @param {Long} other
+ * @param {!Long|number|string} other
  * @return {!Long}
  */
 Long.prototype.xor = function(other) {};
 
 /**
- * @param {number} numBits
+ * @param {number|!Long} numBits
  * @return {!Long}
  */
 Long.prototype.shiftLeft = function(numBits) {};
 
 /**
- * @param {number} numBits
+ * @param {number|!Long} numBits
  * @return {!Long}
  */
 Long.prototype.shiftRight = function(numBits) {};
 
 /**
- * @param {number} numBits
+ * @param {number|!Long} numBits
  * @return {!Long}
  */
 Long.prototype.shiftRightUnsigned = function(numBits) {};
@@ -331,8 +319,3 @@ Long.prototype.toSigned = function() {};
  * @return {!Long}
  */
 Long.prototype.toUnsigned = function() {};
-
-/**
- * @return {!Long}
- */
-Long.prototype.clone = function() {};

@@ -26,16 +26,14 @@ var suite = {
         var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
         test.equal(longVal.toNumber(), 9223372036854775807);
         test.equal(longVal.toString(), "9223372036854775807");
-        var longVal2 = new Long(longVal);
+        var longVal2 = Long.valueOf(longVal);
         test.equal(longVal2.toNumber(), 9223372036854775807);
         test.equal(longVal2.toString(), "9223372036854775807");
         test.equal(longVal2.unsigned, longVal.unsigned);
         test.done();
     },
     
-    // Let's assume signed goog.math.Long works as expected because the people at Google are pretty smart.
-    
-    // So let's focus on my probably not-so-smart extensions:
+    // Let's assume goog.math.Long has been tested properly and focus on our extensions:
     
     "toString": function(test) {
         var longVal = Long.fromBits(0xFFFFFFFF, 0xFFFFFFFF, true);
@@ -43,23 +41,17 @@ var suite = {
         test.equal(longVal.toString(16), "ffffffffffffffff");
         test.equal(longVal.toString(10), "18446744073709551615");
         test.equal(longVal.toString(8), "1777777777777777777777");
-        // #7
+        // #7, obviously wrong in goog.math.Long
         test.equal(Long.fromString("zzzzzz", 36).toString(36), "zzzzzz");
+        test.equal(Long.fromString("-zzzzzz", 36).toString(36), "-zzzzzz");
         test.done();
     },
-    
-    // This one is obviously wrong in goog.math.long itself:
-    /* "base36": function(test) {
-        test.equal(gmLong.fromString("zzzzzz", 36).toString(36), "zzzzzz");
-        test.done();
-    }, */
     
     "unsigned": {
         
         "min/max": function(test) {
-            test.equal(Long.MIN_SIGNED_VALUE.toString(), "-9223372036854775808");
-            test.equal(Long.MAX_SIGNED_VALUE.toString(), "9223372036854775807");
-            test.equal(Long.MIN_UNSIGNED_VALUE.toString(), "0");
+            test.equal(Long.MIN_VALUE.toString(), "-9223372036854775808");
+            test.equal(Long.MAX_VALUE.toString(), "9223372036854775807");
             test.equal(Long.MAX_UNSIGNED_VALUE.toString(), "18446744073709551615");
             test.done();
         },
@@ -105,9 +97,9 @@ var suite = {
         },
         
         "max_unsigned_sub_max_signed": function(test) {
-            var longVal = Long.MAX_UNSIGNED_VALUE.subtract(Long.MAX_SIGNED_VALUE).subtract(Long.ONE);
-            test.equal(longVal.toNumber(), Long.MAX_SIGNED_VALUE);
-            test.equal(longVal.toString(), Long.MAX_SIGNED_VALUE.toString());
+            var longVal = Long.MAX_UNSIGNED_VALUE.subtract(Long.MAX_VALUE).subtract(Long.ONE);
+            test.equal(longVal.toNumber(), Long.MAX_VALUE);
+            test.equal(longVal.toString(), Long.MAX_VALUE.toString());
             test.done();
         },
         
@@ -133,7 +125,7 @@ var suite = {
         },
         
         "max_unsigned_div_max_signed": function(test) {
-            var longVal = Long.MAX_UNSIGNED_VALUE.div(Long.MAX_SIGNED_VALUE);
+            var longVal = Long.MAX_UNSIGNED_VALUE.div(Long.MAX_VALUE);
             test.equal(longVal.toNumber(), 2);
             test.equal(longVal.toString(), "2");
             test.done();
@@ -141,37 +133,15 @@ var suite = {
         
         "max_unsigned_div_neg_signed": function(test) {
             var longVal = Long.MAX_UNSIGNED_VALUE.div(Long.fromInt(-2));
-            test.equal(longVal.toNumber(), -Long.MAX_SIGNED_VALUE);
+            test.equal(longVal.toNumber(), -Long.MAX_VALUE);
             test.done();
         },
 
         "min_signed_div_one": function(test) {
-            var longVal = Long.MIN_SIGNED_VALUE.div(Long.ONE);
+            var longVal = Long.MIN_VALUE.div(Long.ONE);
             test.equal(longVal.toNumber(), Long.MIN_VALUE);
             test.done();
         }
-    },
-
-    // FIXME: There is no support for NaN or +/-Infinity
-    // "NaN": function(test) {
-    //     test.ok(isNan(Long.fromNumber(NaN).toNumber());
-    //     test.strictEqual(Long.fromNumber(+Infinity).toNumber(), +Infinity);
-    //     test.strictEqual(Long.fromNumber(-Infinity).toNumber(), -Infinity);
-    //     test.done();
-    // }
-    // One option could be to store NaN, Infinity etc. in high and set low to 0, while making sure to convert it in a
-    // proper way as soon as any math is called upon it. This might be as simple as that each of these values always
-    // "infects" other values, thus remaining untouched respectively changing the base long to its value.
-    //
-    // To clarify that, it all becomes zero atm, which usually is good enough but not perfect:
-    "NaN": function(test) {
-        test.strictEqual(Long.fromNumber(NaN), Long.ZERO);
-        test.strictEqual(Long.fromNumber(+Infinity), Long.ZERO);
-        test.strictEqual(Long.fromNumber(-Infinity), Long.ZERO);
-        test.strictEqual(Long.fromString(NaN+""), Long.ZERO);
-        test.strictEqual(Long.fromString(+Infinity+""), Long.ZERO);
-        test.strictEqual(Long.fromString(-Infinity+""), Long.ZERO);
-        test.done();
     }
 };
 
