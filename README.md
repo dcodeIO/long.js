@@ -6,13 +6,22 @@ for stand-alone use and extended with unsigned support.
 [![Build Status](https://travis-ci.org/dcodeIO/Long.js.svg)](https://travis-ci.org/dcodeIO/Long.js)
 [![Donate](https://raw.githubusercontent.com/dcodeIO/Long.js/master/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=info%40code-emitter.com&item_name=Open%20Source%3A%20Long.js)
 
-Why?
-----
-As of the [ECMAScript specification](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5), number types have a maximum safe
-value of 2^53-1 ([see also](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER)).
-Beyond that, behaviour might be unexpected. Furthermore, bitwise operations can only be performed on 32 bit numbers.
-However, in some use cases it is required to be able to perform reliable mathematical and/or bitwise operations
-on the full 64 bits. This is where Long.js comes into play.
+Background
+----------
+**The Number Type:** As of [ECMA-262 5th Edition](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5), "all the positive and
+negative integers whose magnitude is no greater than 2<sup>53</sup> are representable in the Number type", which is
+"representing the doubleprecision 64-bit format IEEE 754 values as specified in the IEEE Standard for Binary Floating-Point
+Arithmetic". The [maximum safe integer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER)
+in JavaScript is 2<sup>53</sup>-1.
+
+Example: `0xffffffffffffffff = 18446744073709551615` but in JavaScript it evaluates to `18446744073709552000`.
+
+**Bitwise Operators:** Bitwise operators in JavaScript "deal only with integers in the range −2<sup>31</sup> through
+2<sup>31</sup>−1, inclusive, or in the range 0 through 2<sup>32</sup>−1, inclusive. These operators accept any value of
+the Number type but first convert each such value to one of 2<sup>32</sup> integer values."
+
+In some use cases, however, it is required to be able to work with and perform bitwise operations on the full 64 bits.
+This is where Long.js comes into play.
 
 Usage
 -----

@@ -21,11 +21,10 @@
         "node": ">=0.6"
     },
     "scripts": {
-        "build": "cp src/Long.js dist/Long.js",
-        "make": "npm run-script build && npm run-script compile && npm run-script compress && npm test && npm run-script jsdoc",
+        "build": "node scripts/build.js",
+        "make": "npm run-script build && npm run-script compile && npm run-script compress && npm test",
         "compile": "ccjs dist/Long.js --compilation_level=ADVANCED_OPTIMIZATIONS --output_wrapper=\"(function(){%output%})();\" --create_source_map=dist/Long.min.map > dist/Long.min.js",
         "compress": "gzip -c -9 dist/Long.min.js > dist/Long.min.js.gz",
-        "test": "node node_modules/testjs/bin/testjs tests/suite.js",
-        "jsdoc": "jsdoc -c jsdoc.json"
+        "test": "node node_modules/testjs/bin/testjs tests/suite.js"
     }
 }

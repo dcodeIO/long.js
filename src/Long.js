@@ -29,7 +29,7 @@
      * @exports Long
      * @class A Long class for representing a 64 bit two's-complement integer value.
      * @param {number} low The low (signed) 32 bits of the long
-     * @param {number=} high The high (signed) 32 bits of the long
+     * @param {number} high The high (signed) 32 bits of the long
      * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
      * @constructor
      */

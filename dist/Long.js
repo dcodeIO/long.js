@@ -29,12 +29,12 @@
      * @exports Long
      * @class A Long class for representing a 64 bit two's-complement integer value.
      * @param {number} low The low (signed) 32 bits of the long
-     * @param {number=} high The high (signed) 32 bits of the long
+     * @param {number} high The high (signed) 32 bits of the long
      * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
      * @constructor
      */
     var Long = function(low, high, unsigned) {
-        
+
         /**
          * The low 32 bits as a signed value.
          * @type {number}
@@ -56,7 +56,7 @@
          */
         this.unsigned = !!unsigned;
     };
-    
+
     // The internal representation of a long is the two given signed, 32-bit values.
     // We use 32-bit pieces because these are the size of integers on which
     // Javascript performs bit-operations.  For operations like addition and
@@ -83,7 +83,7 @@
     Long.isLong = function(obj) {
         return (obj && obj instanceof Long) === true;
     };
-    
+
     /**
      * A cache of the Long representations of small integer values.
      * @type {!Object}
@@ -186,7 +186,7 @@
         radix = radix || 10;
         if (radix < 2 || 36 < radix)
             throw Error('radix out of range: ' + radix);
-        
+
         var p;
         if ((p = str.indexOf('-')) > 0)
             throw Error('number format error: interior "-" character: ' + str);
@@ -329,7 +329,7 @@
      * @expose
      */
     Long.MAX_UNSIGNED_VALUE = Long.fromBits(0xFFFFFFFF|0, 0xFFFFFFFF|0, true);
-    
+
     /**
      * Minimum signed value.
      * @type {!Long}
@@ -614,9 +614,9 @@
     Long.prototype.add = function(addend) {
         if (!Long.isLong(addend))
             addend = Long.valueOf(addend);
-        
+
         // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
-        
+
         var a48 = this.high >>> 16;
         var a32 = this.high & 0xFFFF;
         var a16 = this.low >>> 16;
@@ -671,7 +671,7 @@
             return multiplier.isOdd() ? Long.MIN_VALUE : Long.ZERO;
         if (multiplier.equals(Long.MIN_VALUE))
             return this.isOdd() ? Long.MIN_VALUE : Long.ZERO;
-        
+
         if (this.isNegative()) {
             if (multiplier.isNegative())
                 return this.negate().multiply(multiplier.negate());
@@ -679,14 +679,14 @@
                 return this.negate().multiply(multiplier).negate();
         } else if (multiplier.isNegative())
             return this.multiply(multiplier.negate()).negate();
-            
+
         // If both longs are small, use float multiplication
         if (this.lessThan(TWO_PWR_24) && multiplier.lessThan(TWO_PWR_24))
             return Long.fromNumber(this.toNumber() * multiplier.toNumber(), this.unsigned);
 
         // Divide each long into 4 chunks of 16 bits, and then add up 4x4 products.
         // We can skip products that would overflow.
-        
+
         var a48 = this.high >>> 16;
         var a32 = this.high & 0xFFFF;
         var a16 = this.low >>> 16;
@@ -760,7 +760,7 @@
             return this.negate().div(divisor).negate();
         } else if (divisor.isNegative())
             return this.div(divisor.negate()).negate();
-        
+
         // Repeat the following until the remainder is less than other:  find a
         // floating-point that approximates remainder / other *from below*, add this
         // into the result, and subtract it from the remainder.  It is critical that
