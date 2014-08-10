@@ -8,15 +8,15 @@ for stand-alone use and extended with unsigned support.
 
 Background
 ----------
-**The Number Type:** As of [ECMA-262 5th Edition](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5), "all the positive and
-negative integers whose magnitude is no greater than 2<sup>53</sup> are representable in the Number type", which is
-"representing the doubleprecision 64-bit format IEEE 754 values as specified in the IEEE Standard for Binary Floating-Point
-Arithmetic". The [maximum safe integer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER)
+As of [ECMA-262 5th Edition](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5), "all the positive and negative integers
+whose magnitude is no greater than 2<sup>53</sup> are representable in the Number type", which is "representing the
+doubleprecision 64-bit format IEEE 754 values as specified in the IEEE Standard for Binary Floating-Point Arithmetic".
+The [maximum safe integer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER)
 in JavaScript is 2<sup>53</sup>-1.
 
-Example: `0xffffffffffffffff = 18446744073709551615` but in JavaScript it evaluates to `18446744073709552000`.
+Example: 2<sup>64</sup>-1 is 18446744073709551615 but in JavaScript it evaluates to `18446744073709552000`.
 
-**Bitwise Operators:** Bitwise operators in JavaScript "deal only with integers in the range −2<sup>31</sup> through
+Furthermore, bitwise operators in JavaScript "deal only with integers in the range −2<sup>31</sup> through
 2<sup>31</sup>−1, inclusive, or in the range 0 through 2<sup>32</sup>−1, inclusive. These operators accept any value of
 the Number type but first convert each such value to one of 2<sup>32</sup> integer values."
 
