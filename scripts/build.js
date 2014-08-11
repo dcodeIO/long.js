@@ -1,4 +1,4 @@
-var MetaScript = require("../../MetaScript/MetaScript.js"),
+var MetaScript = require("metascript"),
     path = require("path"),
     fs = require("fs");
 

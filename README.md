@@ -20,8 +20,8 @@ Furthermore, bitwise operators in JavaScript "deal only with integers in the ran
 2<sup>31</sup>−1, inclusive, or in the range 0 through 2<sup>32</sup>−1, inclusive. These operators accept any value of
 the Number type but first convert each such value to one of 2<sup>32</sup> integer values."
 
-In some use cases, however, it is required to be able to work with and perform bitwise operations on the full 64 bits.
-This is where Long.js comes into play.
+In some use cases, however, it is required to be able to reliably work with and perform bitwise operations on the full
+64 bits. This is where Long.js comes into play.
 
 Usage
 -----
