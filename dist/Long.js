@@ -227,7 +227,7 @@
         if (Long.isLong(val))
             return val;
         // Throws for not an object (undefined, null):
-        return Long(val.low, val.high, val.unsigned);
+        return new Long(val.low, val.high, val.unsigned);
     };
 
     // NOTE: the compiler should inline these constant values below and then remove these variables, so there should be
