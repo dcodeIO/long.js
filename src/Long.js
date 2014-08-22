@@ -219,7 +219,7 @@
      * @returns {!Long}
      * @expose
      */
-    Long.valueOf = function(val) {
+    Long.fromValue = function(val) {
         if (typeof val === 'number')
             return Long.fromNumber(val);
         if (typeof val === 'string')
@@ -508,7 +508,7 @@
      */
     Long.prototype.equals = function(other) {
         if (!Long.isLong(other))
-            other = Long.valueOf(other);
+            other = Long.fromValue(other);
         if (this.unsigned !== other.unsigned && (this.high >>> 31) !== (other.high >>> 31))
             return false;
         return this.high === other.high && this.low === other.low;
@@ -522,7 +522,7 @@
      */
     Long.prototype.notEquals = function(other) {
         if (!Long.isLong(other))
-            other = Long.valueOf(other);
+            other = Long.fromValue(other);
         return !this.equals(other);
     };
 
@@ -534,7 +534,7 @@
      */
     Long.prototype.lessThan = function(other) {
         if (!Long.isLong(other))
-            other = Long.valueOf(other);
+            other = Long.fromValue(other);
         return this.compare(other) < 0;
     };
 
@@ -546,7 +546,7 @@
      */
     Long.prototype.lessThanOrEqual = function(other) {
         if (!Long.isLong(other))
-            other = Long.valueOf(other);
+            other = Long.fromValue(other);
         return this.compare(other) <= 0;
     };
 
@@ -558,7 +558,7 @@
      */
     Long.prototype.greaterThan = function(other) {
         if (!Long.isLong(other))
-            other = Long.valueOf(other);
+            other = Long.fromValue(other);
         return this.compare(other) > 0;
     };
 
@@ -613,7 +613,7 @@
      */
     Long.prototype.add = function(addend) {
         if (!Long.isLong(addend))
-            addend = Long.valueOf(addend);
+            addend = Long.fromValue(addend);
         
         // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
         
@@ -650,7 +650,7 @@
      */
     Long.prototype.subtract = function(subtrahend) {
         if (!Long.isLong(subtrahend))
-            subtrahend = Long.valueOf(subtrahend);
+            subtrahend = Long.fromValue(subtrahend);
         return this.add(subtrahend.negate());
     };
 
@@ -664,7 +664,7 @@
         if (this.isZero())
             return Long.ZERO;
         if (!Long.isLong(multiplier))
-            multiplier = Long.valueOf(multiplier);
+            multiplier = Long.fromValue(multiplier);
         if (multiplier.isZero())
             return Long.ZERO;
         if (this.equals(Long.MIN_VALUE))
@@ -729,7 +729,7 @@
      */
     Long.prototype.div = function(divisor) {
         if (!Long.isLong(divisor))
-            divisor = Long.valueOf(divisor);
+            divisor = Long.fromValue(divisor);
         if (divisor.isZero())
             throw(new Error('division by zero'));
         if (this.isZero())
@@ -807,7 +807,7 @@
      */
     Long.prototype.modulo = function(divisor) {
         if (!Long.isLong(divisor))
-            divisor = Long.valueOf(divisor);
+            divisor = Long.fromValue(divisor);
         return this.subtract(this.div(divisor).multiply(divisor));
     };
 
@@ -828,7 +828,7 @@
      */
     Long.prototype.and = function(other) {
         if (!Long.isLong(other))
-            other = Long.valueOf(other);
+            other = Long.fromValue(other);
         return Long.fromBits(this.low & other.low, this.high & other.high, this.unsigned);
     };
 
@@ -840,7 +840,7 @@
      */
     Long.prototype.or = function(other) {
         if (!Long.isLong(other))
-            other = Long.valueOf(other);
+            other = Long.fromValue(other);
         return Long.fromBits(this.low | other.low, this.high | other.high, this.unsigned);
     };
 
@@ -852,7 +852,7 @@
      */
     Long.prototype.xor = function(other) {
         if (!Long.isLong(other))
-            other = Long.valueOf(other);
+            other = Long.fromValue(other);
         return Long.fromBits(this.low ^ other.low, this.high ^ other.high, this.unsigned);
     };
 
