@@ -936,7 +936,7 @@
         return new Long(this.low, this.high, true);
     };
 
-    /* CommonJS */ if (typeof module !== 'undefined' && module["exports"])
+    /* CommonJS */ if (typeof require === 'function' && typeof module === 'object' && module && module.id && typeof exports === 'object' && exports)
         module["exports"] = Long;
     /* AMD */ else if (typeof define === 'function' && define["amd"])
         define(function() { return Long; });
