@@ -141,6 +141,13 @@ var suite = {
             var longVal = Long.MIN_VALUE.div(Long.ONE);
             test.equal(longVal.toNumber(), Long.MIN_VALUE);
             test.done();
+        },
+
+        "msb_unsigned": function(test) {
+            var longVal = Long.UONE.shiftLeft(63);
+            test.ok(longVal.notEquals(Long.MIN_VALUE));
+            test.equal(longVal.toString(), "9223372036854775808");
+            test.done();
         }
     }
 };
