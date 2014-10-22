@@ -509,7 +509,7 @@
     Long.prototype.equals = function(other) {
         if (!Long.isLong(other))
             other = Long.fromValue(other);
-        if (this.unsigned !== other.unsigned && (this.high >>> 31) === (other.high >>> 31))
+        if (this.unsigned !== other.unsigned && (this.high >>> 31) === 1 && (other.high >>> 31) === 1)
             return false;
         return this.high === other.high && this.low === other.low;
     };

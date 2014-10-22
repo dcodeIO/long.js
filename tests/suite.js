@@ -147,6 +147,7 @@ var suite = {
             var longVal = Long.UONE.shiftLeft(63);
             test.ok(longVal.notEquals(Long.MIN_VALUE));
             test.equal(longVal.toString(), "9223372036854775808");
+            test.equal(Long.fromString("9223372036854775808", true).toString(), "9223372036854775808");
             test.done();
         }
     }
