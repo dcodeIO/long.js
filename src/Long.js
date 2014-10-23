@@ -235,51 +235,45 @@
 
     /**
      * @type {number}
+     * @const
      * @inner
      */
     var TWO_PWR_16_DBL = 1 << 16;
 
     /**
      * @type {number}
+     * @const
      * @inner
      */
     var TWO_PWR_24_DBL = 1 << 24;
 
     /**
      * @type {number}
+     * @const
      * @inner
      */
     var TWO_PWR_32_DBL = TWO_PWR_16_DBL * TWO_PWR_16_DBL;
 
     /**
      * @type {number}
-     * @inner
-     */
-    var TWO_PWR_31_DBL = TWO_PWR_32_DBL / 2;
-
-    /**
-     * @type {number}
-     * @inner
-     */
-    var TWO_PWR_48_DBL = TWO_PWR_32_DBL * TWO_PWR_16_DBL;
-
-    /**
-     * @type {number}
+     * @const
      * @inner
      */
     var TWO_PWR_64_DBL = TWO_PWR_32_DBL * TWO_PWR_32_DBL;
 
     /**
      * @type {number}
+     * @const
      * @inner
      */
     var TWO_PWR_63_DBL = TWO_PWR_64_DBL / 2;
 
     /**
      * @type {!Long}
+     * @const
      * @inner
      */
-    var TWO_PWR_24 = Long.fromInt(1 << 24);
+    var TWO_PWR_24 = Long.fromInt(TWO_PWR_24_DBL);
 
     /**
      * Signed zero.
@@ -495,6 +489,7 @@
     /**
      * Tests if this Long's value is even.
      * @returns {boolean}
+     * @expose
      */
     Long.prototype.isEven = function() {
         return (this.low & 1) === 0;
@@ -580,13 +575,14 @@
      * @expose
      */
     Long.prototype.compare = function(other) {
-        if (this.equals(other)) {
+        if (this.equals(other))
             return 0;
-        }
-        var thisNeg = this.isNegative();
-        var otherNeg = other.isNegative();
-        if (thisNeg && !otherNeg) return -1;
-        if (!thisNeg && otherNeg) return 1;
+        var thisNeg = this.isNegative(),
+            otherNeg = other.isNegative();
+        if (thisNeg && !otherNeg)
+            return -1;
+        if (!thisNeg && otherNeg)
+            return 1;
         // At this point the sign bits are the same
         if (!this.unsigned)
             return this.subtract(other).isNegative() ? -1 : 1;
@@ -936,7 +932,7 @@
         return new Long(this.low, this.high, true);
     };
 
-    /* CommonJS */ if (typeof require === 'function' && typeof module === 'object' && module && module.id && typeof exports === 'object' && exports)
+    /* CommonJS */ if (typeof require === 'function' && typeof module === 'object' && module && typeof exports === 'object' && exports)
         module["exports"] = Long;
     /* AMD */ else if (typeof define === 'function' && define["amd"])
         define(function() { return Long; });
