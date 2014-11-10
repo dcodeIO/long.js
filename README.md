@@ -167,7 +167,7 @@ Tests if the specified object is a Long.
 | obj             | ***             | Object 
 | **@returns**    | *boolean*       | 
 
-#### Long.valueOf(val)
+#### Long.fromValue(val)
 
 Converts the specified value to a Long.
 
