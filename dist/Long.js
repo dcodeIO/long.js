@@ -564,6 +564,8 @@
      * @expose
      */
     Long.prototype.greaterThanOrEqual = function(other) {
+        if (!Long.isLong(other))
+            other = Long.fromValue(other);
         return this.compare(other) >= 0;
     };
 
