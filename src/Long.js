@@ -20,7 +20,16 @@
  * Released under the Apache License, Version 2.0
  * see: https://github.com/dcodeIO/Long.js for details
  */
-(function(global) {
+(function(global, factory) {
+
+    /* AMD */ if (typeof define === 'function' && define["amd"])
+        define([], factory);
+    /* CommonJS */ else if (typeof require === 'function' && typeof module === "object" && module && module["exports"])
+        module["exports"] = factory();
+    /* Global */ else
+        (global["dcodeIO"] = global["dcodeIO"] || {})["Long"] = factory();
+
+})(this, function() {
     "use strict";
 
     /**
@@ -934,11 +943,6 @@
         return new Long(this.low, this.high, true);
     };
 
-    /* CommonJS */ if (typeof require === 'function' && typeof module === 'object' && module && typeof exports === 'object' && exports)
-        module["exports"] = Long;
-    /* AMD */ else if (typeof define === 'function' && define["amd"])
-        define(function() { return Long; });
-    /* Global */ else
-        (global["dcodeIO"] = global["dcodeIO"] || {})["Long"] = Long;
+    return Long;
 
-})(this);
+});
