@@ -506,9 +506,7 @@ Long.prototype.equals = function(other) {
  * @expose
  */
 Long.prototype.notEquals = function(other) {
-    if (!Long.isLong(other))
-        other = Long.fromValue(other);
-    return !this.equals(other);
+    return !this.equals(/* validates */ other);
 };
 
 /**
@@ -518,9 +516,7 @@ Long.prototype.notEquals = function(other) {
  * @expose
  */
 Long.prototype.lessThan = function(other) {
-    if (!Long.isLong(other))
-        other = Long.fromValue(other);
-    return this.compare(other) < 0;
+    return this.compare(/* validates */ other) < 0;
 };
 
 /**
@@ -530,9 +526,7 @@ Long.prototype.lessThan = function(other) {
  * @expose
  */
 Long.prototype.lessThanOrEqual = function(other) {
-    if (!Long.isLong(other))
-        other = Long.fromValue(other);
-    return this.compare(other) <= 0;
+    return this.compare(/* validates */ other) <= 0;
 };
 
 /**
@@ -542,9 +536,7 @@ Long.prototype.lessThanOrEqual = function(other) {
  * @expose
  */
 Long.prototype.greaterThan = function(other) {
-    if (!Long.isLong(other))
-        other = Long.fromValue(other);
-    return this.compare(other) > 0;
+    return this.compare(/* validates */ other) > 0;
 };
 
 /**
@@ -554,9 +546,7 @@ Long.prototype.greaterThan = function(other) {
  * @expose
  */
 Long.prototype.greaterThanOrEqual = function(other) {
-    if (!Long.isLong(other))
-        other = Long.fromValue(other);
-    return this.compare(other) >= 0;
+    return this.compare(/* validates */ other) >= 0;
 };
 
 /**
@@ -567,6 +557,8 @@ Long.prototype.greaterThanOrEqual = function(other) {
  * @expose
  */
 Long.prototype.compare = function(other) {
+    if (!Long.isLong(other))
+        other = Long.fromValue(other);
     if (this.equals(other))
         return 0;
     var thisNeg = this.isNegative(),
