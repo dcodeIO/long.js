@@ -14,7 +14,7 @@ var scope = {};
 console.log("Building Long with scope", JSON.stringify(scope, null, 2));
 fs.writeFileSync(
     path.join(distDir, "Long.js"),
-    MetaScript.transform(fs.readFileSync(filename = path.join(srcDir, "Long.js")), filename, scope, srcDir)
+    MetaScript.transform(fs.readFileSync(filename = path.join(srcDir, "wrap.js")), filename, scope, srcDir)
 );
 
 // Update bower.json

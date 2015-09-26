@@ -32,6 +32,14 @@ var suite = {
         test.equal(longVal2.unsigned, longVal.unsigned);
         test.done();
     },
+
+    "isLong": function(test) {
+        var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
+        test.strictEqual(Long.isLong(longVal), true);
+        longVal = {"__isLong__": true};
+        test.strictEqual(Long.isLong(longVal), true);
+        test.done();
+    },
     
     // Let's assume goog.math.Long has been tested properly and focus on our extensions:
     

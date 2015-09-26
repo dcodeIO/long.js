@@ -84,13 +84,28 @@
     // methods on which they depend.
 
     /**
+     * An indicator used to reliably determine if an object is a Long or not.
+     * @type {boolean}
+     * @const
+     * @expose
+     * @private
+     */
+    Long.__isLong__;
+
+    Object.defineProperty(Long.prototype, "__isLong__", {
+        value: true,
+        enumerable: false,
+        configurable: false
+    });
+
+    /**
      * Tests if the specified object is a Long.
      * @param {*} obj Object
      * @returns {boolean}
      * @expose
      */
     Long.isLong = function(obj) {
-        return (obj && obj instanceof Long) === true;
+        return (obj && obj["__isLong__"]) === true;
     };
 
     /**
@@ -944,5 +959,4 @@
     };
 
     return Long;
-
 });
