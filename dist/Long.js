@@ -39,7 +39,7 @@
      * @class A Long class for representing a 64 bit two's-complement integer value.
      * @param {number} low The low (signed) 32 bits of the long
      * @param {number} high The high (signed) 32 bits of the long
-     * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
+     * @param {boolean=} unsigned Whether unsigned or nfot, defaults to `false` for signed
      * @constructor
      */
     var Long = function(low, high, unsigned) {
@@ -244,13 +244,13 @@
      * @expose
      */
     Long.fromValue = function(val) {
+        if (val /* is compatible */ instanceof Long)
+            return val;
         if (typeof val === 'number')
             return Long.fromNumber(val);
         if (typeof val === 'string')
             return Long.fromString(val);
-        if (Long.isLong(val))
-            return val;
-        // Throws for not an object (undefined, null):
+        // Throws for non-objects, converts non-instanceof Long:
         return new Long(val.low, val.high, val.unsigned);
     };
 
