@@ -42,7 +42,7 @@
      * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
      * @constructor
      */
-    var Long = function(low, high, unsigned) {
+    function Long(low, high, unsigned) {
 
         /**
          * The low 32 bits as a signed value.
@@ -64,7 +64,7 @@
          * @expose
          */
         this.unsigned = !!unsigned;
-    };
+    }
 
     // The internal representation of a long is the two given signed, 32-bit values.
     // We use 32-bit pieces because these are the size of integers on which
@@ -104,7 +104,7 @@
      * @returns {boolean}
      * @expose
      */
-    Long.isLong = function(obj) {
+    Long.isLong = function isLong(obj) {
         return (obj && obj["__isLong__"]) === true;
     };
 
@@ -129,7 +129,7 @@
      * @returns {!Long} The corresponding Long value
      * @expose
      */
-    Long.fromInt = function(value, unsigned) {
+    Long.fromInt = function fromInt(value, unsigned) {
         var obj, cachedObj;
         if (!unsigned) {
             value = value | 0;
@@ -163,7 +163,7 @@
      * @returns {!Long} The corresponding Long value
      * @expose
      */
-    Long.fromNumber = function(value, unsigned) {
+    Long.fromNumber = function fromNumber(value, unsigned) {
         unsigned = !!unsigned;
         if (isNaN(value) || !isFinite(value))
             return Long.ZERO;
@@ -187,7 +187,7 @@
      * @returns {!Long} The corresponding Long value
      * @expose
      */
-    Long.fromBits = function(lowBits, highBits, unsigned) {
+    Long.fromBits = function fromBits(lowBits, highBits, unsigned) {
         return new Long(lowBits, highBits, unsigned);
     };
 
@@ -199,7 +199,7 @@
      * @returns {!Long} The corresponding Long value
      * @expose
      */
-    Long.fromString = function(str, unsigned, radix) {
+    Long.fromString = function fromString(str, unsigned, radix) {
         if (str.length === 0)
             throw Error('number format error: empty string');
         if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
@@ -243,7 +243,7 @@
      * @returns {!Long}
      * @expose
      */
-    Long.fromValue = function(val) {
+    Long.fromValue = function fromValue(val) {
         if (val /* is compatible */ instanceof Long)
             return val;
         if (typeof val === 'number')
@@ -360,7 +360,7 @@
      * @returns {number}
      * @expose
      */
-    Long.prototype.toInt = function() {
+    Long.prototype.toInt = function toInt() {
         return this.unsigned ? this.low >>> 0 : this.low;
     };
 
@@ -369,7 +369,7 @@
      * @returns {number}
      * @expose
      */
-    Long.prototype.toNumber = function() {
+    Long.prototype.toNumber = function toNumber() {
         if (this.unsigned) {
             return ((this.high >>> 0) * TWO_PWR_32_DBL) + (this.low >>> 0);
         }
@@ -384,7 +384,7 @@
      * @throws {RangeError} If `radix` is out of range
      * @expose
      */
-    Long.prototype.toString = function(radix) {
+    Long.prototype.toString = function toString(radix) {
         radix = radix || 10;
         if (radix < 2 || 36 < radix)
             throw RangeError('radix out of range: ' + radix);
@@ -396,7 +396,7 @@
                 // We need to change the Long value before it can be negated, so we remove
                 // the bottom-most digit in this base and then recurse to do the rest.
                 var radixLong = Long.fromNumber(radix);
-                var div = this.div(radixLong);
+                var div = this.divide(radixLong);
                 rem = div.multiply(radixLong).subtract(this);
                 return div.toString(radix) + rem.toInt().toString(radix);
             } else
@@ -409,7 +409,7 @@
         rem = this;
         var result = '';
         while (true) {
-            var remDiv = rem.div(radixToPower),
+            var remDiv = rem.divide(radixToPower),
                 intval = rem.subtract(remDiv.multiply(radixToPower)).toInt() >>> 0,
                 digits = intval.toString(radix);
             rem = remDiv;
@@ -428,7 +428,7 @@
      * @returns {number} Signed high bits
      * @expose
      */
-    Long.prototype.getHighBits = function() {
+    Long.prototype.getHighBits = function getHighBits() {
         return this.high;
     };
 
@@ -437,7 +437,7 @@
      * @returns {number} Unsigned high bits
      * @expose
      */
-    Long.prototype.getHighBitsUnsigned = function() {
+    Long.prototype.getHighBitsUnsigned = function getHighBitsUnsigned() {
         return this.high >>> 0;
     };
 
@@ -446,7 +446,7 @@
      * @returns {number} Signed low bits
      * @expose
      */
-    Long.prototype.getLowBits = function() {
+    Long.prototype.getLowBits = function getLowBits() {
         return this.low;
     };
 
@@ -455,7 +455,7 @@
      * @returns {number} Unsigned low bits
      * @expose
      */
-    Long.prototype.getLowBitsUnsigned = function() {
+    Long.prototype.getLowBitsUnsigned = function getLowBitsUnsigned() {
         return this.low >>> 0;
     };
 
@@ -464,7 +464,7 @@
      * @returns {number}
      * @expose
      */
-    Long.prototype.getNumBitsAbs = function() {
+    Long.prototype.getNumBitsAbs = function getNumBitsAbs() {
         if (this.isNegative()) // Unsigned Longs are never negative
             return this.equals(Long.MIN_VALUE) ? 64 : this.negate().getNumBitsAbs();
         var val = this.high != 0 ? this.high : this.low;
@@ -479,7 +479,7 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.isZero = function() {
+    Long.prototype.isZero = function isZero() {
         return this.high === 0 && this.low === 0;
     };
 
@@ -488,7 +488,7 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.isNegative = function() {
+    Long.prototype.isNegative = function isNegative() {
         return !this.unsigned && this.high < 0;
     };
 
@@ -497,7 +497,7 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.isPositive = function() {
+    Long.prototype.isPositive = function isPositive() {
         return this.unsigned || this.high >= 0;
     };
 
@@ -506,7 +506,7 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.isOdd = function() {
+    Long.prototype.isOdd = function isOdd() {
         return (this.low & 1) === 1;
     };
 
@@ -515,7 +515,7 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.isEven = function() {
+    Long.prototype.isEven = function isEven() {
         return (this.low & 1) === 0;
     };
 
@@ -525,7 +525,7 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.equals = function(other) {
+    Long.prototype.equals = function equals(other) {
         if (!Long.isLong(other))
             other = Long.fromValue(other);
         if (this.unsigned !== other.unsigned && (this.high >>> 31) === 1 && (other.high >>> 31) === 1)
@@ -534,14 +534,32 @@
     };
 
     /**
+     * Tests if this Long's value equals the specified's. This is an alias of {@link Long#equals}.
+     * @function
+     * @param {!Long|number|string} other Other value
+     * @returns {boolean}
+     * @expose
+     */
+    Long.eq = Long.prototype.equals;
+
+    /**
      * Tests if this Long's value differs from the specified's.
      * @param {!Long|number|string} other Other value
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.notEquals = function(other) {
+    Long.prototype.notEquals = function notEquals(other) {
         return !this.equals(/* validates */ other);
     };
+
+    /**
+     * Tests if this Long's value differs from the specified's. This is an alias of {@link Long#notEquals}.
+     * @function
+     * @param {!Long|number|string} other Other value
+     * @returns {boolean}
+     * @expose
+     */
+    Long.neq = Long.prototype.notEquals;
 
     /**
      * Tests if this Long's value is less than the specified's.
@@ -549,9 +567,18 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.lessThan = function(other) {
+    Long.prototype.lessThan = function lessThan(other) {
         return this.compare(/* validates */ other) < 0;
     };
+
+    /**
+     * Tests if this Long's value is less than the specified's. This is an alias of {@link Long#lessThan}.
+     * @function
+     * @param {!Long|number|string} other Other value
+     * @returns {boolean}
+     * @expose
+     */
+    Long.prototype.lt = Long.prototype.lessThan;
 
     /**
      * Tests if this Long's value is less than or equal the specified's.
@@ -559,9 +586,18 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.lessThanOrEqual = function(other) {
+    Long.prototype.lessThanOrEqual = function lessThanOrEqual(other) {
         return this.compare(/* validates */ other) <= 0;
     };
+
+    /**
+     * Tests if this Long's value is less than or equal the specified's. This is an alias of {@link Long#lessThanOrEqual}.
+     * @function
+     * @param {!Long|number|string} other Other value
+     * @returns {boolean}
+     * @expose
+     */
+    Long.prototype.lte = Long.prototype.lessThanOrEqual;
 
     /**
      * Tests if this Long's value is greater than the specified's.
@@ -569,9 +605,18 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.greaterThan = function(other) {
+    Long.prototype.greaterThan = function greaterThan(other) {
         return this.compare(/* validates */ other) > 0;
     };
+
+    /**
+     * Tests if this Long's value is greater than the specified's. This is an alias of {@link Long#greaterThan}.
+     * @function
+     * @param {!Long|number|string} other Other value
+     * @returns {boolean}
+     * @expose
+     */
+    Long.prototype.gt = Long.prototype.greaterThan;
 
     /**
      * Tests if this Long's value is greater than or equal the specified's.
@@ -579,9 +624,18 @@
      * @returns {boolean}
      * @expose
      */
-    Long.prototype.greaterThanOrEqual = function(other) {
+    Long.prototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
         return this.compare(/* validates */ other) >= 0;
     };
+
+    /**
+     * Tests if this Long's value is greater than or equal the specified's. This is an alias of {@link Long#greaterThanOrEqual}.
+     * @function
+     * @param {!Long|number|string} other Other value
+     * @returns {boolean}
+     * @expose
+     */
+    Long.prototype.gte = Long.prototype.greaterThanOrEqual;
 
     /**
      * Compares this Long's value with the specified's.
@@ -590,7 +644,7 @@
      *  if the given one is greater
      * @expose
      */
-    Long.prototype.compare = function(other) {
+    Long.prototype.compare = function compare(other) {
         if (!Long.isLong(other))
             other = Long.fromValue(other);
         if (this.equals(other))
@@ -613,11 +667,19 @@
      * @returns {!Long} Negated Long
      * @expose
      */
-    Long.prototype.negate = function() {
+    Long.prototype.negate = function negate() {
         if (!this.unsigned && this.equals(Long.MIN_VALUE))
             return Long.MIN_VALUE;
         return this.not().add(Long.ONE);
     };
+
+    /**
+     * Negates this Long's value. This is an alias of {@link Long#negate}.
+     * @function
+     * @returns {!Long} Negated Long
+     * @expose
+     */
+    Long.prototype.neg = Long.prototype.negate;
 
     /**
      * Returns the sum of this and the specified Long.
@@ -625,7 +687,7 @@
      * @returns {!Long} Sum
      * @expose
      */
-    Long.prototype.add = function(addend) {
+    Long.prototype.add = function add(addend) {
         if (!Long.isLong(addend))
             addend = Long.fromValue(addend);
 
@@ -662,11 +724,20 @@
      * @returns {!Long} Difference
      * @expose
      */
-    Long.prototype.subtract = function(subtrahend) {
+    Long.prototype.subtract = function subtract(subtrahend) {
         if (!Long.isLong(subtrahend))
             subtrahend = Long.fromValue(subtrahend);
         return this.add(subtrahend.negate());
     };
+
+    /**
+     * Returns the difference of this and the specified Long. This is an alias of {@link Long#subtract}.
+     * @function
+     * @param {!Long|number|string} subtrahend Subtrahend
+     * @returns {!Long} Difference
+     * @expose
+     */
+    Long.prototype.sub = Long.prototype.subtract;
 
     /**
      * Returns the product of this and the specified Long.
@@ -674,7 +745,7 @@
      * @returns {!Long} Product
      * @expose
      */
-    Long.prototype.multiply = function(multiplier) {
+    Long.prototype.multiply = function multiply(multiplier) {
         if (this.isZero())
             return Long.ZERO;
         if (!Long.isLong(multiplier))
@@ -736,12 +807,21 @@
     };
 
     /**
+     * Returns the product of this and the specified Long. This is an alias of {@link Long#multiply}.
+     * @function
+     * @param {!Long|number|string} multiplier Multiplier
+     * @returns {!Long} Product
+     * @expose
+     */
+    Long.prototype.mul = Long.prototype.multiply;
+
+    /**
      * Returns this Long divided by the specified.
      * @param {!Long|number|string} divisor Divisor
      * @returns {!Long} Quotient
      * @expose
      */
-    Long.prototype.div = function(divisor) {
+    Long.prototype.divide = function divide(divisor) {
         if (!Long.isLong(divisor))
             divisor = Long.fromValue(divisor);
         if (divisor.isZero())
@@ -757,12 +837,12 @@
             else {
                 // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
                 var halfThis = this.shiftRight(1);
-                approx = halfThis.div(divisor).shiftLeft(1);
+                approx = halfThis.divide(divisor).shiftLeft(1);
                 if (approx.equals(Long.ZERO)) {
                     return divisor.isNegative() ? Long.ONE : Long.NEG_ONE;
                 } else {
                     rem = this.subtract(divisor.multiply(approx));
-                    res = approx.add(rem.div(divisor));
+                    res = approx.add(rem.divide(divisor));
                     return res;
                 }
             }
@@ -770,10 +850,10 @@
             return this.unsigned ? Long.UZERO : Long.ZERO;
         if (this.isNegative()) {
             if (divisor.isNegative())
-                return this.negate().div(divisor.negate());
-            return this.negate().div(divisor).negate();
+                return this.negate().divide(divisor.negate());
+            return this.negate().divide(divisor).negate();
         } else if (divisor.isNegative())
-            return this.div(divisor.negate()).negate();
+            return this.divide(divisor.negate()).negate();
 
         // Repeat the following until the remainder is less than other:  find a
         // floating-point that approximates remainder / other *from below*, add this
@@ -814,23 +894,41 @@
     };
 
     /**
+     * Returns this Long divided by the specified. This is an alias of {@link Long#divide}.
+     * @function
+     * @param {!Long|number|string} divisor Divisor
+     * @returns {!Long} Quotient
+     * @expose
+     */
+    Long.prototype.div = Long.prototype.divide;
+
+    /**
      * Returns this Long modulo the specified.
      * @param {!Long|number|string} divisor Divisor
      * @returns {!Long} Remainder
      * @expose
      */
-    Long.prototype.modulo = function(divisor) {
+    Long.prototype.modulo = function modulo(divisor) {
         if (!Long.isLong(divisor))
             divisor = Long.fromValue(divisor);
-        return this.subtract(this.div(divisor).multiply(divisor));
+        return this.subtract(this.divide(divisor).multiply(divisor));
     };
+
+    /**
+     * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
+     * @function
+     * @param {!Long|number|string} divisor Divisor
+     * @returns {!Long} Remainder
+     * @expose
+     */
+    Long.prototype.mod = Long.prototype.modulo;
 
     /**
      * Returns the bitwise NOT of this Long.
      * @returns {!Long}
      * @expose
      */
-    Long.prototype.not = function() {
+    Long.prototype.not = function not() {
         return Long.fromBits(~this.low, ~this.high, this.unsigned);
     };
 
@@ -840,7 +938,7 @@
      * @returns {!Long}
      * @expose
      */
-    Long.prototype.and = function(other) {
+    Long.prototype.and = function and(other) {
         if (!Long.isLong(other))
             other = Long.fromValue(other);
         return Long.fromBits(this.low & other.low, this.high & other.high, this.unsigned);
@@ -852,7 +950,7 @@
      * @returns {!Long}
      * @expose
      */
-    Long.prototype.or = function(other) {
+    Long.prototype.or = function or(other) {
         if (!Long.isLong(other))
             other = Long.fromValue(other);
         return Long.fromBits(this.low | other.low, this.high | other.high, this.unsigned);
@@ -864,7 +962,7 @@
      * @returns {!Long}
      * @expose
      */
-    Long.prototype.xor = function(other) {
+    Long.prototype.xor = function xor(other) {
         if (!Long.isLong(other))
             other = Long.fromValue(other);
         return Long.fromBits(this.low ^ other.low, this.high ^ other.high, this.unsigned);
@@ -876,7 +974,7 @@
      * @returns {!Long} Shifted Long
      * @expose
      */
-    Long.prototype.shiftLeft = function(numBits) {
+    Long.prototype.shiftLeft = function shiftLeft(numBits) {
         if (Long.isLong(numBits))
             numBits = numBits.toInt();
         if ((numBits &= 63) === 0)
@@ -888,12 +986,21 @@
     };
 
     /**
+     * Returns this Long with bits shifted to the left by the given amount. This is an alias of {@link Long#shiftLeft}.
+     * @function
+     * @param {number|!Long} numBits Number of bits
+     * @returns {!Long} Shifted Long
+     * @expose
+     */
+    Long.prototype.shl = Long.prototype.shiftLeft;
+
+    /**
      * Returns this Long with bits arithmetically shifted to the right by the given amount.
      * @param {number|!Long} numBits Number of bits
      * @returns {!Long} Shifted Long
      * @expose
      */
-    Long.prototype.shiftRight = function(numBits) {
+    Long.prototype.shiftRight = function shiftRight(numBits) {
         if (Long.isLong(numBits))
             numBits = numBits.toInt();
         if ((numBits &= 63) === 0)
@@ -905,12 +1012,21 @@
     };
 
     /**
+     * Returns this Long with bits arithmetically shifted to the right by the given amount. This is an alias of {@link Long#shiftRight}.
+     * @function
+     * @param {number|!Long} numBits Number of bits
+     * @returns {!Long} Shifted Long
+     * @expose
+     */
+    Long.prototype.shr = Long.prototype.shiftRight;
+
+    /**
      * Returns this Long with bits logically shifted to the right by the given amount.
      * @param {number|!Long} numBits Number of bits
      * @returns {!Long} Shifted Long
      * @expose
      */
-    Long.prototype.shiftRightUnsigned = function(numBits) {
+    Long.prototype.shiftRightUnsigned = function shiftRightUnsigned(numBits) {
         if (Long.isLong(numBits))
             numBits = numBits.toInt();
         numBits &= 63;
@@ -929,11 +1045,20 @@
     };
 
     /**
+     * Returns this Long with bits logically shifted to the right by the given amount. This is an alias of {@link Long#shiftRightUnsigned}.
+     * @function
+     * @param {number|!Long} numBits Number of bits
+     * @returns {!Long} Shifted Long
+     * @expose
+     */
+    Long.prototype.shru = Long.prototype.shiftRightUnsigned;
+
+    /**
      * Converts this Long to signed.
      * @returns {!Long} Signed long
      * @expose
      */
-    Long.prototype.toSigned = function() {
+    Long.prototype.toSigned = function toSigned() {
         if (!this.unsigned)
             return this;
         return new Long(this.low, this.high, false);
@@ -944,7 +1069,7 @@
      * @returns {!Long} Unsigned long
      * @expose
      */
-    Long.prototype.toUnsigned = function() {
+    Long.prototype.toUnsigned = function toUnsigned() {
         if (this.unsigned)
             return this;
         return new Long(this.low, this.high, true);
