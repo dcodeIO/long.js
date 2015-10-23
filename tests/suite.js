@@ -14,9 +14,6 @@
  limitations under the License.
  */
 
-/**
- * Long.js Pretty Simple Test Suite.
- */
 var Long = require(__dirname+"/../index.js"),
     gmLong = require("./goog.math.long.js");
 

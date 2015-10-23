@@ -32,7 +32,7 @@
 })(this, function() {
     "use strict";
 
-    //? include("Long.js");
+    //? include("long.js");
 
     return Long;
 });

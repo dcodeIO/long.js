@@ -15,4 +15,4 @@
  limitations under the License.
  */
 
-module.exports = require("./dist/Long.js");
+module.exports = require("./dist/long.js");

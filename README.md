@@ -1,4 +1,4 @@
-![Long.js - A Long class for representing a 64 bit two's-complement integer ](https://raw.github.com/dcodeIO/Long.js/master/Long.png)
+![Long.js - A Long class for representing a 64 bit two's-complement integer ](https://raw.github.com/dcodeIO/Long.js/master/long.png)
 =======
 A Long class for representing a 64 bit two's-complement integer value derived from the [Closure Library](https://github.com/google/closure-library)
 for stand-alone use and extended with unsigned support.
@@ -229,7 +229,7 @@ Compares this Long's value with the specified's.
 | other           | *!Long &#124; number &#124; string* | Other value 
 | **@returns**    | *number*        | 0 if they are the same, 1 if the this is greater and -1 if the given one is greater 
 
-#### Long#div(divisor)
+#### Long#divide/div(divisor)
 
 Returns this Long divided by the specified.
 
@@ -238,7 +238,7 @@ Returns this Long divided by the specified.
 | divisor         | *!Long &#124; number &#124; string* | Divisor 
 | **@returns**    | *!Long*         | Quotient 
 
-#### Long#equals(other)
+#### Long#equals/eq(other)
 
 Tests if this Long's value equals the specified's.
 
@@ -287,7 +287,7 @@ Gets the number of bits needed to represent the absolute value of this Long.
 |-----------------|-----------------|---------------
 | **@returns**    | *number*        | 
 
-#### Long#greaterThan(other)
+#### Long#greaterThan/gt(other)
 
 Tests if this Long's value is greater than the specified's.
 
@@ -296,7 +296,7 @@ Tests if this Long's value is greater than the specified's.
 | other           | *!Long &#124; number &#124; string* | Other value 
 | **@returns**    | *boolean*       | 
 
-#### Long#greaterThanOrEqual(other)
+#### Long#greaterThanOrEqual/gte(other)
 
 Tests if this Long's value is greater than or equal the specified's.
 
@@ -345,7 +345,7 @@ Tests if this Long's value equals zero.
 |-----------------|-----------------|---------------
 | **@returns**    | *boolean*       | 
 
-#### Long#lessThan(other)
+#### Long#lessThan/lt(other)
 
 Tests if this Long's value is less than the specified's.
 
@@ -354,7 +354,7 @@ Tests if this Long's value is less than the specified's.
 | other           | *!Long &#124; number &#124; string* | Other value 
 | **@returns**    | *boolean*       | 
 
-#### Long#lessThanOrEqual(other)
+#### Long#lessThanOrEqual/lte(other)
 
 Tests if this Long's value is less than or equal the specified's.
 
@@ -363,7 +363,7 @@ Tests if this Long's value is less than or equal the specified's.
 | other           | *!Long &#124; number &#124; string* | Other value 
 | **@returns**    | *boolean*       | 
 
-#### Long#modulo(divisor)
+#### Long#modulo/mod(divisor)
 
 Returns this Long modulo the specified.
 
@@ -372,7 +372,7 @@ Returns this Long modulo the specified.
 | divisor         | *!Long &#124; number &#124; string* | Divisor 
 | **@returns**    | *!Long*         | Remainder 
 
-#### Long#multiply(multiplier)
+#### Long#multiply/mul(multiplier)
 
 Returns the product of this and the specified Long.
 
@@ -381,7 +381,7 @@ Returns the product of this and the specified Long.
 | multiplier      | *!Long &#124; number &#124; string* | Multiplier 
 | **@returns**    | *!Long*         | Product 
 
-#### Long#negate()
+#### Long#negate/neg()
 
 Negates this Long's value.
 
@@ -397,7 +397,7 @@ Returns the bitwise NOT of this Long.
 |-----------------|-----------------|---------------
 | **@returns**    | *!Long*         | 
 
-#### Long#notEquals(other)
+#### Long#notEquals/neq(other)
 
 Tests if this Long's value differs from the specified's.
 
@@ -415,7 +415,7 @@ Returns the bitwise OR of this Long and the specified.
 | other           | *!Long &#124; number &#124; string* | Other Long 
 | **@returns**    | *!Long*         | 
 
-#### Long#shiftLeft(numBits)
+#### Long#shiftLeft/shl(numBits)
 
 Returns this Long with bits shifted to the left by the given amount.
 
@@ -424,7 +424,7 @@ Returns this Long with bits shifted to the left by the given amount.
 | numBits         | *number &#124; !Long* | Number of bits 
 | **@returns**    | *!Long*         | Shifted Long 
 
-#### Long#shiftRight(numBits)
+#### Long#shiftRight/shr(numBits)
 
 Returns this Long with bits arithmetically shifted to the right by the given amount.
 
@@ -433,7 +433,7 @@ Returns this Long with bits arithmetically shifted to the right by the given amo
 | numBits         | *number &#124; !Long* | Number of bits 
 | **@returns**    | *!Long*         | Shifted Long 
 
-#### Long#shiftRightUnsigned(numBits)
+#### Long#shiftRightUnsigned/shru(numBits)
 
 Returns this Long with bits logically shifted to the right by the given amount.
 
@@ -442,7 +442,7 @@ Returns this Long with bits logically shifted to the right by the given amount.
 | numBits         | *number &#124; !Long* | Number of bits 
 | **@returns**    | *!Long*         | Shifted Long 
 
-#### Long#subtract(subtrahend)
+#### Long#subtract/sub(subtrahend)
 
 Returns the difference of this and the specified Long.
 
