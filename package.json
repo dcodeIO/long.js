@@ -6,7 +6,10 @@
     "main": "dist/long.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/dcodeIO/Long.js.git"
+        "url": "https://github.com/dcodeIO/long.js.git"
+    },
+    "bugs": {
+        "url": "https://github.com/dcodeIO/long.js/issues"
     },
     "keywords": ["math"],
     "dependencies": {
