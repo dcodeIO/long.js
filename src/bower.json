@@ -3,7 +3,7 @@
     "version": "/*?= VERSION */",
     "author": "Daniel Wirtz <dcode@dcode.io>",
     "description": "A Long class for representing a 64 bit two's-complement integer value.",
-    "main": "dist/Long.js",
+    "main": "dist/long.js",
     "keywords": ["math"],
     "license": "Apache-2.0"
 }
