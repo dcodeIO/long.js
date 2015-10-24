@@ -1,10 +1,10 @@
-![Long.js - A Long class for representing a 64 bit two's-complement integer ](https://raw.github.com/dcodeIO/Long.js/master/long.png)
+![long.js - A Long class for representing a 64 bit two's-complement integer ](https://raw.github.com/dcodeIO/long.js/master/long.png)
 =======
 A Long class for representing a 64 bit two's-complement integer value derived from the [Closure Library](https://github.com/google/closure-library)
 for stand-alone use and extended with unsigned support.
 
-[![Build Status](https://travis-ci.org/dcodeIO/Long.js.svg)](https://travis-ci.org/dcodeIO/Long.js)
-[![Donate](https://raw.githubusercontent.com/dcodeIO/Long.js/master/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=info%40code-emitter.com&item_name=Open%20Source%3A%20Long.js)
+[![Build Status](https://travis-ci.org/dcodeIO/long.js.svg)](https://travis-ci.org/dcodeIO/long.js)
+[![Donate](https://raw.githubusercontent.com/dcodeIO/long.js/master/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=dcode%40dcode.io&item_name=Open%20Source%3A%20long.js)
 
 Background
 ----------
@@ -21,7 +21,7 @@ Furthermore, bitwise operators in JavaScript "deal only with integers in the ran
 the Number type but first convert each such value to one of 2<sup>32</sup> integer values."
 
 In some use cases, however, it is required to be able to reliably work with and perform bitwise operations on the full
-64 bits. This is where Long.js comes into play.
+64 bits. This is where long.js comes into play.
 
 Usage
 -----
@@ -504,9 +504,9 @@ Returns the bitwise XOR of this Long and the given one.
 
 Downloads
 ---------
-* [Distributions](https://github.com/dcodeIO/Long.js/tree/master/dist)
-* [ZIP-Archive](https://github.com/dcodeIO/Long.js/archive/master.zip)
-* [Tarball](https://github.com/dcodeIO/Long.js/tarball/master)
+* [Distributions](https://github.com/dcodeIO/long.js/tree/master/dist)
+* [ZIP-Archive](https://github.com/dcodeIO/long.js/archive/master.zip)
+* [Tarball](https://github.com/dcodeIO/long.js/tarball/master)
 
 License
 -------
