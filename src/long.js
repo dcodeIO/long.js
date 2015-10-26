@@ -540,7 +540,7 @@ LongPrototype.neq = LongPrototype.notEquals;
  * @expose
  */
 LongPrototype.lessThan = function lessThan(other) {
-    return this.compare(/* validates */ other) < 0;
+    return this.comp(/* validates */ other) < 0;
 };
 
 /**
@@ -559,7 +559,7 @@ LongPrototype.lt = LongPrototype.lessThan;
  * @expose
  */
 LongPrototype.lessThanOrEqual = function lessThanOrEqual(other) {
-    return this.compare(/* validates */ other) <= 0;
+    return this.comp(/* validates */ other) <= 0;
 };
 
 /**
@@ -578,7 +578,7 @@ LongPrototype.lte = LongPrototype.lessThanOrEqual;
  * @expose
  */
 LongPrototype.greaterThan = function greaterThan(other) {
-    return this.compare(/* validates */ other) > 0;
+    return this.comp(/* validates */ other) > 0;
 };
 
 /**
@@ -597,7 +597,7 @@ LongPrototype.gt = LongPrototype.greaterThan;
  * @expose
  */
 LongPrototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
-    return this.compare(/* validates */ other) >= 0;
+    return this.comp(/* validates */ other) >= 0;
 };
 
 /**

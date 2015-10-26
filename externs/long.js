@@ -271,6 +271,12 @@ Long.prototype.gte = function(other) {};
 Long.prototype.compare = function(other) {};
 
 /**
+ * @param {!Long|number|string} other
+ * @return {number}
+ */
+Long.prototype.comp = function(other) {};
+
+/**
  * @return {!Long}
  */
 Long.prototype.negate = function() {};

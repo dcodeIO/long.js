@@ -11,7 +11,7 @@ var rootDir = path.join(__dirname, ".."),
 var scope = {};
 
 // Build
-console.log("Building Long with scope", JSON.stringify(scope, null, 2));
+console.log("Building long.js with scope", JSON.stringify(scope, null, 2));
 fs.writeFileSync(
     path.join(distDir, "long.js"),
     MetaScript.transform(fs.readFileSync(filename = path.join(srcDir, "wrap.js")), filename, scope, srcDir)

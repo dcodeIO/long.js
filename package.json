@@ -26,7 +26,7 @@
     "scripts": {
         "build": "node scripts/build.js",
         "make": "npm run-script build && npm run-script compile && npm run-script compress && npm test",
-        "compile": "ccjs dist/long.js --compilation_level=ADVANCED_OPTIMIZATIONS --create_source_map=dist/long.min.map > dist/long.min.js",
+        "compile": "ccjs dist/long.js --compilation_level=SIMPLE_OPTIMIZATIONS --create_source_map=dist/long.min.map > dist/long.min.js",
         "compress": "gzip -c -9 dist/long.min.js > dist/long.min.js.gz",
         "test": "node node_modules/testjs/bin/testjs tests/suite.js"
     }

@@ -574,7 +574,7 @@
      * @expose
      */
     LongPrototype.lessThan = function lessThan(other) {
-        return this.compare(/* validates */ other) < 0;
+        return this.comp(/* validates */ other) < 0;
     };
 
     /**
@@ -593,7 +593,7 @@
      * @expose
      */
     LongPrototype.lessThanOrEqual = function lessThanOrEqual(other) {
-        return this.compare(/* validates */ other) <= 0;
+        return this.comp(/* validates */ other) <= 0;
     };
 
     /**
@@ -612,7 +612,7 @@
      * @expose
      */
     LongPrototype.greaterThan = function greaterThan(other) {
-        return this.compare(/* validates */ other) > 0;
+        return this.comp(/* validates */ other) > 0;
     };
 
     /**
@@ -631,7 +631,7 @@
      * @expose
      */
     LongPrototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
-        return this.compare(/* validates */ other) >= 0;
+        return this.comp(/* validates */ other) >= 0;
     };
 
     /**
