@@ -209,7 +209,7 @@
             unsigned = false;
         radix = radix || 10;
         if (radix < 2 || 36 < radix)
-            throw Error('radix out of range');
+            throw RangeError('radix out of range');
 
         var p;
         if ((p = str.indexOf('-')) > 0)

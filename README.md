@@ -220,7 +220,7 @@ Returns the bitwise AND of this Long and the specified.
 | other           | *!Long &#124; number &#124; string* | Other Long 
 | **@returns**    | *!Long*         | 
 
-#### Long#compare(other)
+#### Long#compare/comp(other)
 
 Compares this Long's value with the specified's.
 

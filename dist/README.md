@@ -5,7 +5,7 @@ Distributions
   contains the commented source.
   
 * **[long.min.js](https://raw.githubusercontent.com/dcodeIO/Long.js/master/dist/long.min.js)**  
-  has been compiled with Closure Compiler using `--compilation_level=ADVANCED_OPTIMIZATIONS`.
+  has been compiled with Closure Compiler.
   
 * **[long.min.js.gz](https://raw.githubusercontent.com/dcodeIO/Long.js/master/dist/long.min.js.gz)**  
   has also been gzipped using `-9`.
