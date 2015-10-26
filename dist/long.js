@@ -201,7 +201,7 @@
      */
     Long.fromString = function fromString(str, unsigned, radix) {
         if (str.length === 0)
-            throw Error('number format error: empty string');
+            throw Error('string is empty');
         if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
             return Long.ZERO;
         if (typeof unsigned === 'number') // For goog.math.long compatibility
@@ -209,11 +209,11 @@
             unsigned = false;
         radix = radix || 10;
         if (radix < 2 || 36 < radix)
-            throw Error('radix out of range: ' + radix);
+            throw Error('radix out of range');
 
         var p;
         if ((p = str.indexOf('-')) > 0)
-            throw Error('number format error: interior "-" character: ' + str);
+            throw Error('interior hyphen');
         else if (p === 0)
             return Long.fromString(str.substring(1), unsigned, radix).neg();
 
@@ -393,7 +393,7 @@
     LongPrototype.toString = function toString(radix) {
         radix = radix || 10;
         if (radix < 2 || 36 < radix)
-            throw RangeError('radix out of range: ' + radix);
+            throw RangeError('radix out of range');
         if (this.isZero())
             return '0';
         var rem;
