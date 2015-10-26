@@ -4,7 +4,7 @@ A Long class for representing a 64 bit two's-complement integer value derived fr
 for stand-alone use and extended with unsigned support.
 
 [![Build Status](https://travis-ci.org/dcodeIO/long.js.svg)](https://travis-ci.org/dcodeIO/long.js)
-[![Donate](https://raw.githubusercontent.com/dcodeIO/long.js/master/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=dcode%40dcode.io&item_name=Open%20Source%3A%20long.js)
+[![Donate](https://raw.githubusercontent.com/dcodeIO/long.js/master/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=dcode%40dcode.io&item_name=%3C3%20long.js)
 
 Background
 ----------
