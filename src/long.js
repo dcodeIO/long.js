@@ -195,6 +195,15 @@ function fromBits(lowBits, highBits, unsigned) {
 Long.fromBits = fromBits;
 
 /**
+ * @function
+ * @param {number} base
+ * @param {number} exponent
+ * @returns {number}
+ * @inner
+ */
+var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
+
+/**
  * @param {string} str
  * @param {(boolean|number)=} unsigned
  * @param {number=} radix
@@ -221,14 +230,14 @@ function fromString(str, unsigned, radix) {
 
     // Do several (8) digits each time through the loop, so as to
     // minimize the calls to the very expensive emulated div.
-    var radixToPower = fromNumber(Math.pow(radix, 8));
+    var radixToPower = fromNumber(pow_dbl(radix, 8));
 
     var result = ZERO;
     for (var i = 0; i < str.length; i += 8) {
         var size = Math.min(8, str.length - i);
         var value = parseInt(str.substring(i, i + size), radix);
         if (size < 8) {
-            var power = fromNumber(Math.pow(radix, size));
+            var power = fromNumber(pow_dbl(radix, size));
             result = result.mul(power).add(fromNumber(value));
         } else {
             result = result.mul(radixToPower);
@@ -480,7 +489,7 @@ LongPrototype.toString = function toString(radix) {
 
     // Do several (6) digits each time through the loop, so as to
     // minimize the calls to the very expensive emulated div.
-    var radixToPower = fromNumber(Math.pow(radix, 6), this.unsigned);
+    var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned);
     rem = this;
     var result = '';
     while (true) {
@@ -955,7 +964,7 @@ LongPrototype.divide = function divide(divisor) {
         // We will tweak the approximate result by changing it in the 48-th digit or
         // the smallest non-fractional digit, whichever is larger.
         var log2 = Math.ceil(Math.log(approx) / Math.LN2),
-            delta = (log2 <= 48) ? 1 : Math.pow(2, log2 - 48),
+            delta = (log2 <= 48) ? 1 : pow_dbl(2, log2 - 48),
 
         // Decrease the approximation until it is smaller than the remainder.  Note
         // that if it is too large, the product overflows and is negative.
