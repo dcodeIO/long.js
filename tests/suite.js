@@ -51,6 +51,26 @@ var suite = {
         test.equal(Long.fromString("-zzzzzz", 36).toString(36), "-zzzzzz");
         test.done();
     },
+
+    "dispose": function(test) {
+        if (!Long.dispose) {
+            test.log("Not supported");
+            test.done();
+            return;
+        }
+        var inst = Long.fromInt(0);
+        test.strictEqual(Long.dispose(inst), false); // cached, not reused
+        Long.dispose(inst);
+        var inst2 = Long.fromInt(1);
+        test.notStrictEqual(inst, inst2);
+        test.done();
+
+        inst = Long.fromNumber(0);
+        test.strictEqual(Long.dispose(inst), true); // not cached (our first inst is), reused
+        inst2 = Long.fromNumber(1);
+        test.strictEqual(inst, inst2);
+        test.done();
+    },
     
     "unsigned": {
         

@@ -132,6 +132,17 @@
     var UINT_CACHE = {};
 
     /**
+     * Determines if an integer value is cacheable.
+     * @param {number} value Integer value
+     * @param {boolean=} unsigned Whether unsigned or not
+     * @returns {boolean}
+     * @inner
+     */
+    function cacheable(value, unsigned) {
+        return unsigned ? 0 <= (value >>>= 0) && value < 256 : -128 <= (value |= 0) && value < 128;
+    }
+
+    /**
      * @param {number} value
      * @param {boolean=} unsigned
      * @returns {!Long}
@@ -139,20 +150,8 @@
      */
     function fromInt(value, unsigned) {
         var obj, cachedObj, cache;
-        if (!unsigned) {
-            value = value | 0;
-            if (cache = (-128 <= value && value < 128)) {
-                cachedObj = INT_CACHE[value];
-                if (cachedObj)
-                    return cachedObj;
-            }
-            obj = fromBits(value, value < 0 ? -1 : 0, false);
-            if (cache)
-                INT_CACHE[value] = obj;
-            return obj;
-        } else {
-            value = value >>> 0;
-            if (cache = (0 <= value && value < 256)) {
+        if (unsigned) {
+            if (cache = cacheable(value >>>= 0, true)) {
                 cachedObj = UINT_CACHE[value];
                 if (cachedObj)
                     return cachedObj;
@@ -160,6 +159,16 @@
             obj = fromBits(value, (value | 0) < 0 ? -1 : 0, true);
             if (cache)
                 UINT_CACHE[value] = obj;
+            return obj;
+        } else {
+            if (cache = cacheable(value |= 0, false)) {
+                cachedObj = INT_CACHE[value];
+                if (cachedObj)
+                    return cachedObj;
+            }
+            obj = fromBits(value, value < 0 ? -1 : 0, false);
+            if (cache)
+                INT_CACHE[value] = obj;
             return obj;
         }
     }
@@ -181,15 +190,19 @@
      * @inner
      */
     function fromNumber(value, unsigned) {
-        unsigned = !!unsigned;
         if (isNaN(value) || !isFinite(value))
-            return ZERO;
-        if (!unsigned && value <= -TWO_PWR_63_DBL)
-            return MIN_VALUE;
-        if (!unsigned && value + 1 >= TWO_PWR_63_DBL)
-            return MAX_VALUE;
-        if (unsigned && value >= TWO_PWR_64_DBL)
-            return MAX_UNSIGNED_VALUE;
+            return unsigned ? UZERO : ZERO;
+        if (unsigned) {
+            if (value < 0)
+                return UZERO;
+            if (value >= TWO_PWR_64_DBL)
+                return MAX_UNSIGNED_VALUE;
+        } else {
+            if (value <= -TWO_PWR_63_DBL)
+                return MIN_VALUE;
+            if (value + 1 >= TWO_PWR_63_DBL)
+                return MAX_VALUE;
+        }
         if (value < 0)
             return fromNumber(-value, unsigned).neg();
         return fromBits((value % TWO_PWR_32_DBL) | 0, (value / TWO_PWR_32_DBL) | 0, unsigned);
@@ -259,8 +272,9 @@
         var p;
         if ((p = str.indexOf('-')) > 0)
             throw Error('interior hyphen');
-        else if (p === 0)
+        else if (p === 0) {
             return fromString(str.substring(1), unsigned, radix).neg();
+        }
 
         // Do several (8) digits each time through the loop, so as to
         // minimize the calls to the very expensive emulated div.
@@ -268,8 +282,8 @@
 
         var result = ZERO;
         for (var i = 0; i < str.length; i += 8) {
-            var size = Math.min(8, str.length - i);
-            var value = parseInt(str.substring(i, i + size), radix);
+            var size = Math.min(8, str.length - i),
+                value = parseInt(str.substring(i, i + size), radix);
             if (size < 8) {
                 var power = fromNumber(pow_dbl(radix, size));
                 result = result.mul(power).add(fromNumber(value));
@@ -508,23 +522,22 @@
             throw RangeError('radix');
         if (this.isZero())
             return '0';
-        var rem;
         if (this.isNegative()) { // Unsigned Longs are never negative
             if (this.eq(MIN_VALUE)) {
                 // We need to change the Long value before it can be negated, so we remove
                 // the bottom-most digit in this base and then recurse to do the rest.
-                var radixLong = fromNumber(radix);
-                var div = this.div(radixLong);
-                rem = div.mul(radixLong).sub(this);
-                return div.toString(radix) + rem.toInt().toString(radix);
+                var radixLong = fromNumber(radix),
+                    div = this.div(radixLong),
+                    rem1 = div.mul(radixLong).sub(this);
+                return div.toString(radix) + rem1.toInt().toString(radix);
             } else
                 return '-' + this.neg().toString(radix);
         }
 
         // Do several (6) digits each time through the loop, so as to
         // minimize the calls to the very expensive emulated div.
-        var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned);
-        rem = this;
+        var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned),
+            rem = this;
         var result = '';
         while (true) {
             var remDiv = rem.div(radixToPower),

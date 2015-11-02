@@ -98,6 +98,17 @@ var INT_CACHE = {};
 var UINT_CACHE = {};
 
 /**
+ * Determines if an integer value is cacheable.
+ * @param {number} value Integer value
+ * @param {boolean=} unsigned Whether unsigned or not
+ * @returns {boolean}
+ * @inner
+ */
+function cacheable(value, unsigned) {
+    return unsigned ? 0 <= (value >>>= 0) && value < 256 : -128 <= (value |= 0) && value < 128;
+}
+
+/**
  * @param {number} value
  * @param {boolean=} unsigned
  * @returns {!Long}
@@ -105,20 +116,8 @@ var UINT_CACHE = {};
  */
 function fromInt(value, unsigned) {
     var obj, cachedObj, cache;
-    if (!unsigned) {
-        value = value | 0;
-        if (cache = (-128 <= value && value < 128)) {
-            cachedObj = INT_CACHE[value];
-            if (cachedObj)
-                return cachedObj;
-        }
-        obj = fromBits(value, value < 0 ? -1 : 0, false);
-        if (cache)
-            INT_CACHE[value] = obj;
-        return obj;
-    } else {
-        value = value >>> 0;
-        if (cache = (0 <= value && value < 256)) {
+    if (unsigned) {
+        if (cache = cacheable(value >>>= 0, true)) {
             cachedObj = UINT_CACHE[value];
             if (cachedObj)
                 return cachedObj;
@@ -126,6 +125,16 @@ function fromInt(value, unsigned) {
         obj = fromBits(value, (value | 0) < 0 ? -1 : 0, true);
         if (cache)
             UINT_CACHE[value] = obj;
+        return obj;
+    } else {
+        if (cache = cacheable(value |= 0, false)) {
+            cachedObj = INT_CACHE[value];
+            if (cachedObj)
+                return cachedObj;
+        }
+        obj = fromBits(value, value < 0 ? -1 : 0, false);
+        if (cache)
+            INT_CACHE[value] = obj;
         return obj;
     }
 }
@@ -147,15 +156,19 @@ Long.fromInt = fromInt;
  * @inner
  */
 function fromNumber(value, unsigned) {
-    unsigned = !!unsigned;
     if (isNaN(value) || !isFinite(value))
-        return ZERO;
-    if (!unsigned && value <= -TWO_PWR_63_DBL)
-        return MIN_VALUE;
-    if (!unsigned && value + 1 >= TWO_PWR_63_DBL)
-        return MAX_VALUE;
-    if (unsigned && value >= TWO_PWR_64_DBL)
-        return MAX_UNSIGNED_VALUE;
+        return unsigned ? UZERO : ZERO;
+    if (unsigned) {
+        if (value < 0)
+            return UZERO;
+        if (value >= TWO_PWR_64_DBL)
+            return MAX_UNSIGNED_VALUE;
+    } else {
+        if (value <= -TWO_PWR_63_DBL)
+            return MIN_VALUE;
+        if (value + 1 >= TWO_PWR_63_DBL)
+            return MAX_VALUE;
+    }
     if (value < 0)
         return fromNumber(-value, unsigned).neg();
     return fromBits((value % TWO_PWR_32_DBL) | 0, (value / TWO_PWR_32_DBL) | 0, unsigned);
@@ -179,6 +192,15 @@ Long.fromNumber = fromNumber;
  * @inner
  */
 function fromBits(lowBits, highBits, unsigned) {
+    //? if (DISPOSE) {
+    if (disposed.length > 0) {
+        var inst = disposed.shift();
+        inst.low = lowBits | 0;
+        inst.high = highBits | 0;
+        inst.unsigned = !!unsigned;
+        return inst;
+    }
+    //? }
     return new Long(lowBits, highBits, unsigned);
 }
 
@@ -225,8 +247,9 @@ function fromString(str, unsigned, radix) {
     var p;
     if ((p = str.indexOf('-')) > 0)
         throw Error('interior hyphen');
-    else if (p === 0)
+    else if (p === 0) {
         return fromString(str.substring(1), unsigned, radix).neg();
+    }
 
     // Do several (8) digits each time through the loop, so as to
     // minimize the calls to the very expensive emulated div.
@@ -234,8 +257,8 @@ function fromString(str, unsigned, radix) {
 
     var result = ZERO;
     for (var i = 0; i < str.length; i += 8) {
-        var size = Math.min(8, str.length - i);
-        var value = parseInt(str.substring(i, i + size), radix);
+        var size = Math.min(8, str.length - i),
+            value = parseInt(str.substring(i, i + size), radix);
         if (size < 8) {
             var power = fromNumber(pow_dbl(radix, size));
             result = result.mul(power).add(fromNumber(value));
@@ -284,6 +307,61 @@ function fromValue(val) {
  * @expose
  */
 Long.fromValue = fromValue;
+//? if (DISPOSE) {
+
+// This is experimental code that will probably be removed in the future. At first glance something like this can seem
+// reasonable, but it would require a lot of additional (possibly MetaScript) code to perform disposal of intermediate
+// values everywhere. Otherwise, calling dispose as a user would not have much of an effect as any manually disposed
+// instances become reused a lot faster internally than a user can provide more. After testing this out for a bit I am
+// not convinced that the additional overhead from calling dispose() on literally every intermediate instance is worth
+// it.
+//
+// Alternatively, it has been suggested to add self-mutating methods in #24, but this would also be neglected by the
+// sheer number of intermediate instances that are still necessary.
+//
+// On this basis I'd recommend not to implement anything of this and leave memory optimization efforts to the VM.
+// -dcode
+
+/**
+ * Disposed Longs.
+ * @type {!Array.<!Long>}
+ * @inner
+ */
+var disposed = [];
+
+/**
+ * @param {!Long} inst
+ * @returns {boolean}
+ * @inner
+ */
+function dispose(inst) {
+    if (disposed.length > 1023)
+        return false;
+    if (!(inst /* compatible */ instanceof Long))
+        return false;
+    // Do not dispose if cached
+    if (inst.unsigned) {
+        if (inst.high == 0 && UINT_CACHE[inst.low >>> 0] === inst)
+            return false;
+    } else {
+        if ((inst.high == 0 || inst.high == -1) && INT_CACHE[inst.low] === inst)
+            return false;
+    }
+    disposed.push(inst);
+    return true;
+}
+
+/**
+ * Disposes a Long instance and queues it for reuse. If not ultimately necessary, it is recommended not to use this
+ *  method at all. If used however, it must be guaranteed that a disposed instance is never used again and that this
+ *  method is never called more than once with the same instance.
+ * @function
+ * @param {!Long} inst Long instance to dispose
+ * @returns {boolean} Whether actually disposed
+ * @expose
+ */
+Long.dispose = dispose;
+//? }
 
 // NOTE: the compiler should inline these constant values below and then remove these variables, so there should be
 // no runtime penalty for these.
@@ -474,23 +552,22 @@ LongPrototype.toString = function toString(radix) {
         throw RangeError('radix');
     if (this.isZero())
         return '0';
-    var rem;
     if (this.isNegative()) { // Unsigned Longs are never negative
         if (this.eq(MIN_VALUE)) {
             // We need to change the Long value before it can be negated, so we remove
             // the bottom-most digit in this base and then recurse to do the rest.
-            var radixLong = fromNumber(radix);
-            var div = this.div(radixLong);
-            rem = div.mul(radixLong).sub(this);
-            return div.toString(radix) + rem.toInt().toString(radix);
+            var radixLong = fromNumber(radix),
+                div = this.div(radixLong),
+                rem1 = div.mul(radixLong).sub(this);
+            return div.toString(radix) + rem1.toInt().toString(radix);
         } else
             return '-' + this.neg().toString(radix);
     }
 
     // Do several (6) digits each time through the loop, so as to
     // minimize the calls to the very expensive emulated div.
-    var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned);
-    rem = this;
+    var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned),
+        rem = this;
     var result = '';
     while (true) {
         var remDiv = rem.div(radixToPower),
