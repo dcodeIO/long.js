@@ -98,17 +98,6 @@ var INT_CACHE = {};
 var UINT_CACHE = {};
 
 /**
- * Determines if an integer value is cacheable.
- * @param {number} value Integer value
- * @param {boolean=} unsigned Whether unsigned or not
- * @returns {boolean}
- * @inner
- */
-function cacheable(value, unsigned) {
-    return unsigned ? 0 <= (value >>>= 0) && value < 256 : -128 <= (value |= 0) && value < 128;
-}
-
-/**
  * @param {number} value
  * @param {boolean=} unsigned
  * @returns {!Long}
@@ -117,7 +106,8 @@ function cacheable(value, unsigned) {
 function fromInt(value, unsigned) {
     var obj, cachedObj, cache;
     if (unsigned) {
-        if (cache = cacheable(value >>>= 0, true)) {
+        value >>>= 0;
+        if (cache = (0 <= value && value < 256)) {
             cachedObj = UINT_CACHE[value];
             if (cachedObj)
                 return cachedObj;
@@ -127,7 +117,8 @@ function fromInt(value, unsigned) {
             UINT_CACHE[value] = obj;
         return obj;
     } else {
-        if (cache = cacheable(value |= 0, false)) {
+        value |= 0;
+        if (cache = (-128 <= value && value < 128)) {
             cachedObj = INT_CACHE[value];
             if (cachedObj)
                 return cachedObj;
@@ -192,15 +183,6 @@ Long.fromNumber = fromNumber;
  * @inner
  */
 function fromBits(lowBits, highBits, unsigned) {
-    //? if (DISPOSE) {
-    if (disposed.length > 0) {
-        var inst = disposed.shift();
-        inst.low = lowBits | 0;
-        inst.high = highBits | 0;
-        inst.unsigned = !!unsigned;
-        return inst;
-    }
-    //? }
     return new Long(lowBits, highBits, unsigned);
 }
 
@@ -307,61 +289,6 @@ function fromValue(val) {
  * @expose
  */
 Long.fromValue = fromValue;
-//? if (DISPOSE) {
-
-// This is experimental code that will probably be removed in the future. At first glance something like this can seem
-// reasonable, but it would require a lot of additional (possibly MetaScript) code to perform disposal of intermediate
-// values everywhere. Otherwise, calling dispose as a user would not have much of an effect as any manually disposed
-// instances become reused a lot faster internally than a user can provide more. After testing this out for a bit I am
-// not convinced that the additional overhead from calling dispose() on literally every intermediate instance is worth
-// it.
-//
-// Alternatively, it has been suggested to add self-mutating methods in #24, but this would also be neglected by the
-// sheer number of intermediate instances that are still necessary.
-//
-// On this basis I'd recommend not to implement anything of this and leave memory optimization efforts to the VM.
-// -dcode
-
-/**
- * Disposed Longs.
- * @type {!Array.<!Long>}
- * @inner
- */
-var disposed = [];
-
-/**
- * @param {!Long} inst
- * @returns {boolean}
- * @inner
- */
-function dispose(inst) {
-    if (disposed.length > 1023)
-        return false;
-    if (!(inst /* compatible */ instanceof Long))
-        return false;
-    // Do not dispose if cached
-    if (inst.unsigned) {
-        if (inst.high == 0 && UINT_CACHE[inst.low >>> 0] === inst)
-            return false;
-    } else {
-        if ((inst.high == 0 || inst.high == -1) && INT_CACHE[inst.low] === inst)
-            return false;
-    }
-    disposed.push(inst);
-    return true;
-}
-
-/**
- * Disposes a Long instance and queues it for reuse. If not ultimately necessary, it is recommended not to use this
- *  method at all. If used however, it must be guaranteed that a disposed instance is never used again and that this
- *  method is never called more than once with the same instance.
- * @function
- * @param {!Long} inst Long instance to dispose
- * @returns {boolean} Whether actually disposed
- * @expose
- */
-Long.dispose = dispose;
-//? }
 
 // NOTE: the compiler should inline these constant values below and then remove these variables, so there should be
 // no runtime penalty for these.

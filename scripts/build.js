@@ -8,9 +8,7 @@ var rootDir = path.join(__dirname, ".."),
     pkg = require(path.join(rootDir, "package.json")),
     filename;
 
-var scope = {
-    DISPOSE: false
-};
+var scope = {};
 
 // Build
 console.log("Building long.js with scope", JSON.stringify(scope, null, 2));

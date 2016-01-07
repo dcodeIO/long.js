@@ -132,17 +132,6 @@
     var UINT_CACHE = {};
 
     /**
-     * Determines if an integer value is cacheable.
-     * @param {number} value Integer value
-     * @param {boolean=} unsigned Whether unsigned or not
-     * @returns {boolean}
-     * @inner
-     */
-    function cacheable(value, unsigned) {
-        return unsigned ? 0 <= (value >>>= 0) && value < 256 : -128 <= (value |= 0) && value < 128;
-    }
-
-    /**
      * @param {number} value
      * @param {boolean=} unsigned
      * @returns {!Long}
@@ -151,7 +140,8 @@
     function fromInt(value, unsigned) {
         var obj, cachedObj, cache;
         if (unsigned) {
-            if (cache = cacheable(value >>>= 0, true)) {
+            value >>>= 0;
+            if (cache = (0 <= value && value < 256)) {
                 cachedObj = UINT_CACHE[value];
                 if (cachedObj)
                     return cachedObj;
@@ -161,7 +151,8 @@
                 UINT_CACHE[value] = obj;
             return obj;
         } else {
-            if (cache = cacheable(value |= 0, false)) {
+            value |= 0;
+            if (cache = (-128 <= value && value < 128)) {
                 cachedObj = INT_CACHE[value];
                 if (cachedObj)
                     return cachedObj;
