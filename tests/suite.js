@@ -51,26 +51,6 @@ var suite = {
         test.equal(Long.fromString("-zzzzzz", 36).toString(36), "-zzzzzz");
         test.done();
     },
-
-    "dispose": function(test) {
-        if (!Long.dispose) {
-            test.log("Not supported");
-            test.done();
-            return;
-        }
-        var inst = Long.fromInt(0);
-        test.strictEqual(Long.dispose(inst), false); // cached, not reused
-        Long.dispose(inst);
-        var inst2 = Long.fromInt(1);
-        test.notStrictEqual(inst, inst2);
-        test.done();
-
-        inst = Long.fromNumber(0);
-        test.strictEqual(Long.dispose(inst), true); // not cached (our first inst is), reused
-        inst2 = Long.fromNumber(1);
-        test.strictEqual(inst, inst2);
-        test.done();
-    },
     
     "unsigned": {
         
@@ -116,6 +96,7 @@ var suite = {
             test.equal(longVal.toNumber(), -1);
             longVal = longVal.toUnsigned();
             test.equal(longVal.toNumber(), 0xFFFFFFFFFFFFFFFF);
+            test.equal(longVal.toString(16), 'ffffffffffffffff');
             longVal = longVal.toSigned();
             test.equal(longVal.toNumber(), -1);
             test.done();
@@ -123,7 +104,7 @@ var suite = {
         
         "max_unsigned_sub_max_signed": function(test) {
             var longVal = Long.MAX_UNSIGNED_VALUE.subtract(Long.MAX_VALUE).subtract(Long.ONE);
-            test.equal(longVal.toNumber(), Long.MAX_VALUE);
+            test.equal(longVal.toNumber(), Long.MAX_VALUE.toNumber());
             test.equal(longVal.toString(), Long.MAX_VALUE.toString());
             test.done();
         },
@@ -156,15 +137,24 @@ var suite = {
             test.done();
         },
         
+        "max_unsigned_div_max_unsigned": function(test) {
+            var longVal = Long.MAX_UNSIGNED_VALUE;
+            test.strictEqual(longVal.div(longVal).toString(), '1');
+            test.done();
+        },
+        
         "max_unsigned_div_neg_signed": function(test) {
-            var longVal = Long.MAX_UNSIGNED_VALUE.div(Long.fromInt(-2));
-            test.equal(longVal.toNumber(), -Long.MAX_VALUE);
+            var a = Long.MAX_UNSIGNED_VALUE;
+            var b = Long.fromInt(-2);
+            test.strictEqual(b.toUnsigned().toString(), Long.MAX_UNSIGNED_VALUE.sub(1).toString());
+            var longVal = a.div(b);
+            test.strictEqual(longVal.toString(), '1');
             test.done();
         },
 
         "min_signed_div_one": function(test) {
             var longVal = Long.MIN_VALUE.div(Long.ONE);
-            test.equal(longVal.toNumber(), Long.MIN_VALUE);
+            test.strictEqual(longVal.toString(), Long.MIN_VALUE.toString());
             test.done();
         },
 
@@ -173,6 +163,17 @@ var suite = {
             test.ok(longVal.notEquals(Long.MIN_VALUE));
             test.equal(longVal.toString(), "9223372036854775808");
             test.equal(Long.fromString("9223372036854775808", true).toString(), "9223372036854775808");
+            test.done();
+        },
+        
+        "issue31": function(test) {
+            var a = new Long(0, 8, true);
+            var b = Long.fromNumber(2656901066, true);
+            test.strictEqual(a.unsigned, true);
+            test.strictEqual(b.unsigned, true);
+            var x = a.div(b);
+            test.strictEqual(x.toString(), '12');
+            test.strictEqual(x.unsigned, true);
             test.done();
         }
     }
