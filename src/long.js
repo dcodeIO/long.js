@@ -219,9 +219,13 @@ function fromString(str, unsigned, radix) {
         throw Error('empty string');
     if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
         return ZERO;
-    if (typeof unsigned === 'number') // For goog.math.long compatibility
+    if (typeof unsigned === 'number') { 
+        // For goog.math.long compatibility
         radix = unsigned,
         unsigned = false;
+    } else {
+        unsigned = !! unsigned;
+    }
     radix = radix || 10;
     if (radix < 2 || 36 < radix)
         throw RangeError('radix');
