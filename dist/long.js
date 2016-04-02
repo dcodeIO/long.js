@@ -90,7 +90,7 @@
      * @expose
      * @private
      */
-    Long.__isLong__;
+    Long.prototype.__isLong__;
 
     Object.defineProperty(Long.prototype, "__isLong__", {
         value: true,
@@ -967,6 +967,8 @@
             return this.unsigned ? UZERO : ZERO;
         var approx, rem, res;
         if (!this.unsigned) {
+            // This section is only relevant for signed longs and is derived from the
+            // closure library as a whole.
             if (this.eq(MIN_VALUE)) {
                 if (divisor.eq(ONE) || divisor.eq(NEG_ONE))
                     return MIN_VALUE;  // recall that -MIN_VALUE == MIN_VALUE
@@ -992,19 +994,18 @@
                 return this.neg().div(divisor).neg();
             } else if (divisor.isNegative())
                 return this.div(divisor.neg()).neg();
-        } else if (!divisor.unsigned)
-            divisor = divisor.toUnsigned();
-
-        // The algorithm below has not been made for unsigned longs. It's therefore
-        // required to take special care of the MSB prior to running it.
-        if (this.unsigned) {
+            res = ZERO;
+        } else {
+            // The algorithm below has not been made for unsigned longs. It's therefore
+            // required to take special care of the MSB prior to running it.
+            if (!divisor.unsigned)
+                divisor = divisor.toUnsigned();
             if (divisor.gt(this))
                 return UZERO;
             if (divisor.gt(this.shru(1))) // 15 >>> 1 = 7 ; with divisor = 8 ; true
                 return UONE;
             res = UZERO;
-        } else
-            res = ZERO;
+        }
 
         // Repeat the following until the remainder is less than other:  find a
         // floating-point that approximates remainder / other *from below*, add this
