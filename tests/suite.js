@@ -51,6 +51,19 @@ var suite = {
         test.equal(Long.fromString("-zzzzzz", 36).toString(36), "-zzzzzz");
         test.done();
     },
+
+    "toBytes": function(test) {
+        var longVal = Long.fromBits(0x01234567, 0x12345678);
+        test.deepEqual(longVal.toBytesBE(), [
+            0x12, 0x34, 0x56, 0x78,
+            0x01, 0x23, 0x45, 0x67
+        ]);
+        test.deepEqual(longVal.toBytesLE(), [
+            0x67, 0x45, 0x23, 0x01,
+            0x78, 0x56, 0x34, 0x12
+        ]);
+        test.done();
+    },
     
     "unsigned": {
         
