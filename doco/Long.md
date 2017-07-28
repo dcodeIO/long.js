@@ -468,6 +468,27 @@ Returns the bitwise XOR of this Long and the given one.
 | other           | *!Long &#124; number &#124; string* | Other Long 
 | **@returns**    | *!Long*         | 
 
+#### Long#toBytes(le=)
+
+Converts this Long to its byte representation.
+
+|Parameter      |Type           |Description  
+|---------------|---------------|-------------
+|le             |*boolean*      |Whether little or big endian, defaults to big endian 
+|**@returns**   |*!Array.&lt;number&gt;*|Byte representation
+
+#### Long.fromBytes(arrBytes, offset=, unsigned=, le=)
+
+Returns a Long representing the 64 bit integer that comes by concatenating the given bytes.
+
+|Parameter      |Type           |Description  
+|---------------|---------------|-------------
+|arrBytes       |*!Array.&lt;number&gt;*|Byte representation in an array of at least offset+8 bytes
+|offset         |*number*       |The starting index from which to read 8 elements of the array, defaults to zero
+|unsigned       |*boolean*      |Whether unsigned or not, defaults to `false` for signed 
+|le             |*boolean*      |Whether little or big endian, defaults to big endian 
+|**@returns**   |*!Long*        |The corresponding Long value 
+
 
 ---
 *Generated with [doco](https://github.com/dcodeIO/doco) v0.3.0*
