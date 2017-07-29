@@ -93,6 +93,18 @@ assumed to use 32 bits.
 | unsigned        | *boolean*       | Whether unsigned or not, defaults to `false` for signed 
 | **@returns**    | *!Long*         | The corresponding Long value 
 
+#### Long.fromBytes(arrBytes, offset=, unsigned=, le=)
+
+Returns a Long representing the 64 bit integer that comes by concatenating the given bytes.
+
+|Parameter      |Type           |Description  
+|---------------|---------------|-------------
+|arrBytes       |*!Array.&lt;number&gt;*|Byte representation in an array of at least offset+8 bytes
+|offset         |*number*       |The starting index from which to read 8 elements of the array, defaults to zero
+|unsigned       |*boolean*      |Whether unsigned or not, defaults to `false` for signed 
+|le             |*boolean*      |Whether little or big endian, defaults to big endian 
+|**@returns**   |*!Long*        |The corresponding Long value 
+
 #### Long.fromInt(value, unsigned=)
 
 Returns a Long representing the given 32 bit integer value.
@@ -417,6 +429,15 @@ Returns the difference of this and the specified Long.
 | subtrahend      | *!Long &#124; number &#124; string* | Subtrahend 
 | **@returns**    | *!Long*         | Difference 
 
+#### Long#toBytes(le=)
+
+Converts this Long to its byte representation.
+
+|Parameter      |Type           |Description  
+|---------------|---------------|-------------
+|le             |*boolean*      |Whether little or big endian, defaults to big endian 
+|**@returns**   |*!Array.&lt;number&gt;*|Byte representation
+
 #### Long#toInt()
 
 Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
@@ -467,27 +488,6 @@ Returns the bitwise XOR of this Long and the given one.
 |-----------------|-----------------|---------------
 | other           | *!Long &#124; number &#124; string* | Other Long 
 | **@returns**    | *!Long*         | 
-
-#### Long#toBytes(le=)
-
-Converts this Long to its byte representation.
-
-|Parameter      |Type           |Description  
-|---------------|---------------|-------------
-|le             |*boolean*      |Whether little or big endian, defaults to big endian 
-|**@returns**   |*!Array.&lt;number&gt;*|Byte representation
-
-#### Long.fromBytes(arrBytes, offset=, unsigned=, le=)
-
-Returns a Long representing the 64 bit integer that comes by concatenating the given bytes.
-
-|Parameter      |Type           |Description  
-|---------------|---------------|-------------
-|arrBytes       |*!Array.&lt;number&gt;*|Byte representation in an array of at least offset+8 bytes
-|offset         |*number*       |The starting index from which to read 8 elements of the array, defaults to zero
-|unsigned       |*boolean*      |Whether unsigned or not, defaults to `false` for signed 
-|le             |*boolean*      |Whether little or big endian, defaults to big endian 
-|**@returns**   |*!Long*        |The corresponding Long value 
 
 
 ---

@@ -1163,15 +1163,15 @@
      * @param {boolean=} le Whether little or big endian, defaults to big endian
      * @returns {!Array.<number>} Byte representation
      */
-    LongPrototype.toBytes = function(le) {
+    LongPrototype.toBytes = function toBytes(le) {
         return le ? this.toBytesLE() : this.toBytesBE();
-    }
+    };
 
     /**
      * Converts this Long to its little endian byte representation.
      * @returns {!Array.<number>} Little endian byte representation
      */
-    LongPrototype.toBytesLE = function() {
+    LongPrototype.toBytesLE = function toBytesLE() {
         var hi = this.high,
             lo = this.low;
         return [
@@ -1184,13 +1184,13 @@
             (hi >>> 16) & 0xff,
             (hi >>> 24) & 0xff
         ];
-    }
+    };
 
     /**
      * Converts this Long to its big endian byte representation.
      * @returns {!Array.<number>} Big endian byte representation
      */
-    LongPrototype.toBytesBE = function() {
+    LongPrototype.toBytesBE = function toBytesBE() {
         var hi = this.high,
             lo = this.low;
         return [
@@ -1203,7 +1203,7 @@
             (lo >>>  8) & 0xff,
              lo         & 0xff
         ];
-    }
+    };
 
     /**
      * @param {!Array.<number>} arrBytes
