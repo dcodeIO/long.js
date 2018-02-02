@@ -810,6 +810,11 @@ LongPrototype.sub = LongPrototype.subtract;
  * @returns {!Long} Product
  */
 LongPrototype.multiply = function multiply(multiplier) {
+    if (this.isZero())
+        return ZERO;
+    if (!isLong(multiplier))
+        multiplier = fromValue(multiplier);
+
     // use wasm support if present
     if (wasm) {
       var low = wasm.mul(this.low,
@@ -819,10 +824,6 @@ LongPrototype.multiply = function multiply(multiplier) {
       return fromBits(low, wasm.get_high(), this.unsigned);
     }
 
-    if (this.isZero())
-        return ZERO;
-    if (!isLong(multiplier))
-        multiplier = fromValue(multiplier);
     if (multiplier.isZero())
         return ZERO;
     if (this.eq(MIN_VALUE))
@@ -896,6 +897,18 @@ LongPrototype.mul = LongPrototype.multiply;
 LongPrototype.divide = function divide(divisor) {
     if (!isLong(divisor))
         divisor = fromValue(divisor);
+
+    // use wasm support if present
+    if (wasm) {
+      var low = (this.unsigned ? wasm.div_u : wasm.div_s)(
+        this.low,
+        this.high,
+        divisor.low,
+        divisor.high
+      );
+      return fromBits(low, wasm.get_high(), this.unsigned);
+    }
+
     if (divisor.isZero())
         throw Error('division by zero');
     if (this.isZero())
