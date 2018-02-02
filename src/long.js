@@ -1129,15 +1129,15 @@ LongPrototype.toUnsigned = function toUnsigned() {
  * @param {boolean=} le Whether little or big endian, defaults to big endian
  * @returns {!Array.<number>} Byte representation
  */
-LongPrototype.toBytes = function(le) {
+LongPrototype.toBytes = function toBytes(le) {
     return le ? this.toBytesLE() : this.toBytesBE();
-}
+};
 
 /**
  * Converts this Long to its little endian byte representation.
  * @returns {!Array.<number>} Little endian byte representation
  */
-LongPrototype.toBytesLE = function() {
+LongPrototype.toBytesLE = function toBytesLE() {
     var hi = this.high,
         lo = this.low;
     return [
@@ -1150,13 +1150,13 @@ LongPrototype.toBytesLE = function() {
         (hi >>> 16) & 0xff,
         (hi >>> 24) & 0xff
     ];
-}
+};
 
 /**
  * Converts this Long to its big endian byte representation.
  * @returns {!Array.<number>} Big endian byte representation
  */
-LongPrototype.toBytesBE = function() {
+LongPrototype.toBytesBE = function toBytesBE() {
     var hi = this.high,
         lo = this.low;
     return [
@@ -1169,4 +1169,48 @@ LongPrototype.toBytesBE = function() {
         (lo >>>  8) & 0xff,
          lo         & 0xff        
     ];
+};
+
+/**
+ * @param {!Array.<number>} arrBytes
+ * @param {number=} offset
+ * @param {boolean=} unsigned
+ * @param {boolean=} le
+ * @returns {!Long}
+ * @inner
+ */
+function fromBytes(arrBytes, offset, unsigned, le) {
+    if (typeof(offset)!=='number') offset=0;
+    if (le) {
+        var lo = arrBytes[offset++];
+        lo |= (arrBytes[offset++] << 8);
+        lo |= (arrBytes[offset++] << 16);
+        lo |= (arrBytes[offset++] << 24);
+        var hi = arrBytes[offset++];
+        hi |= (arrBytes[offset++] << 8);
+        hi |= (arrBytes[offset++] << 16);
+        hi |= (arrBytes[offset] << 24);
+    }
+    else {
+        var hi = (arrBytes[offset++] << 24);
+        hi |= (arrBytes[offset++] << 16);
+        hi |= (arrBytes[offset++] << 8);
+        hi |= arrBytes[offset++];
+        var lo = (arrBytes[offset++] << 24);
+        lo |= (arrBytes[offset++] << 16);
+        lo |= (arrBytes[offset++] << 8);
+        lo |= arrBytes[offset];
+    }
+    return Long.fromBits(lo, hi, unsigned);
 }
+
+/**
+ * Returns a Long representing the 64 bit integer that comes by concatenating the given bytes.
+ * @function
+ * @param {!Array.<number>} arrBytes Byte representation in an array of at least offset+8 bytes
+ * @param {number=} offset The starting index from which to read 8 elements of the array, defaults to zero
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
+ * @param {boolean=} le Whether little or big endian, defaults to big endian
+ * @returns {!Long} The corresponding Long value
+ */
+Long.fromBytes = fromBytes;
