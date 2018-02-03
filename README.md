@@ -15,7 +15,7 @@ doubleprecision 64-bit format IEEE 754 values as specified in the IEEE Standard 
 The [maximum safe integer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER)
 in JavaScript is 2<sup>53</sup>-1.
 
-Example: 2<sup>64</sup>-1 is 18446744073709551615 but in JavaScript it evaluates to `18446744073709552000`.
+Example: 2<sup>64</sup>-1 is 1844674407370955**1615** but in JavaScript it evaluates to 1844674407370955**2000**.
 
 Furthermore, bitwise operators in JavaScript "deal only with integers in the range −2<sup>31</sup> through
 2<sup>31</sup>−1, inclusive, or in the range 0 through 2<sup>32</sup>−1, inclusive. These operators accept any value of
@@ -524,3 +524,19 @@ Returns the bitwise XOR of this Long and the given one.
 |-----------------|-----------------|---------------
 | other           | *!Long &#124; number &#124; string* | Other Long
 | **@returns**    | *!Long*         |
+
+Building
+--------
+
+To build an UMD bundle to `dist/long.js`, run:
+
+```
+$> npm install
+$> npm run build
+```
+
+Running the [tests](./tests):
+
+```
+$> npm test
+```
