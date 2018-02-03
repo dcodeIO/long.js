@@ -1,7 +1,11 @@
+dist: trusty
 language: node_js
 node_js:
+  - "lts/*"
   - 0.12
-  - 4.2
-  - 8
   - node
-sudo: false
+jobs:
+  include:
+    - stage: build
+      script: npm run build
+
