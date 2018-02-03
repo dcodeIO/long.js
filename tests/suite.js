@@ -230,8 +230,7 @@ var suite = {
           });
         });
       });
-    },
-
+    }
 };
 
 module.exports = suite;
