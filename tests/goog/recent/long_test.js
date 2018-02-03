@@ -1614,7 +1614,8 @@ function testIsStringInRange() {
     assertEquals(true, goog.math.Long.isStringInRange(TEST_STRINGS[i], 10));
   }
 }
-testIsStringInRange();
+
+// goog.global['testIsStringInRange' + i] = testIsStringInRange(i);
 
 // Regression test for
 // https://github.com/google/closure-library/pull/498
