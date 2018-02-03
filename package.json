@@ -14,9 +14,7 @@
     "keywords": [
         "math"
     ],
-    "dependencies": {
-        "doco": "^0.3.0"
-    },
+    "dependencies": {},
     "devDependencies": {
         "webpack": "^3.10.0"
     },
