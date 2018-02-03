@@ -148,7 +148,7 @@ API
 * Long#**greaterThan**/**gt**(other: `Long | number | string`): `boolean`<br />
   Tests if this Long's value is greater than the specified's.
 
-* Long#**greaterThanOrEqual**/**gte**(other: `Long | number | string`): `boolean`<br />
+* Long#**greaterThanOrEqual**/**gte**/**ge**(other: `Long | number | string`): `boolean`<br />
   Tests if this Long's value is greater than or equal the specified's.
 
 * Long#**isEven**(): `boolean`<br />
@@ -163,16 +163,16 @@ API
 * Long#**isPositive**(): `boolean`<br />
   Tests if this Long's value is positive.
 
-* Long#**isZero**(): `boolean`<br />
+* Long#**isZero**/**eqz**(): `boolean`<br />
   Tests if this Long's value equals zero.
 
 * Long#**lessThan**/**lt**(other: `Long | number | string`): `boolean`<br />
   Tests if this Long's value is less than the specified's.
 
-* Long#**lessThanOrEqual**/**lte**(other: `Long | number | string`): `boolean`<br />
+* Long#**lessThanOrEqual**/**lte**/**le**(other: `Long | number | string`): `boolean`<br />
   Tests if this Long's value is less than or equal the specified's.
 
-* Long#**modulo**/**mod**(divisor: `Long | number | string`): `Long`<br />
+* Long#**modulo**/**mod**/**rem**(divisor: `Long | number | string`): `Long`<br />
   Returns this Long modulo the specified.
 
 * Long#**multiply**/**mul**(multiplier: `Long | number | string`): `Long`<br />
@@ -184,7 +184,7 @@ API
 * Long#**not**(): `Long`<br />
   Returns the bitwise NOT of this Long.
 
-* Long#**notEquals**/**neq**(other: `Long | number | string`): `boolean`<br />
+* Long#**notEquals**/**neq**/**ne**(other: `Long | number | string`): `boolean`<br />
   Tests if this Long's value differs from the specified's.
 
 * Long#**or**(other: `Long | number | string`): `Long`<br />
@@ -196,7 +196,7 @@ API
 * Long#**shiftRight**/**shr**(numBits: `Long | number | string`): `Long`<br />
   Returns this Long with bits arithmetically shifted to the right by the given amount.
 
-* Long#**shiftRightUnsigned**/**shru**(numBits: `Long | number | string`): `Long`<br />
+* Long#**shiftRightUnsigned**/**shru**/**shr_u**(numBits: `Long | number | string`): `Long`<br />
   Returns this Long with bits logically shifted to the right by the given amount.
 
 * Long#**subtract**/**sub**(subtrahend: `Long | number | string`): `Long`<br />

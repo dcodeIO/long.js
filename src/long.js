@@ -547,6 +547,12 @@ LongPrototype.isZero = function isZero() {
 };
 
 /**
+ * Tests if this Long's value equals zero. This is an alias of {@link Long#isZero}.
+ * @returns {boolean}
+ */
+LongPrototype.eqz = LongPrototype.isZero;
+
+/**
  * Tests if this Long's value is negative.
  * @returns {boolean}
  */
@@ -617,6 +623,14 @@ LongPrototype.notEquals = function notEquals(other) {
 LongPrototype.neq = LongPrototype.notEquals;
 
 /**
+ * Tests if this Long's value differs from the specified's. This is an alias of {@link Long#notEquals}.
+ * @function
+ * @param {!Long|number|string} other Other value
+ * @returns {boolean}
+ */
+LongPrototype.ne = LongPrototype.notEquals;
+
+/**
  * Tests if this Long's value is less than the specified's.
  * @param {!Long|number|string} other Other value
  * @returns {boolean}
@@ -651,6 +665,14 @@ LongPrototype.lessThanOrEqual = function lessThanOrEqual(other) {
 LongPrototype.lte = LongPrototype.lessThanOrEqual;
 
 /**
+ * Tests if this Long's value is less than or equal the specified's. This is an alias of {@link Long#lessThanOrEqual}.
+ * @function
+ * @param {!Long|number|string} other Other value
+ * @returns {boolean}
+ */
+LongPrototype.le = LongPrototype.lessThanOrEqual;
+
+/**
  * Tests if this Long's value is greater than the specified's.
  * @param {!Long|number|string} other Other value
  * @returns {boolean}
@@ -683,6 +705,14 @@ LongPrototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
  * @returns {boolean}
  */
 LongPrototype.gte = LongPrototype.greaterThanOrEqual;
+
+/**
+ * Tests if this Long's value is greater than or equal the specified's. This is an alias of {@link Long#greaterThanOrEqual}.
+ * @function
+ * @param {!Long|number|string} other Other value
+ * @returns {boolean}
+ */
+LongPrototype.ge = LongPrototype.greaterThanOrEqual;
 
 /**
  * Compares this Long's value with the specified's.
@@ -983,6 +1013,14 @@ LongPrototype.modulo = function modulo(divisor) {
 LongPrototype.mod = LongPrototype.modulo;
 
 /**
+ * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
+ * @function
+ * @param {!Long|number|string} divisor Divisor
+ * @returns {!Long} Remainder
+ */
+LongPrototype.rem = LongPrototype.modulo;
+
+/**
  * Returns the bitwise NOT of this Long.
  * @returns {!Long}
  */
@@ -1101,6 +1139,14 @@ LongPrototype.shiftRightUnsigned = function shiftRightUnsigned(numBits) {
  * @returns {!Long} Shifted Long
  */
 LongPrototype.shru = LongPrototype.shiftRightUnsigned;
+
+/**
+ * Returns this Long with bits logically shifted to the right by the given amount. This is an alias of {@link Long#shiftRightUnsigned}.
+ * @function
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Shifted Long
+ */
+LongPrototype.shr_u = LongPrototype.shiftRightUnsigned;
 
 /**
  * Converts this Long to signed.
