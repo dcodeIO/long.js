@@ -189,7 +189,49 @@ var suite = {
             test.strictEqual(x.unsigned, true);
             test.done();
         }
-    }
+    },
+
+    // Compare to gmLong, which does not have wasm support. that means that if
+    // the VM we are on does support wasm, we are comparing the wasm and non-wasm
+    // paths.
+
+    "wasm_comparison": function(test) {
+      var interestingValues = [0, 1, 2, 1000];
+      interestingValues.forEach(function(low1) {
+        interestingValues.forEach(function(high1) {
+          [true, false].forEach(function(unsigned1) {
+            interestingValues.forEach(function(low2) {
+              interestingValues.forEach(function(high2) {
+                [true, false].forEach(function(unsigned2) {
+                  function compute(func) {
+                    try {
+                      return func();
+                    } catch (e) {
+                      return '(exception)';
+                    }
+                  }
+                  var value1 = new Long(low1, high1, unsigned1);
+                  var value2 = new Long(low2, high2, unsigned2);
+                  var gmvalue1 = new gmLong(low1, high1, unsigned1);
+                  var gmvalue2 = new gmLong(low2, high2, unsigned2);
+                  var mul = compute(function() { return value1.mul(value2) });
+                  var gmmul = compute(function() { return gmvalue1.multiply(gmvalue2) });
+                  test.equal(mul.toString(), gmmul.toString());
+                  var div = compute(function() { return value1.div(value2) });
+                  var gmdiv = compute(function() { return gmvalue1.div(gmvalue2) });
+                  test.equal(div.toString(), gmdiv.toString());
+                  var modulo = compute(function() { return value1.modulo(value2) });
+                  var gmmodulo = compute(function() { return gmvalue1.modulo(gmvalue2) });
+                  test.equal(modulo.toString(), gmmodulo.toString());
+                  test.done();
+                });
+              });
+            });
+          });
+        });
+      });
+    },
+
 };
 
 module.exports = suite;
