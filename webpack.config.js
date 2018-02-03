@@ -14,3 +14,9 @@ module.exports = {
   ],
   devtool: "source-map"
 };
+
+// Also update bower.json
+var bower = require("./bower.json");
+var pkg = require("./package.json");
+bower.version = pkg.version;
+require("fs").writeFileSync(path.join(__dirname, "bower.json"), JSON.stringify(bower, null, 4));
