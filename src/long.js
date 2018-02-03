@@ -925,9 +925,20 @@ LongPrototype.mul = LongPrototype.multiply;
 LongPrototype.divide = function divide(divisor) {
     if (!isLong(divisor))
         divisor = fromValue(divisor);
+    if (divisor.isZero())
+        throw Error('division by zero');
 
     // use wasm support if present
     if (wasm) {
+        // guard against signed division overflow: the largest
+        // negative number / -1 would be 1 larger than the largest
+        // positive number, due to two's complement.
+        if (!this.unsigned &&
+            this.high === -0x80000000 &&
+            divisor.low === -1 && divisor.high === -1) {
+            // be consistent with non-wasm code path
+            return this;
+        }
         var low = (this.unsigned ? wasm.div_u : wasm.div_s)(
             this.low,
             this.high,
@@ -937,8 +948,6 @@ LongPrototype.divide = function divide(divisor) {
         return fromBits(low, wasm.get_high(), this.unsigned);
     }
 
-    if (divisor.isZero())
-        throw Error('division by zero');
     if (this.isZero())
         return this.unsigned ? UZERO : ZERO;
     var approx, rem, res;
