@@ -1,4 +1,11 @@
+dist: trusty
 language: node_js
 node_js:
   - 0.12
   - "lts/*"
+jobs:
+  include:
+    - stage: test
+      script: npm test
+    - stage: build
+      script: npm run build
