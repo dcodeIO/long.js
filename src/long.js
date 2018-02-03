@@ -260,24 +260,24 @@ Long.fromString = fromString;
 /**
  * @function
  * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val
+ * @param {boolean=} unsigned
  * @returns {!Long}
  * @inner
  */
-function fromValue(val) {
-    if (val /* is compatible */ instanceof Long)
-        return val;
+function fromValue(val, unsigned) {
     if (typeof val === 'number')
-        return fromNumber(val);
+        return fromNumber(val, unsigned);
     if (typeof val === 'string')
-        return fromString(val);
+        return fromString(val, unsigned);
     // Throws for non-objects, converts non-instanceof Long:
-    return fromBits(val.low, val.high, val.unsigned);
+    return fromBits(val.low, val.high, typeof unsigned === 'boolean' ? unsigned : val.unsigned);
 }
 
 /**
  * Converts the specified value to a Long using the appropriate from* function for its type.
  * @function
  * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val Value
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
  * @returns {!Long}
  */
 Long.fromValue = fromValue;

@@ -110,7 +110,7 @@ API
   Long.**fromString**(str: `string`, radix: `number`)<br />
   Returns a Long representation of the given string, written using the specified radix.
 
-* Long.**fromValue**(val: `*`): `Long`<br />
+* Long.**fromValue**(val: `*`, unsigned?: `boolean`): `Long`<br />
   Converts the specified value to a Long using the appropriate from* function for its type.
 
 ### Methods
