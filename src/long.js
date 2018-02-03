@@ -139,7 +139,7 @@ Long.fromInt = fromInt;
  * @inner
  */
 function fromNumber(value, unsigned) {
-    if (isNaN(value) || !isFinite(value))
+    if (isNaN(value))
         return unsigned ? UZERO : ZERO;
     if (unsigned) {
         if (value < 0)

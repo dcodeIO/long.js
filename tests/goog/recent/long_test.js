@@ -1615,10 +1615,35 @@ function testIsStringInRange() {
   }
 }
 
-// goog.global['testIsStringInRange' + i] = testIsStringInRange(i);
-
 // Regression test for
 // https://github.com/google/closure-library/pull/498
 function testBase36ToString() {
   assertEquals('zzzzzz', goog.math.Long.fromString('zzzzzz', 36).toString(36));
 }
+
+// BEGIN MONKEY PATCH
+
+// long.js doesn't have getZero etc. but instead ZERO
+if (goog.math.Long.ZERO) {
+  goog.math.Long.getZero = function() { return this.ZERO; };
+  goog.math.Long.getOne = function() { return this.ONE; };
+  goog.math.Long.getMaxValue = function() { return this.MAX_VALUE; };
+  goog.math.Long.getMinValue = function() { return this.MIN_VALUE; };
+}
+
+// the test runner can't just 'see' these functions, so add them explicitly
+[
+  testToFromBits,
+  testToFromInt,
+  testToFromNumber,
+  testIsZero,
+  testIsNegative,
+  testIsOdd,
+  testNegation,
+  testAdd,
+  testSubtract,
+  testMultiply,
+  testBase36ToString
+].forEach(function(fn) { goog.global[fn.name] = fn; });
+
+// END MONKEY PATCH

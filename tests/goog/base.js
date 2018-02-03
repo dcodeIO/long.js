@@ -23,14 +23,16 @@ goog.provide("goog.global");
 
 goog.provide("goog.asserts");
 
+var assert = require("assert");
 goog.asserts.assert = function(condition, opt_message, var_args) {
-  if (!condition)
-    throw Error("Assertion error: " + opt_message + " " + Array.prototype.slice.call(arguments, 2));
+  assert(condition, opt_message, Array.prototype.slice.call(arguments, 2));
 };
 
 global.assertEquals = function(expected, actual) { goog.asserts.assert(expected === actual); }
 
 global.assertTrue = function(value) { goog.asserts.assert(value === true); }
+
+global.assertNotNull = function(value) { goog.asserts.assert(value !== null); }
 
 goog.provide("goog.reflect");
 
