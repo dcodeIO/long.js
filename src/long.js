@@ -1,3 +1,5 @@
+module.exports = Long;
+
 /**
  * Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as *signed* integers.
  *  See the from* functions below for more convenient ways of constructing Longs.
@@ -211,7 +213,7 @@ function fromString(str, unsigned, radix) {
         throw Error('empty string');
     if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
         return ZERO;
-    if (typeof unsigned === 'number') { 
+    if (typeof unsigned === 'number') {
         // For goog.math.long compatibility
         radix = unsigned,
         unsigned = false;
@@ -919,7 +921,7 @@ LongPrototype.divide = function divide(divisor) {
             return UONE;
         res = UZERO;
     }
-        
+
     // Repeat the following until the remainder is less than other:  find a
     // floating-point that approximates remainder / other *from below*, add this
     // into the result, and subtract it from the remainder.  It is critical that
@@ -1167,7 +1169,7 @@ LongPrototype.toBytesBE = function toBytesBE() {
         (lo >>> 24) & 0xff,
         (lo >>> 16) & 0xff,
         (lo >>>  8) & 0xff,
-         lo         & 0xff        
+         lo         & 0xff
     ];
 };
 
