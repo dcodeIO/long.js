@@ -7,7 +7,7 @@ module.exports = Long;
  * @class A Long class for representing a 64 bit two's-complement integer value.
  * @param {number} low The low (signed) 32 bits of the long
  * @param {number} high The high (signed) 32 bits of the long
- * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
  * @constructor
  */
 function Long(low, high, unsigned) {
@@ -56,11 +56,7 @@ function Long(low, high, unsigned) {
  */
 Long.prototype.__isLong__;
 
-Object.defineProperty(Long.prototype, "__isLong__", {
-    value: true,
-    enumerable: false,
-    configurable: false
-});
+Object.defineProperty(Long.prototype, "__isLong__", { value: true });
 
 /**
  * @function
@@ -131,7 +127,7 @@ function fromInt(value, unsigned) {
  * Returns a Long representing the given 32 bit integer value.
  * @function
  * @param {number} value The 32 bit integer in question
- * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
  * @returns {!Long} The corresponding Long value
  */
 Long.fromInt = fromInt;
@@ -165,7 +161,7 @@ function fromNumber(value, unsigned) {
  * Returns a Long representing the given value, provided that it is a finite number. Otherwise, zero is returned.
  * @function
  * @param {number} value The number in question
- * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
  * @returns {!Long} The corresponding Long value
  */
 Long.fromNumber = fromNumber;
@@ -187,7 +183,7 @@ function fromBits(lowBits, highBits, unsigned) {
  * @function
  * @param {number} lowBits The low 32 bits
  * @param {number} highBits The high 32 bits
- * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
  * @returns {!Long} The corresponding Long value
  */
 Long.fromBits = fromBits;
@@ -255,7 +251,7 @@ function fromString(str, unsigned, radix) {
  * Returns a Long representation of the given string, written using the specified radix.
  * @function
  * @param {string} str The textual representation of the Long
- * @param {(boolean|number)=} unsigned Whether unsigned or not, defaults to `false` for signed
+ * @param {(boolean|number)=} unsigned Whether unsigned or not, defaults to signed
  * @param {number=} radix The radix in which the text is written (2-36), defaults to 10
  * @returns {!Long} The corresponding Long value
  */
@@ -279,7 +275,7 @@ function fromValue(val) {
 }
 
 /**
- * Converts the specified value to a Long.
+ * Converts the specified value to a Long using the appropriate from* function for its type.
  * @function
  * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val Value
  * @returns {!Long}
@@ -1143,14 +1139,14 @@ LongPrototype.toBytesLE = function toBytesLE() {
     var hi = this.high,
         lo = this.low;
     return [
-         lo         & 0xff,
-        (lo >>>  8) & 0xff,
-        (lo >>> 16) & 0xff,
-        (lo >>> 24) & 0xff,
-         hi         & 0xff,
-        (hi >>>  8) & 0xff,
-        (hi >>> 16) & 0xff,
-        (hi >>> 24) & 0xff
+        lo        & 0xff,
+        lo >>>  8 & 0xff,
+        lo >>> 16 & 0xff,
+        lo >>> 24       ,
+        hi        & 0xff,
+        hi >>>  8 & 0xff,
+        hi >>> 16 & 0xff,
+        hi >>> 24
     ];
 };
 
@@ -1162,57 +1158,64 @@ LongPrototype.toBytesBE = function toBytesBE() {
     var hi = this.high,
         lo = this.low;
     return [
-        (hi >>> 24) & 0xff,
-        (hi >>> 16) & 0xff,
-        (hi >>>  8) & 0xff,
-         hi         & 0xff,
-        (lo >>> 24) & 0xff,
-        (lo >>> 16) & 0xff,
-        (lo >>>  8) & 0xff,
-         lo         & 0xff
+        hi >>> 24       ,
+        hi >>> 16 & 0xff,
+        hi >>>  8 & 0xff,
+        hi        & 0xff,
+        lo >>> 24       ,
+        lo >>> 16 & 0xff,
+        lo >>>  8 & 0xff,
+        lo        & 0xff
     ];
 };
 
 /**
- * @param {!Array.<number>} arrBytes
- * @param {number=} offset
- * @param {boolean=} unsigned
- * @param {boolean=} le
- * @returns {!Long}
- * @inner
+ * Creates a Long from its byte representation.
+ * @param {!Array.<number>} bytes Byte representation
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+ * @param {boolean=} le Whether little or big endian, defaults to big endian
+ * @returns {Long} The corresponding Long value
  */
-function fromBytes(arrBytes, offset, unsigned, le) {
-    if (typeof(offset)!=='number') offset=0;
-    if (le) {
-        var lo = arrBytes[offset++];
-        lo |= (arrBytes[offset++] << 8);
-        lo |= (arrBytes[offset++] << 16);
-        lo |= (arrBytes[offset++] << 24);
-        var hi = arrBytes[offset++];
-        hi |= (arrBytes[offset++] << 8);
-        hi |= (arrBytes[offset++] << 16);
-        hi |= (arrBytes[offset] << 24);
-    }
-    else {
-        var hi = (arrBytes[offset++] << 24);
-        hi |= (arrBytes[offset++] << 16);
-        hi |= (arrBytes[offset++] << 8);
-        hi |= arrBytes[offset++];
-        var lo = (arrBytes[offset++] << 24);
-        lo |= (arrBytes[offset++] << 16);
-        lo |= (arrBytes[offset++] << 8);
-        lo |= arrBytes[offset];
-    }
-    return Long.fromBits(lo, hi, unsigned);
-}
+Long.fromBytes = function fromBytes(bytes, unsigned, le) {
+    return le ? Long.fromBytesLE(bytes, unsigned) : Long.fromBytesBE(bytes, unsigned);
+};
 
 /**
- * Returns a Long representing the 64 bit integer that comes by concatenating the given bytes.
- * @function
- * @param {!Array.<number>} arrBytes Byte representation in an array of at least offset+8 bytes
- * @param {number=} offset The starting index from which to read 8 elements of the array, defaults to zero
- * @param {boolean=} unsigned Whether unsigned or not, defaults to `false` for signed
- * @param {boolean=} le Whether little or big endian, defaults to big endian
- * @returns {!Long} The corresponding Long value
+ * Creates a Long from its little endian byte representation.
+ * @param {!Array.<number>} bytes Little endian byte representation
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+ * @returns {Long} The corresponding Long value
  */
-Long.fromBytes = fromBytes;
+Long.fromBytesLE = function fromBytesLE(bytes, unsigned) {
+    return new Long(
+        bytes[0]       |
+        bytes[1] <<  8 |
+        bytes[2] << 16 |
+        bytes[3] << 24,
+        bytes[4]       |
+        bytes[5] <<  8 |
+        bytes[6] << 16 |
+        bytes[7] << 24,
+        unsigned
+    );
+};
+
+/**
+ * Creates a Long from its big endian byte representation.
+ * @param {!Array.<number>} bytes Big endian byte representation
+ * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+ * @returns {Long} The corresponding Long value
+ */
+Long.fromBytesBE = function fromBytesBE(bytes, unsigned) {
+    return new Long(
+        bytes[4] << 24 |
+        bytes[5] << 16 |
+        bytes[6] <<  8 |
+        bytes[7],
+        bytes[0] << 24 |
+        bytes[1] << 16 |
+        bytes[2] <<  8 |
+        bytes[3],
+        unsigned
+    );
+};

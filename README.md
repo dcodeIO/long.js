@@ -33,6 +33,7 @@ The class is compatible with CommonJS and AMD loaders and is exposed globally as
 var Long = require("long");
 
 var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
+
 console.log(longVal.toString());
 ...
 ```
@@ -40,490 +41,193 @@ console.log(longVal.toString());
 API
 ---
 
-#### new Long(low, high=, unsigned=)
+### Constructor
 
-Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as *signed* integers.
-See the from* functions below for more convenient ways of constructing Longs.
+* new **Long**(low: `number`, high: `number`, unsigned?: `boolean`)<br />
+  Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as *signed* integers. See the from* functions below for more convenient ways of constructing Longs.
 
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| low             | *number*        | The low (signed) 32 bits of the long
-| high            | *number*        | The high (signed) 32 bits of the long
-| unsigned        | *boolean*       | Whether unsigned or not, defaults to `false` for signed
+### Fields
 
----
+* Long#**low**: `number`<br />
+  The low 32 bits as a signed value.
 
-#### Long.MAX_UNSIGNED_VALUE
+* Long#**high**: `number`<br />
+  The high 32 bits as a signed value.
 
-Maximum unsigned value.
+* Long#**unsigned**: `boolean`<br />
+  Whether unsigned or not.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *!Long*         |
+### Constants
 
-#### Long.MAX_VALUE
+* Long.**ZERO**: `Long`<br />
+  Signed zero.
 
-Maximum signed value.
+* Long.**ONE**: `Long`<br />
+  Signed one.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *!Long*         |
+* Long.**NEG_ONE**: `Long`<br />
+  Signed negative one.
 
-#### Long.MIN_VALUE
+* Long.**UZERO**: `Long`<br />
+  Unsigned zero.
 
-Minimum signed value.
+* Long.**UONE**: `Long`<br />
+  Unsigned one.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *!Long*         |
+* Long.**MAX_VALUE**: `Long`<br />
+  Maximum signed value.
 
-#### Long.NEG_ONE
+* Long.**MIN_VALUE**: `Long`<br />
+  Minimum signed value.
 
-Signed negative one.
+* Long.**MAX_UNSIGNED_VALUE**: `Long`<br />
+  Maximum unsigned value.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *!Long*         |
+### Utility
 
-#### Long.ONE
+* Long.**isLong**(obj: `*`): `boolean`<br />
+  Tests if the specified object is a Long.
 
-Signed one.
+* Long.**fromBits**(lowBits: `number`, highBits: `number`, unsigned?: `boolean`): `Long`<br />
+  Returns a Long representing the 64 bit integer that comes by concatenating the given low and high bits. Each is assumed to use 32 bits.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *!Long*         |
+* Long.**fromBytes**(bytes: `number[]`, unsigned?: `boolean`, le?: `boolean`): `Long`<br />
+  Creates a Long from its byte representation.
 
-#### Long.UONE
+* Long.**fromBytesLE**(bytes: `number[]`, unsigned?: `boolean`): `Long`<br />
+  Creates a Long from its little endian byte representation.
 
-Unsigned one.
+* Long.**fromBytesBE**(bytes: `number[]`, unsigned?: `boolean`): `Long`<br />
+  Creates a Long from its big endian byte representation.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *!Long*         |
+* Long.**fromInt**(value: `number`, unsigned?: `boolean`): `Long`<br />
+  Returns a Long representing the given 32 bit integer value.
 
-#### Long.UZERO
+* Long.**fromNumber**(value: `number`, unsigned?: `boolean`): `Long`<br />
+  Returns a Long representing the given value, provided that it is a finite number. Otherwise, zero is returned.
 
-Unsigned zero.
+* Long.**fromString**(str: `string`, unsigned?: `boolean`, radix?: `number`)<br />
+  Long.**fromString**(str: `string`, radix: `number`)<br />
+  Returns a Long representation of the given string, written using the specified radix.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *!Long*         |
+* Long.**fromValue**(val: `*`): `Long`<br />
+  Converts the specified value to a Long using the appropriate from* function for its type.
 
-#### Long.ZERO
+### Methods
 
-Signed zero.
+* Long#**add**(addend: `Long | number | string`): `Long`<br />
+  Returns the sum of this and the specified Long.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *!Long*         |
+* Long#**and**(other: `Long | number | string`): `Long`<br />
+  Returns the bitwise AND of this Long and the specified.
 
-#### Long.fromBits(lowBits, highBits, unsigned=)
+* Long#**compare**/**comp**(other: `Long | number | string`): `number`<br />
+  Compares this Long's value with the specified's. Returns `0` if they are the same, `1` if the this is greater and `-1` if the given one is greater.
 
-Returns a Long representing the 64 bit integer that comes by concatenating the given low and high bits. Each is
-assumed to use 32 bits.
+* Long#**divide**/**div**(divisor: `Long | number | string`): `Long`<br />
+  Returns this Long divided by the specified.
 
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| lowBits         | *number*        | The low 32 bits
-| highBits        | *number*        | The high 32 bits
-| unsigned        | *boolean*       | Whether unsigned or not, defaults to `false` for signed
-| **@returns**    | *!Long*         | The corresponding Long value
+* Long#**equals**/**eq**(other: `Long | number | string`): `boolean`<br />
+  Tests if this Long's value equals the specified's.
 
-#### Long.fromBytes(arrBytes, offset=, unsigned=, le=)
+* Long#**getHighBits**(): `number`<br />
+  Gets the high 32 bits as a signed integer.
 
-Returns a Long representing the 64 bit integer that comes by concatenating the given bytes.
+* Long#**getHighBitsUnsigned**(): `number`<br />
+  Gets the high 32 bits as an unsigned integer.
 
-|Parameter      |Type           |Description
-|---------------|---------------|-------------
-|arrBytes       |*!Array.&lt;number&gt;*|Byte representation in an array of at least offset+8 bytes
-|offset         |*number*       |The starting index from which to read 8 elements of the array, defaults to zero
-|unsigned       |*boolean*      |Whether unsigned or not, defaults to `false` for signed
-|le             |*boolean*      |Whether little or big endian, defaults to big endian
-|**@returns**   |*!Long*        |The corresponding Long value
+* Long#**getLowBits**(): `number`<br />
+  Gets the low 32 bits as a signed integer.
 
-#### Long.fromInt(value, unsigned=)
+* Long#**getLowBitsUnsigned**(): `number`<br />
+  Gets the low 32 bits as an unsigned integer.
 
-Returns a Long representing the given 32 bit integer value.
+* Long#**getNumBitsAbs**(): `number`<br />
+  Gets the number of bits needed to represent the absolute value of this Long.
 
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| value           | *number*        | The 32 bit integer in question
-| unsigned        | *boolean*       | Whether unsigned or not, defaults to `false` for signed
-| **@returns**    | *!Long*         | The corresponding Long value
+* Long#**greaterThan**/**gt**(other: `Long | number | string`): `boolean`<br />
+  Tests if this Long's value is greater than the specified's.
 
-#### Long.fromNumber(value, unsigned=)
+* Long#**greaterThanOrEqual**/**gte**(other: `Long | number | string`): `boolean`<br />
+  Tests if this Long's value is greater than or equal the specified's.
 
-Returns a Long representing the given value, provided that it is a finite number. Otherwise, zero is returned.
+* Long#**isEven**(): `boolean`<br />
+  Tests if this Long's value is even.
 
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| value           | *number*        | The number in question
-| unsigned        | *boolean*       | Whether unsigned or not, defaults to `false` for signed
-| **@returns**    | *!Long*         | The corresponding Long value
+* Long#**isNegative**(): `boolean`<br />
+  Tests if this Long's value is negative.
 
-#### Long.fromString(str, unsigned=, radix=)
+* Long#**isOdd**(): `boolean`<br />
+  Tests if this Long's value is odd.
 
-Returns a Long representation of the given string, written using the specified radix.
+* Long#**isPositive**(): `boolean`<br />
+  Tests if this Long's value is positive.
 
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| str             | *string*        | The textual representation of the Long
-| unsigned        | *boolean &#124; number* | Whether unsigned or not, defaults to `false` for signed
-| radix           | *number*        | The radix in which the text is written (2-36), defaults to 10
-| **@returns**    | *!Long*         | The corresponding Long value
+* Long#**isZero**(): `boolean`<br />
+  Tests if this Long's value equals zero.
 
-#### Long.isLong(obj)
+* Long#**lessThan**/**lt**(other: `Long | number | string`): `boolean`<br />
+  Tests if this Long's value is less than the specified's.
 
-Tests if the specified object is a Long.
+* Long#**lessThanOrEqual**/**lte**(other: `Long | number | string`): `boolean`<br />
+  Tests if this Long's value is less than or equal the specified's.
 
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| obj             | ***             | Object
-| **@returns**    | *boolean*       |
+* Long#**modulo**/**mod**(divisor: `Long | number | string`): `Long`<br />
+  Returns this Long modulo the specified.
 
-#### Long.fromValue(val)
+* Long#**multiply**/**mul**(multiplier: `Long | number | string`): `Long`<br />
+  Returns the product of this and the specified Long.
 
-Converts the specified value to a Long.
+* Long#**negate**/**neg**(): `Long`<br />
+  Negates this Long's value.
 
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| val             | *!Long &#124; number &#124; string &#124; !{low: number, high: number, unsigned: boolean}* | Value
-| **@returns**    | *!Long*         |
+* Long#**not**(): `Long`<br />
+  Returns the bitwise NOT of this Long.
 
----
+* Long#**notEquals**/**neq**(other: `Long | number | string`): `boolean`<br />
+  Tests if this Long's value differs from the specified's.
 
-#### Long#high
+* Long#**or**(other: `Long | number | string`): `Long`<br />
+  Returns the bitwise OR of this Long and the specified.
 
-The high 32 bits as a signed value.
+* Long#**shiftLeft**/**shl**(numBits: `Long | number | string`): `Long`<br />
+  Returns this Long with bits shifted to the left by the given amount.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *number*        |
+* Long#**shiftRight**/**shr**(numBits: `Long | number | string`): `Long`<br />
+  Returns this Long with bits arithmetically shifted to the right by the given amount.
 
-#### Long#low
+* Long#**shiftRightUnsigned**/**shru**(numBits: `Long | number | string`): `Long`<br />
+  Returns this Long with bits logically shifted to the right by the given amount.
 
-The low 32 bits as a signed value.
+* Long#**subtract**/**sub**(subtrahend: `Long | number | string`): `Long`<br />
+  Returns the difference of this and the specified Long.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *number*        |
+* Long#**toBytes**(le?: `boolean`): `number[]`<br />
+  Converts this Long to its byte representation.
 
-#### Long#unsigned
+* Long#**toBytesLE**(): `number[]`<br />
+  Converts this Long to its little endian byte representation.
 
-Whether unsigned or not.
+* Long#**toBytesBE**(): `number[]`<br />
+  Converts this Long to its big endian byte representation.
 
-|                 |                 |
-|-----------------|-----------------|
-| **@type**       | *boolean*       |
+* Long#**toInt**(): `number`<br />
+  Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
 
-#### Long#add(addend)
+* Long#**toNumber**(): `number`<br />
+  Converts the Long to a the nearest floating-point representation of this value (double, 53 bit mantissa).
 
-Returns the sum of this and the specified Long.
+* Long#**toSigned**(): `Long`<br />
+  Converts this Long to signed.
 
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| addend          | *!Long &#124; number &#124; string* | Addend
-| **@returns**    | *!Long*         | Sum
+* Long#**toString**(radix?: `number`): `string`<br />
+  Converts the Long to a string written in the specified radix.
 
-#### Long#and(other)
+* Long#**toUnsigned**(): `Long`<br />
+  Converts this Long to unsigned.
 
-Returns the bitwise AND of this Long and the specified.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other Long
-| **@returns**    | *!Long*         |
-
-#### Long#compare/comp(other)
-
-Compares this Long's value with the specified's.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other value
-| **@returns**    | *number*        | 0 if they are the same, 1 if the this is greater and -1 if the given one is greater
-
-#### Long#divide/div(divisor)
-
-Returns this Long divided by the specified.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| divisor         | *!Long &#124; number &#124; string* | Divisor
-| **@returns**    | *!Long*         | Quotient
-
-#### Long#equals/eq(other)
-
-Tests if this Long's value equals the specified's.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other value
-| **@returns**    | *boolean*       |
-
-#### Long#getHighBits()
-
-Gets the high 32 bits as a signed integer.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *number*        | Signed high bits
-
-#### Long#getHighBitsUnsigned()
-
-Gets the high 32 bits as an unsigned integer.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *number*        | Unsigned high bits
-
-#### Long#getLowBits()
-
-Gets the low 32 bits as a signed integer.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *number*        | Signed low bits
-
-#### Long#getLowBitsUnsigned()
-
-Gets the low 32 bits as an unsigned integer.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *number*        | Unsigned low bits
-
-#### Long#getNumBitsAbs()
-
-Gets the number of bits needed to represent the absolute value of this Long.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *number*        |
-
-#### Long#greaterThan/gt(other)
-
-Tests if this Long's value is greater than the specified's.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other value
-| **@returns**    | *boolean*       |
-
-#### Long#greaterThanOrEqual/gte(other)
-
-Tests if this Long's value is greater than or equal the specified's.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other value
-| **@returns**    | *boolean*       |
-
-#### Long#isEven()
-
-Tests if this Long's value is even.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *boolean*       |
-
-#### Long#isNegative()
-
-Tests if this Long's value is negative.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *boolean*       |
-
-#### Long#isOdd()
-
-Tests if this Long's value is odd.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *boolean*       |
-
-#### Long#isPositive()
-
-Tests if this Long's value is positive.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *boolean*       |
-
-#### Long#isZero()
-
-Tests if this Long's value equals zero.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *boolean*       |
-
-#### Long#lessThan/lt(other)
-
-Tests if this Long's value is less than the specified's.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other value
-| **@returns**    | *boolean*       |
-
-#### Long#lessThanOrEqual/lte(other)
-
-Tests if this Long's value is less than or equal the specified's.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other value
-| **@returns**    | *boolean*       |
-
-#### Long#modulo/mod(divisor)
-
-Returns this Long modulo the specified.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| divisor         | *!Long &#124; number &#124; string* | Divisor
-| **@returns**    | *!Long*         | Remainder
-
-#### Long#multiply/mul(multiplier)
-
-Returns the product of this and the specified Long.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| multiplier      | *!Long &#124; number &#124; string* | Multiplier
-| **@returns**    | *!Long*         | Product
-
-#### Long#negate/neg()
-
-Negates this Long's value.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *!Long*         | Negated Long
-
-#### Long#not()
-
-Returns the bitwise NOT of this Long.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *!Long*         |
-
-#### Long#notEquals/neq(other)
-
-Tests if this Long's value differs from the specified's.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other value
-| **@returns**    | *boolean*       |
-
-#### Long#or(other)
-
-Returns the bitwise OR of this Long and the specified.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other Long
-| **@returns**    | *!Long*         |
-
-#### Long#shiftLeft/shl(numBits)
-
-Returns this Long with bits shifted to the left by the given amount.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| numBits         | *number &#124; !Long* | Number of bits
-| **@returns**    | *!Long*         | Shifted Long
-
-#### Long#shiftRight/shr(numBits)
-
-Returns this Long with bits arithmetically shifted to the right by the given amount.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| numBits         | *number &#124; !Long* | Number of bits
-| **@returns**    | *!Long*         | Shifted Long
-
-#### Long#shiftRightUnsigned/shru(numBits)
-
-Returns this Long with bits logically shifted to the right by the given amount.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| numBits         | *number &#124; !Long* | Number of bits
-| **@returns**    | *!Long*         | Shifted Long
-
-#### Long#subtract/sub(subtrahend)
-
-Returns the difference of this and the specified Long.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| subtrahend      | *!Long &#124; number &#124; string* | Subtrahend
-| **@returns**    | *!Long*         | Difference
-
-#### Long#toBytes(le=)
-
-Converts this Long to its byte representation.
-
-|Parameter      |Type           |Description
-|---------------|---------------|-------------
-|le             |*boolean*      |Whether little or big endian, defaults to big endian
-|**@returns**   |*!Array.&lt;number&gt;*|Byte representation
-
-#### Long#toInt()
-
-Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *number*        |
-
-#### Long#toNumber()
-
-Converts the Long to a the nearest floating-point representation of this value (double, 53 bit mantissa).
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *number*        |
-
-#### Long#toSigned()
-
-Converts this Long to signed.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *!Long*         | Signed long
-
-#### Long#toString(radix=)
-
-Converts the Long to a string written in the specified radix.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| radix           | *number*        | Radix (2-36), defaults to 10
-| **@returns**    | *string*        |
-| **@throws**     | *RangeError*    | If `radix` is out of range
-
-#### Long#toUnsigned()
-
-Converts this Long to unsigned.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| **@returns**    | *!Long*         | Unsigned long
-
-#### Long#xor(other)
-
-Returns the bitwise XOR of this Long and the given one.
-
-| Parameter       | Type            | Description
-|-----------------|-----------------|---------------
-| other           | *!Long &#124; number &#124; string* | Other Long
-| **@returns**    | *!Long*         |
+* Long#**xor**(other: `Long | number | string`): `Long`<br />
+  Returns the bitwise XOR of this Long and the given one.
 
 Building
 --------
