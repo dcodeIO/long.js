@@ -1,14 +1,33 @@
+"use strict";
+
 module.exports = Long;
 
 /**
- * wasm optimizations, to do native i64 multiplication and divide
+ * wasm optimizations for:
+ * - multiplication
+ * - signed division
+ * - unsigned division
+ * - signed modulo
+ * - unsigned modulo
+ * - converting from i64 to string
+ * - converting from string to i64
  */
 var wasm = null;
 
 try {
-  wasm = new WebAssembly.Instance(new WebAssembly.Module(new Uint8Array([
-    0, 97, 115, 109, 1, 0, 0, 0, 1, 13, 2, 96, 0, 1, 127, 96, 4, 127, 127, 127, 127, 1, 127, 3, 7, 6, 0, 1, 1, 1, 1, 1, 6, 6, 1, 127, 1, 65, 0, 11, 7, 50, 6, 3, 109, 117, 108, 0, 1, 5, 100, 105, 118, 95, 115, 0, 2, 5, 100, 105, 118, 95, 117, 0, 3, 5, 114, 101, 109, 95, 115, 0, 4, 5, 114, 101, 109, 95, 117, 0, 5, 8, 103, 101, 116, 95, 104, 105, 103, 104, 0, 0, 10, 191, 1, 6, 4, 0, 35, 0, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 126, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 127, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 128, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 129, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 130, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11
-  ])), {}).exports;
+  wasm = new WebAssembly.Instance(new WebAssembly.Module(new Uint8Array([0,97,115,109,1,0,0,0,1,154,128,128,128,0,4,96,0,1,127,96,3,127,127,127,1,127,96,2,127,127,1,127,96,4,127,127,127,127,1,127,3,139,128,128,128,0,10,0,0,0,1,2,3,3,3,3,3,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,241,128,128,128,0,11,6,109,101,109,111,114,121,2,0,13,103,101,116,79,117,116,67,104,97,114,80,116,114,0,0,12,103,101,116,73,110,67,104,97,114,80,116,114,0,1,7,103,101,116,72,105,103,104,0,2,14,116,111,83,116,114,105,110,103,70,114,111,109,54,52,0,3,10,102,114,111,109,83,116,114,105,110,103,0,4,3,109,117,108,0,5,3,100,105,118,0,6,4,117,100,105,118,0,7,3,114,101,109,0,8,4,117,114,101,109,0,9,10,181,132,128,128,0,10,132,128,128,128,0,0,65,16,11,133,128,128,128,0,0,65,144,2,11,136,128,128,128,0,0,65,0,40,2,144,4,11,219,129,128,128,0,4,1,126,2,127,1,126,1,127,2,64,2,64,32,1,173,66,32,134,32,0,172,132,34,6,80,13,0,32,2,172,33,3,65,126,33,0,3,64,32,0,65,18,106,65,215,0,65,48,32,6,32,3,129,167,34,1,65,9,74,27,32,1,106,34,1,58,0,0,32,0,65,1,106,33,0,32,6,32,3,127,34,6,66,0,82,13,0,11,32,0,65,127,70,13,1,32,0,65,2,106,33,7,65,0,45,0,16,33,2,65,0,32,1,58,0,16,32,0,65,17,106,32,2,58,0,0,2,64,32,0,65,2,73,13,0,65,2,33,1,3,64,32,1,65,15,106,34,2,45,0,0,33,4,32,2,32,0,65,16,106,34,5,45,0,0,58,0,0,32,5,32,4,58,0,0,32,1,32,0,65,127,106,34,0,73,33,2,32,1,65,1,106,33,1,32,2,13,0,11,11,32,7,15,11,65,0,65,48,58,0,16,65,1,15,11,65,1,11,211,128,128,128,0,1,2,126,2,64,2,64,32,0,69,13,0,32,1,173,33,2,66,0,33,3,65,0,33,1,3,64,32,3,32,2,126,32,1,65,144,2,106,48,0,0,124,66,80,124,33,3,32,0,32,1,65,1,106,34,1,71,13,0,12,2,11,11,66,0,33,3,11,65,0,32,3,66,32,136,62,2,144,4,32,3,167,11,167,128,128,128,0,1,1,126,65,0,32,3,173,66,32,134,32,2,172,132,32,1,173,66,32,134,32,0,172,132,126,34,4,66,32,136,62,2,144,4,32,4,167,11,167,128,128,128,0,1,1,126,65,0,32,1,173,66,32,134,32,0,172,132,32,3,173,66,32,134,32,2,172,132,127,34,4,66,32,136,62,2,144,4,32,4,167,11,167,128,128,128,0,1,1,126,65,0,32,1,173,66,32,134,32,0,172,132,32,3,173,66,32,134,32,2,172,132,128,34,4,66,32,136,62,2,144,4,32,4,167,11,167,128,128,128,0,1,1,126,65,0,32,1,173,66,32,134,32,0,172,132,32,3,173,66,32,134,32,2,172,132,129,34,4,66,32,136,62,2,144,4,32,4,167,11,167,128,128,128,0,1,1,126,65,0,32,1,173,66,32,134,32,0,172,132,32,3,173,66,32,134,32,2,172,132,130,34,4,66,32,136,62,2,144,4,32,4,167,11])), {}).exports;
+  wasm = {
+    stringIn: new Uint8Array(wasm.memory.buffer, wasm.getInCharPtr(), 256),
+    stringOut: new Uint8Array(wasm.memory.buffer, wasm.getOutCharPtr(), 256),
+    getHigh: wasm.getHigh,
+    toString: wasm.toStringFrom64,
+    fromString: wasm.fromString,
+    mul: wasm.mul,
+    div: wasm.div,
+    udiv: wasm.udiv,
+    rem: wasm.rem,
+    urem: wasm.urem
+  };
 } catch (e) {
   // no wasm support :(
 }
@@ -220,6 +239,8 @@ var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
 function fromString(str, unsigned, radix) {
     if (str.length === 0)
         throw Error('empty string');
+    if (str.length > 256)
+        throw RangeError('string too long');
     if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
         return ZERO;
     if (typeof unsigned === 'number') {
@@ -239,13 +260,21 @@ function fromString(str, unsigned, radix) {
     else if (p === 0) {
         return fromString(str.substring(1), unsigned, radix).neg();
     }
+    var i;
+
+    if (wasm) {
+        for (i = 0; i < str.length; ++i) {
+            wasm.stringIn[i] = str.charCodeAt(i);
+        }
+        return fromBits(wasm.fromString(str.length, radix), wasm.getHigh(), unsigned);
+    }
 
     // Do several (8) digits each time through the loop, so as to
     // minimize the calls to the very expensive emulated div.
     var radixToPower = fromNumber(pow_dbl(radix, 8));
 
     var result = ZERO;
-    for (var i = 0; i < str.length; i += 8) {
+    for (i = 0; i < str.length; i += 8) {
         var size = Math.min(8, str.length - i),
             value = parseInt(str.substring(i, i + size), radix);
         if (size < 8) {
@@ -437,6 +466,13 @@ var MIN_VALUE = fromBits(0, 0x80000000|0, false);
 Long.MIN_VALUE = MIN_VALUE;
 
 /**
+ * Minimum signed value as string.
+ * @type {string}
+ * @inner
+ */
+var MIN_VALUE_STRING = '-9223372036854775808';
+
+/**
  * @alias Long.prototype
  * @inner
  */
@@ -475,21 +511,26 @@ LongPrototype.toString = function toString(radix) {
         return '0';
     if (this.isNegative()) { // Unsigned Longs are never negative
         if (this.eq(MIN_VALUE)) {
-            // We need to change the Long value before it can be negated, so we remove
-            // the bottom-most digit in this base and then recurse to do the rest.
-            var radixLong = fromNumber(radix),
-                div = this.div(radixLong),
-                rem1 = div.mul(radixLong).sub(this);
-            return div.toString(radix) + rem1.toInt().toString(radix);
+            return MIN_VALUE_STRING;
         } else
             return '-' + this.neg().toString(radix);
+    }
+    var result;
+
+    if (wasm) {
+        var length = wasm.toString(this.low, this.high, radix);
+        result = new Array(length);
+        for (var i = 0; i < length; ++i) {
+            result[i] = wasm.stringOut[i];
+        }
+        return String.fromCharCode.apply(String, result);
     }
 
     // Do several (6) digits each time through the loop, so as to
     // minimize the calls to the very expensive emulated div.
     var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned),
         rem = this;
-    var result = '';
+    result = '';
     while (true) {
         var remDiv = rem.div(radixToPower),
             intval = rem.sub(remDiv.mul(radixToPower)).toInt() >>> 0,
@@ -845,11 +886,12 @@ LongPrototype.multiply = function multiply(multiplier) {
 
     // use wasm support if present
     if (wasm) {
-        var low = wasm.mul(this.low,
-                           this.high,
-                           multiplier.low,
-                           multiplier.high);
-        return fromBits(low, wasm.get_high(), this.unsigned);
+        return fromBits(wasm.mul(
+            this.low,
+            this.high,
+            multiplier.low,
+            multiplier.high
+        ), wasm.getHigh(), this.unsigned);
     }
 
     if (multiplier.isZero())
@@ -939,13 +981,12 @@ LongPrototype.divide = function divide(divisor) {
             // be consistent with non-wasm code path
             return this;
         }
-        var low = (this.unsigned ? wasm.div_u : wasm.div_s)(
+        return fromBits((this.unsigned ? wasm.udiv : wasm.div)(
             this.low,
             this.high,
             divisor.low,
             divisor.high
-        );
-        return fromBits(low, wasm.get_high(), this.unsigned);
+        ), wasm.getHigh(), this.unsigned);
     }
 
     if (this.isZero())
@@ -1048,13 +1089,12 @@ LongPrototype.modulo = function modulo(divisor) {
 
     // use wasm support if present
     if (wasm) {
-        var low = (this.unsigned ? wasm.rem_u : wasm.rem_s)(
+        return fromBits((this.unsigned ? wasm.urem : wasm.rem)(
             this.low,
             this.high,
             divisor.low,
             divisor.high
-        );
-        return fromBits(low, wasm.get_high(), this.unsigned);
+        ), wasm.getHigh(), this.unsigned);
     }
 
     return this.sub(this.div(divisor).mul(divisor));
@@ -1177,14 +1217,12 @@ LongPrototype.shiftRightUnsigned = function shiftRightUnsigned(numBits) {
     if (numBits === 0)
         return this;
     else {
-        var high = this.high;
-        if (numBits < 32) {
-            var low = this.low;
-            return fromBits((low >>> numBits) | (high << (32 - numBits)), high >>> numBits, this.unsigned);
-        } else if (numBits === 32)
-            return fromBits(high, 0, this.unsigned);
+        if (numBits < 32)
+            return fromBits((this.low >>> numBits) | (this.high << (32 - numBits)), this.high >>> numBits, this.unsigned);
+        else if (numBits === 32)
+            return fromBits(this.high, 0, this.unsigned);
         else
-            return fromBits(high >>> (numBits - 32), 0, this.unsigned);
+            return fromBits(this.high >>> (numBits - 32), 0, this.unsigned);
     }
 };
 
