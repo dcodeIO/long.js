@@ -63,6 +63,28 @@ Long.fromNumber = function(value, unsigned) {};
 Long.fromBits = function(lowBits, highBits, unsigned) {};
 
 /**
+ * @param {!Array.<number>} bytes
+ * @param {boolean=} unsigned
+ * @param {boolean=} le
+ * @return {!Long}
+ */
+Long.fromBytes = function(bytes, unsigned, le) {};
+
+/**
+ * @param {!Array.<number>} bytes
+ * @param {boolean=} unsigned
+ * @return {!Long}
+ */
+Long.fromBytesLE = function(bytes, unsigned) {};
+
+/**
+ * @param {!Array.<number>} bytes
+ * @param {boolean=} unsigned
+ * @return {!Long}
+ */
+Long.fromBytesBE = function(bytes, unsigned) {};
+
+/**
  * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val
  * @returns {!Long}
  */
