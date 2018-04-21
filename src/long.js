@@ -845,11 +845,11 @@ LongPrototype.multiply = function multiply(multiplier) {
 
     // use wasm support if present
     if (wasm) {
-        var low = wasm.mul(this.low,
-                           this.high,
-                           multiplier.low,
-                           multiplier.high);
-        return fromBits(low, wasm.get_high(), this.unsigned);
+        var low = wasm["mul"](this.low,
+                              this.high,
+                              multiplier.low,
+                              multiplier.high);
+        return fromBits(low, wasm["get_high"](), this.unsigned);
     }
 
     if (multiplier.isZero())
@@ -939,13 +939,13 @@ LongPrototype.divide = function divide(divisor) {
             // be consistent with non-wasm code path
             return this;
         }
-        var low = (this.unsigned ? wasm.div_u : wasm.div_s)(
+        var low = (this.unsigned ? wasm["div_u"] : wasm["div_s"])(
             this.low,
             this.high,
             divisor.low,
             divisor.high
         );
-        return fromBits(low, wasm.get_high(), this.unsigned);
+        return fromBits(low, wasm["get_high"](), this.unsigned);
     }
 
     if (this.isZero())
@@ -1048,13 +1048,13 @@ LongPrototype.modulo = function modulo(divisor) {
 
     // use wasm support if present
     if (wasm) {
-        var low = (this.unsigned ? wasm.rem_u : wasm.rem_s)(
+        var low = (this.unsigned ? wasm["rem_u"] : wasm["rem_s"])(
             this.low,
             this.high,
             divisor.low,
             divisor.high
         );
-        return fromBits(low, wasm.get_high(), this.unsigned);
+        return fromBits(low, wasm["get_high"](), this.unsigned);
     }
 
     return this.sub(this.div(divisor).mul(divisor));
