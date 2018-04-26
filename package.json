@@ -16,12 +16,13 @@
     ],
     "dependencies": {},
     "devDependencies": {
+        "dtslint": "^0.3.0",
         "webpack": "^3.10.0"
     },
     "license": "Apache-2.0",
     "scripts": {
         "build": "webpack",
-        "test": "node tests"
+        "test": "node tests && dtslint types"
     },
     "files": [
         "index.js",
@@ -29,6 +30,8 @@
         "README.md",
         "src/long.js",
         "dist/long.js",
-        "dist/long.js.map"
-    ]
+        "dist/long.js.map",
+        "types/index.d.ts"
+    ],
+    "types": "types"
 }
