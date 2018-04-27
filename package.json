@@ -16,13 +16,12 @@
     ],
     "dependencies": {},
     "devDependencies": {
-        "dtslint": "^0.3.0",
         "webpack": "^3.10.0"
     },
     "license": "Apache-2.0",
     "scripts": {
         "build": "webpack",
-        "test": "node tests && dtslint types"
+        "test": "node tests"
     },
     "files": [
         "index.js",
