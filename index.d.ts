@@ -104,7 +104,7 @@ declare class Long {
     /**
      * Converts the specified value to a Long.
      */
-    static fromValue(val: Long | number | string | {low: number, high: number, unsigned: boolean}): Long;
+    static fromValue(val: Long | number | string | {low: number, high: number, unsigned: boolean}, unsigned?: boolean): Long;
 
     /**
      * Returns the sum of this and the specified Long.
@@ -192,6 +192,11 @@ declare class Long {
     gte(other: Long | number | string): boolean;
 
     /**
+     * Tests if this Long's value is greater than or equal the specified's.
+     */
+    ge(other: Long | number | string): boolean;
+
+    /**
      * Tests if this Long's value is even.
      */
     isEven(): boolean;
@@ -217,6 +222,11 @@ declare class Long {
     isZero(): boolean;
 
     /**
+     * Tests if this Long's value equals zero.
+     */
+    eqz(): boolean;
+
+    /**
      * Tests if this Long's value is less than the specified's.
      */
     lessThan(other: Long | number | string): boolean;
@@ -237,6 +247,11 @@ declare class Long {
     lte(other: Long | number | string): boolean;
 
     /**
+     * Tests if this Long's value is less than or equal the specified's.
+     */
+    le(other: Long | number | string): boolean;
+
+    /**
      * Returns this Long modulo the specified.
      */
     modulo(other: Long | number | string): Long;
@@ -245,6 +260,11 @@ declare class Long {
      * Returns this Long modulo the specified.
      */
     mod(other: Long | number | string): Long;
+
+    /**
+     * Returns this Long modulo the specified.
+     */
+    rem(other: Long | number | string): Long;
 
     /**
      * Returns the product of this and the specified Long.
@@ -282,6 +302,11 @@ declare class Long {
     neq(other: Long | number | string): boolean;
 
     /**
+     * Tests if this Long's value differs from the specified's.
+     */
+    ne(other: Long | number | string): boolean;
+
+    /**
      * Returns the bitwise OR of this Long and the specified.
      */
     or(other: Long | number | string): Long;
@@ -315,6 +340,11 @@ declare class Long {
      * Returns this Long with bits logically shifted to the right by the given amount.
      */
     shru(numBits: number | Long): Long;
+
+    /**
+     * Returns this Long with bits logically shifted to the right by the given amount.
+     */
+    shr_u(numBits: number | Long): Long;
 
     /**
      * Returns the difference of this and the specified Long.
