@@ -1,4 +1,3 @@
-// TypeScript Version: 2.4
 export default Long;
 
 declare class Long {

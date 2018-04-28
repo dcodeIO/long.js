@@ -30,7 +30,7 @@
         "src/long.js",
         "dist/long.js",
         "dist/long.js.map",
-        "types/index.d.ts"
+        "index.d.ts"
     ],
-    "types": "types"
+    "types": "index.d.ts"
 }
