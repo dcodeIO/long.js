@@ -29,6 +29,8 @@
         "README.md",
         "src/long.js",
         "dist/long.js",
-        "dist/long.js.map"
-    ]
+        "dist/long.js.map",
+        "index.d.ts"
+    ],
+    "types": "index.d.ts"
 }
