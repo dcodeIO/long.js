@@ -347,6 +347,26 @@ declare class Long {
     shr_u(numBits: number | Long): Long;
 
     /**
+     * Returns this Long with bits rotated to the left by the given amount.
+     */
+    rotateLeft(numBits: number | Long): Long;
+
+    /**
+     * Returns this Long with bits rotated to the left by the given amount.
+     */
+    rotl(numBits: number | Long): Long;
+
+    /**
+     * Returns this Long with bits rotated to the right by the given amount.
+     */
+    rotateRight(numBits: number | Long): Long;
+
+    /**
+     * Returns this Long with bits rotated to the right by the given amount.
+     */
+    rotr(numBits: number | Long): Long;
+
+    /**
      * Returns the difference of this and the specified Long.
      */
     subtract(subtrahend: number | Long | string): Long;

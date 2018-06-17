@@ -1198,6 +1198,48 @@ LongPrototype.shiftRight = function shiftRight(numBits) {
 LongPrototype.shr = LongPrototype.shiftRight;
 
 /**
+ * Returns this Long with bits rotated to the left by the given amount.
+ * @this {!Long}
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Rotated Long
+ */
+LongPrototype.rotateLeft = function rotateLeft(numBits) {
+    if (isLong(numBits))
+        numBits = numBits.toInt();
+    if ((numBits &= 63) === 0)
+        return this;
+    return (this.shl(numBits)).or(this.shru(64-numBits));
+}
+/**
+ * Returns this Long with bits rotated to the left by the given amount. This is an alias of {@link Long#rotateLeft}.
+ * @function
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Shifted Long
+ */
+LongPrototype.rotl = LongPrototype.rotateLeft;
+
+/**
+ * Returns this Long with bits rotated to the right by the given amount.
+ * @this {!Long}
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Rotated Long
+ */
+LongPrototype.rotateRight = function rotateRight(numBits) {
+    if (isLong(numBits))
+        numBits = numBits.toInt();
+    if ((numBits &= 63) === 0)
+        return this;
+    return (this.shru(numBits)).or(this.shl(64-numBits));
+}
+/**
+ * Returns this Long with bits rotated to the right by the given amount. This is an alias of {@link Long#rotateRight}.
+ * @function
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Shifted Long
+ */
+LongPrototype.rotr = LongPrototype.rotateRight;
+
+/**
  * Returns this Long with bits logically shifted to the right by the given amount.
  * @this {!Long}
  * @param {number|!Long} numBits Number of bits

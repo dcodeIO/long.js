@@ -160,6 +160,19 @@ function testIssue31() {
     var x = a.div(b);
     assert.strictEqual(x.toString(), '12');
     assert.strictEqual(x.unsigned, true);
+},
+
+function testRotateLeft() {
+    var longVal = Long.fromBits(0x01234567, 0x89ABCDEF);
+    var longValL = Long.fromBits(0x12345678, 0x9ABCDEF0);
+    var rl = longVal.rotateLeft(4);
+    assert.deepEqual(rl, longValL);
+},
+function testRotateRight() {
+    var longVal = Long.fromBits(0x01234567, 0x89ABCDEF);
+    var longValR = Long.fromBits(0xF0123456, 0x789ABCDE);
+    var rr =  longVal.rotateRight(4);
+    assert.deepEqual(rr, longValR);
 }
 
 ]; // END TEST CASES

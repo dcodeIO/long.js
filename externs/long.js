@@ -428,6 +428,30 @@ Long.prototype.shiftRightUnsigned = function(numBits) {};
 Long.prototype.shru = function(numBits) {};
 
 /**
+ * @param {number|!Long} numBits
+ * @return {!Long}
+ */
+Long.prototype.rotateLeft = function(numBits) {};
+
+/**
+ * @param {number|!Long} numBits
+ * @return {!Long}
+ */
+Long.prototype.rotl = function(numBits) {};
+
+/**
+ * @param {number|!Long} numBits
+ * @return {!Long}
+ */
+Long.prototype.rotateRight = function(numBits) {};
+
+/**
+ * @param {number|!Long} numBits
+ * @return {!Long}
+ */
+Long.prototype.rotr = function(numBits) {};
+
+/**
  * @return {!Long}
  */
 Long.prototype.toSigned = function() {};
