@@ -137,6 +137,21 @@ declare class Long {
     div(divisor: Long | number | string): Long;
 
     /**
+     * Returns a deep copy of this Long.
+     */
+    clone(): Long;
+
+    /**
+     * Returns this Long to given integer power.
+     */
+    power(exp: Long | number | string): Long;
+
+    /**
+     * Returns this Long to given integer power.
+     */
+    pow(exp: Long | number | string): Long;
+
+    /**
      * Tests if this Long's value equals the specified's.
      */
     equals(other: Long | number | string): boolean;

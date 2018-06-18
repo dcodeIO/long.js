@@ -1087,6 +1087,42 @@ LongPrototype.modulo = function modulo(divisor) {
 };
 
 /**
+ * Returns a deep copy of this Long.
+ * @this {!Long}
+ * @returns {!Long} Deep copy of this Long
+ */
+LongPrototype.clone = function clone() {
+    return new Long(this.low, this.high, this.unsigned);
+};
+
+/**
+ * Returns this Long to given integer power.
+ * @this {!Long}
+ * @param {!Long|number|string} exp Integer power
+ * @returns {!Long} This Long to given integer power
+ */
+LongPrototype.power = function power(exp) {
+    var a = this;
+    var b = Long.fromValue(exp);
+    if (b.isZero()) return Long.ONE.clone();
+    if (a.eq(Long.ONE) || b.eq(Long.ONE)) return a.clone();
+    if (b.isNegative()) return Long.ONE.div(a.pow(b.neg())); // being only integers, this will probably always be zero?
+    while (b.isEven()) {
+      b = b.shru(1);
+      a = a.mul(a);
+    }
+    return a.pow(b.sub(1)).mul(a);
+};
+
+/**
+ * Returns this Long to given integer power. This is an alias of {@link Long#power}.
+ * @function
+ * @param {!Long|number|string} exp Power
+ * @returns {!Long} This Long to given integer power
+ */
+LongPrototype.pow = LongPrototype.power;
+
+/**
  * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
  * @function
  * @param {!Long|number|string} divisor Divisor

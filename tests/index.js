@@ -152,6 +152,19 @@ function testUnsignedMsbUnsigned() {
     assert.strictEqual(Long.fromString("9223372036854775808", true).toString(), "9223372036854775808");
 },
 
+function testPower() {
+    var a = Long.fromNumber(11);
+    var b = a.power(12);
+    var res = Long.fromNumber(3138428376721);
+    assert.deepEqual(b, res);
+    // check negative, which will probably always be zero since we can't store fractional result?
+    b = a.power(-3);
+    assert.deepEqual(b, Long.ZERO);
+    // except perhaps one which has a short circuit condition anyway?
+    b = Long.ONE.power(-1);
+    assert.deepEqual(b, Long.ONE);
+},
+
 function testIssue31() {
     var a = new Long(0, 8, true);
     var b = Long.fromNumber(2656901066, true);

@@ -127,6 +127,12 @@ API
 * Long#**divide**/**div**(divisor: `Long | number | string`): `Long`<br />
   Returns this Long divided by the specified.
 
+* Long#**clone**(): `Long`<br />
+  Returns a deep copy of this Long.
+
+* Long#**power**/**pow**(exp: `Long | number | string`): `Long`<br />
+  Returns this Long to given integer power.
+
 * Long#**equals**/**eq**(other: `Long | number | string`): `boolean`<br />
   Tests if this Long's value equals the specified's.
 
