@@ -1104,8 +1104,8 @@ LongPrototype.clone = function clone() {
 LongPrototype.power = function power(exp) {
     var a = this;
     var b = Long.fromValue(exp);
-    if (b.isZero()) return Long.ONE.clone();
-    if (a.eq(Long.ONE) || b.eq(Long.ONE)) return a.clone();
+    if (b.isZero()) return Long.ONE;
+    if (a.eq(Long.ONE) || b.eq(Long.ONE)) return a;
     if (b.isNegative()) return Long.ONE.div(a.pow(b.neg())); // being only integers, this will probably always be zero?
     while (b.isEven()) {
       b = b.shru(1);
