@@ -1096,28 +1096,28 @@ LongPrototype.clone = function clone() {
 };
 
 /**
- * Returns this Long to given integer power.
+ * Returns this Long to given 32bit integer power.
  * @this {!Long}
- * @param {!Long|number|string} exp Integer power
+ * @param {!Long|number} exp Integer power (32bit)
  * @returns {!Long} This Long to given integer power
  */
 LongPrototype.power = function power(exp) {
     var a = this;
-    var b = Long.fromValue(exp);
-    if (b.isZero()) return Long.ONE;
-    if (a.eq(Long.ONE) || b.eq(Long.ONE)) return a;
-    if (b.isNegative()) return Long.ONE.div(a.pow(b.neg())); // being only integers, this will probably always be zero?
-    while (b.isEven()) {
-      b = b.shru(1);
+    if (isLong(exp)) exp = exp.toInt();
+    if (exp===0) return Long.ONE;
+    if (a.eq(Long.ONE) || exp===1) return a;
+    if (exp < 0) return Long.ZERO; // Long.ONE.div(a.pow(-exp)); // being only integers, this will probably always be zero?
+    while ((exp & 1)===0) {
+      exp >>>= 1;
       a = a.mul(a);
     }
-    return a.pow(b.sub(1)).mul(a);
+    return a.pow(exp-1).mul(a);
 };
 
 /**
- * Returns this Long to given integer power. This is an alias of {@link Long#power}.
+ * Returns this Long to given 32bit integer power. This is an alias of {@link Long#power}.
  * @function
- * @param {!Long|number|string} exp Power
+ * @param {!Long|number} exp Power
  * @returns {!Long} This Long to given integer power
  */
 LongPrototype.pow = LongPrototype.power;

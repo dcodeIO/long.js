@@ -362,13 +362,13 @@ Long.prototype.div = function(other) {};
 Long.prototype.clone = function() {};
 
 /**
- * @param {!Long|number|string} other
+ * @param {!Long|number} other
  * @return {!Long}
  */
 Long.prototype.power = function(other) {};
 
 /**
- * @param {!Long|number|string} other
+ * @param {!Long|number} other
  * @return {!Long}
  */
 Long.prototype.pow = function(other) {};

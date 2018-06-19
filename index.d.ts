@@ -142,14 +142,14 @@ declare class Long {
     clone(): Long;
 
     /**
-     * Returns this Long to given integer power.
+     * Returns this Long to given 32bit integer power.
      */
-    power(exp: Long | number | string): Long;
+    power(exp: Long | number): Long;
 
     /**
-     * Returns this Long to given integer power.
+     * Returns this Long to given 32bit integer power.
      */
-    pow(exp: Long | number | string): Long;
+    pow(exp: Long | number): Long;
 
     /**
      * Tests if this Long's value equals the specified's.
