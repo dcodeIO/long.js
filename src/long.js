@@ -1198,48 +1198,6 @@ LongPrototype.shiftRight = function shiftRight(numBits) {
 LongPrototype.shr = LongPrototype.shiftRight;
 
 /**
- * Returns this Long with bits rotated to the left by the given amount.
- * @this {!Long}
- * @param {number|!Long} numBits Number of bits
- * @returns {!Long} Rotated Long
- */
-LongPrototype.rotateLeft = function rotateLeft(numBits) {
-    if (isLong(numBits))
-        numBits = numBits.toInt();
-    if ((numBits &= 63) === 0)
-        return this;
-    return (this.shl(numBits)).or(this.shru(64-numBits));
-}
-/**
- * Returns this Long with bits rotated to the left by the given amount. This is an alias of {@link Long#rotateLeft}.
- * @function
- * @param {number|!Long} numBits Number of bits
- * @returns {!Long} Shifted Long
- */
-LongPrototype.rotl = LongPrototype.rotateLeft;
-
-/**
- * Returns this Long with bits rotated to the right by the given amount.
- * @this {!Long}
- * @param {number|!Long} numBits Number of bits
- * @returns {!Long} Rotated Long
- */
-LongPrototype.rotateRight = function rotateRight(numBits) {
-    if (isLong(numBits))
-        numBits = numBits.toInt();
-    if ((numBits &= 63) === 0)
-        return this;
-    return (this.shru(numBits)).or(this.shl(64-numBits));
-}
-/**
- * Returns this Long with bits rotated to the right by the given amount. This is an alias of {@link Long#rotateRight}.
- * @function
- * @param {number|!Long} numBits Number of bits
- * @returns {!Long} Shifted Long
- */
-LongPrototype.rotr = LongPrototype.rotateRight;
-
-/**
  * Returns this Long with bits logically shifted to the right by the given amount.
  * @this {!Long}
  * @param {number|!Long} numBits Number of bits
@@ -1278,6 +1236,60 @@ LongPrototype.shru = LongPrototype.shiftRightUnsigned;
  * @returns {!Long} Shifted Long
  */
 LongPrototype.shr_u = LongPrototype.shiftRightUnsigned;
+
+/**
+ * Returns this Long with bits rotated to the left by the given amount.
+ * @this {!Long}
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Rotated Long
+ */
+LongPrototype.rotateLeft = function rotateLeft(numBits) {
+    var b;
+    if (isLong(numBits)) numBits = numBits.toInt();
+    if ((numBits &= 63) === 0) return this;
+    if (numBits === 32) return fromBits(this.high, this.low, this.unsigned);
+    if (numBits < 32) {
+        b = (32 - numBits);
+        return fromBits(((this.low << numBits) | (this.high >>> b)), ((this.high << numBits) | (this.low >>> b)), this.unsigned);
+    }
+    numBits -= 32;
+    b = (32 - numBits);
+    return fromBits(((this.high << numBits) | (this.low >>> b)), ((this.low << numBits) | (this.high >>> b)), this.unsigned);
+}
+/**
+ * Returns this Long with bits rotated to the left by the given amount. This is an alias of {@link Long#rotateLeft}.
+ * @function
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Rotated Long
+ */
+LongPrototype.rotl = LongPrototype.rotateLeft;
+
+/**
+ * Returns this Long with bits rotated to the right by the given amount.
+ * @this {!Long}
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Rotated Long
+ */
+LongPrototype.rotateRight = function rotateRight(numBits) {
+    var b;
+    if (isLong(numBits)) numBits = numBits.toInt();
+    if ((numBits &= 63) === 0) return this;
+    if (numBits === 32) return fromBits(this.high, this.low, this.unsigned);
+    if (numBits < 32) {
+        b = (32 - numBits);
+        return fromBits(((this.high << b) | (this.low >>> numBits)), ((this.low << b) | (this.high >>> numBits)), this.unsigned);
+    }
+    numBits -= 32;
+    b = (32 - numBits);
+    return fromBits(((this.low << b) | (this.high >>> numBits)), ((this.high << b) | (this.low >>> numBits)), this.unsigned);
+}
+/**
+ * Returns this Long with bits rotated to the right by the given amount. This is an alias of {@link Long#rotateRight}.
+ * @function
+ * @param {number|!Long} numBits Number of bits
+ * @returns {!Long} Rotated Long
+ */
+LongPrototype.rotr = LongPrototype.rotateRight;
 
 /**
  * Converts this Long to signed.
