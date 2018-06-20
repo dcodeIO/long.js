@@ -863,7 +863,7 @@ LongPrototype.sub = LongPrototype.subtract;
  */
 LongPrototype.multiply = function multiply(multiplier) {
     if (this.isZero())
-        return ZERO;
+        return (this.unsigned?UZERO:ZERO);
     if (!isLong(multiplier))
         multiplier = fromValue(multiplier);
 
@@ -877,11 +877,11 @@ LongPrototype.multiply = function multiply(multiplier) {
     }
 
     if (multiplier.isZero())
-        return ZERO;
+        return (this.unsigned?UZERO:ZERO);
     if (this.eq(MIN_VALUE))
-        return multiplier.isOdd() ? MIN_VALUE : ZERO;
+        return multiplier.isOdd() ? MIN_VALUE : (this.unsigned?UZERO:ZERO);
     if (multiplier.eq(MIN_VALUE))
-        return this.isOdd() ? MIN_VALUE : ZERO;
+        return this.isOdd() ? MIN_VALUE : (this.unsigned?UZERO:ZERO);
 
     if (this.isNegative()) {
         if (multiplier.isNegative())
@@ -1103,15 +1103,16 @@ LongPrototype.clone = function clone() {
  */
 LongPrototype.power = function power(exp) {
     var a = this;
+    if (a.eq(Long.ONE)) return a;
     if (isLong(exp)) exp = exp.toInt();
-    if (exp===0) return Long.ONE;
-    if (a.eq(Long.ONE) || exp===1) return a;
-    if (exp < 0) return Long.ZERO; // Long.ONE.div(a.pow(-exp)); // being only integers, this will probably always be zero?
+    if (exp===0) return (a.unsigned?UONE:ONE); // zero to zero is treated as one by many languages
+    if (a.isZero() || exp===1) return a;
+    if (exp < 0) return (a.unsigned?UZERO:ZERO); // Long.ONE.div(a.pow(-exp)); // being only integers, this will probably always be zero?
     while ((exp & 1)===0) {
       exp >>>= 1;
       a = a.mul(a);
     }
-    return a.pow(exp-1).mul(a);
+    return (exp===1 ? a : a.pow(exp-1).mul(a));
 };
 
 /**
