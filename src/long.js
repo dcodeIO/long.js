@@ -1204,21 +1204,11 @@ LongPrototype.shr = LongPrototype.shiftRight;
  * @returns {!Long} Shifted Long
  */
 LongPrototype.shiftRightUnsigned = function shiftRightUnsigned(numBits) {
-    if (isLong(numBits))
-        numBits = numBits.toInt();
-    numBits &= 63;
-    if (numBits === 0)
-        return this;
-    else {
-        var high = this.high;
-        if (numBits < 32) {
-            var low = this.low;
-            return fromBits((low >>> numBits) | (high << (32 - numBits)), high >>> numBits, this.unsigned);
-        } else if (numBits === 32)
-            return fromBits(high, 0, this.unsigned);
-        else
-            return fromBits(high >>> (numBits - 32), 0, this.unsigned);
-    }
+    if (isLong(numBits)) numBits = numBits.toInt();
+    if ((numBits &= 63) === 0) return this;
+    if (numBits < 32) return fromBits((this.low >>> numBits) | (this.high << (32 - numBits)), this.high >>> numBits, this.unsigned);
+    if (numBits === 32) return fromBits(this.high, 0, this.unsigned);
+    return fromBits(this.high >>> (numBits - 32), 0, this.unsigned);
 };
 
 /**
