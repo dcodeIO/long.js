@@ -99,7 +99,7 @@ declare class Long {
     /**
      * Tests if the specified object is a Long.
      */
-    static isLong(obj: any): boolean;
+    static isLong(obj: any): obj is Long;
 
     /**
      * Converts the specified value to a Long.
