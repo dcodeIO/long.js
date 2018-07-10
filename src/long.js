@@ -1106,7 +1106,11 @@ LongPrototype.power = function power(exp) {
     if (a.eq(Long.ONE)) return a;
     if (isLong(exp)) exp = exp.toInt();
     if (exp===0) return (a.unsigned?UONE:ONE); // zero to zero is treated as one by many languages
-    if (a.isZero() || exp===1) return a;
+    if (a.isZero()) {
+        if (exp < 0) throw Error('Zero to negative power is undefined'); // or return Infinity?
+        return a;
+    }
+    if (exp===1) return a;
     if (exp < 0) return (a.unsigned?UZERO:ZERO); // Long.ONE.div(a.pow(-exp)); // being only integers, this will probably always be zero?
     while ((exp & 1)===0) {
       exp >>>= 1;

@@ -198,6 +198,11 @@ function testPower() {
     // zero to zero power
     b = Long.ZERO.power(Long.ZERO);
     assert.deepEqual(b, Long.ONE);
+    // zero to negative power
+    a = false;
+    try { b = Long.ZERO.power(-3); }
+    catch (e) { a = true }
+    if (a===false) throw new Error('Zero to negative power should throw error');
 },
 
 function testIssue31() {
