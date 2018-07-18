@@ -1,10 +1,10 @@
 {
     "name": "@xtuc/long",
-    "version": "4.1.0",
+    "version": "4.2.1",
     "author": "Daniel Wirtz <dcode@dcode.io>",
     "description": "A Long class for representing a 64-bit two's-complement integer value.",
     "module": "src/long.js",
-    "main": "src/long.js",
+    "main": "dist/long.cjs.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/dcodeIO/long.js.git"
@@ -17,6 +17,9 @@
     ],
     "dependencies": {},
     "devDependencies": {
+        "@babel/cli": "^7.0.0-beta.54",
+        "@babel/core": "^7.0.0-beta.54",
+        "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.54",
         "webpack": "^3.10.0"
     },
     "license": "Apache-2.0",
@@ -33,5 +36,6 @@
         "dist/long.js.map",
         "index.d.ts"
     ],
-    "types": "index.d.ts"
+    "types": "index.d.ts",
+    "prepublish": "babel --plugins @babel/plugin-transform-modules-commonjs src/long.js -o dist/long.cjs.js"
 }
