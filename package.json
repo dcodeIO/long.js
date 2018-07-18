@@ -1,6 +1,6 @@
 {
     "name": "@xtuc/long",
-    "version": "4.0.0",
+    "version": "4.1.0",
     "author": "Daniel Wirtz <dcode@dcode.io>",
     "description": "A Long class for representing a 64-bit two's-complement integer value.",
     "module": "src/long.js",
