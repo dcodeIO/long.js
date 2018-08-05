@@ -1,5 +1,5 @@
 var assert = require("assert");
-var Long = require("..");
+var Long = require("..").default;
 
 var tests = [ // BEGIN TEST CASES
 

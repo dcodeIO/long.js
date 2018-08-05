@@ -24,7 +24,9 @@
     },
     "license": "Apache-2.0",
     "scripts": {
-        "build": "webpack",
+        "build:node": "babel src/long.js -o dist/long.cjs.js",
+        "build:browser": "webpack",
+        "build": "npm run build:node && npm run build:browser",
         "test": "node tests"
     },
     "files": [
@@ -37,5 +39,5 @@
         "index.d.ts"
     ],
     "types": "index.d.ts",
-    "prepublish": "babel --plugins @babel/plugin-transform-modules-commonjs src/long.js -o dist/long.cjs.js"
+    "prepublish": "npm run build"
 }
