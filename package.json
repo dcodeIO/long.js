@@ -27,7 +27,9 @@
         "build:node": "babel src/long.js -o dist/long.cjs.js",
         "build:browser": "webpack",
         "build": "npm run build:node && npm run build:browser",
-        "test": "node tests"
+        "test": "node tests",
+        "pretest": "npm run build",
+        "prepublish": "npm run build"
     },
     "files": [
         "index.js",
@@ -38,6 +40,5 @@
         "dist/long.js.map",
         "index.d.ts"
     ],
-    "types": "index.d.ts",
-    "prepublish": "npm run build"
+    "types": "index.d.ts"
 }
