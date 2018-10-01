@@ -2,7 +2,6 @@ dist: trusty
 language: node_js
 node_js:
   - "lts/*"
-  - 0.12
   - node
 jobs:
   include:
