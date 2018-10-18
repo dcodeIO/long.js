@@ -1,4 +1,7 @@
-export default Long;
+export = Long;
+export as namespace Long;
+
+declare namespace Long { }
 
 declare class Long {
     /**
@@ -92,7 +95,7 @@ declare class Long {
     static fromBytesLE(bytes: number[], unsigned?: boolean): Long;
 
     /**
-     * Creates a Long from its little endian byte representation.
+     * Creates a Long from its big endian byte representation.
      */
     static fromBytesBE(bytes: number[], unsigned?: boolean): Long;
 
