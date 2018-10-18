@@ -199,6 +199,12 @@ API
 * Long#**shiftRightUnsigned**/**shru**/**shr_u**(numBits: `Long | number | string`): `Long`<br />
   Returns this Long with bits logically shifted to the right by the given amount.
 
+* Long#**rotateLeft**/**rotl**(numBits: `Long | number | string`): `Long`<br />
+  Returns this Long with bits rotated to the left by the given amount.
+
+* Long#**rotateRight**/**rotr**(numBits: `Long | number | string`): `Long`<br />
+  Returns this Long with bits rotated to the right by the given amount.
+
 * Long#**subtract**/**sub**(subtrahend: `Long | number | string`): `Long`<br />
   Returns the difference of this and the specified Long.
 

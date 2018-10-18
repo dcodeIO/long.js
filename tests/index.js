@@ -160,6 +160,37 @@ function testIssue31() {
     var x = a.div(b);
     assert.strictEqual(x.toString(), '12');
     assert.strictEqual(x.unsigned, true);
+},
+
+function testRotateLeft() {
+    var longVal = Long.fromBits(0x01234567, 0x89ABCDEF);
+    var longValL = Long.fromBits(0x12345678, 0x9ABCDEF0);
+    var longValR = Long.fromBits(0xF0123456, 0x789ABCDE);
+    var longValS = Long.fromBits(0x89ABCDEF, 0x01234567);
+    // little rotate
+    var v = longVal.rotateLeft(4);
+    assert.deepEqual(v, longValL);
+    // big rotate
+    v = longVal.rotateLeft(60);
+    assert.deepEqual(v, longValR);
+    // swap
+    v = longVal.rotateLeft(32);
+    assert.deepEqual(v, longValS);
+},
+function testRotateRight() {
+    var longVal = Long.fromBits(0x01234567, 0x89ABCDEF);
+    var longValL = Long.fromBits(0x12345678, 0x9ABCDEF0);
+    var longValR = Long.fromBits(0xF0123456, 0x789ABCDE);
+    var longValS = Long.fromBits(0x89ABCDEF, 0x01234567);
+    // little rotate
+    var v =  longVal.rotateRight(4);
+    assert.deepEqual(v, longValR);
+    // big rotate
+    v = longVal.rotateRight(60);
+    assert.deepEqual(v, longValL);
+    // swap
+    v = longVal.rotateRight(32);
+    assert.deepEqual(v, longValS);
 }
 
 ]; // END TEST CASES
