@@ -1,6 +1,4 @@
 module.exports = Long;
-module.exports.default = Long;
-module.exports.Long = Long;
 
 /**
  * wasm optimizations, to do native i64 multiplication and divide
