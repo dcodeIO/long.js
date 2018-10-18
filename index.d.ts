@@ -1,6 +1,4 @@
-export default Long;
-
-declare class Long {
+export default class Long {
     /**
      * Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as signed integers. See the from* functions below for more convenient ways of constructing Longs.
      */
@@ -87,7 +85,7 @@ declare class Long {
     static fromBytes(bytes: number[], unsigned?: boolean, le?: boolean): Long;
 
     /**
-     * Creates a Long from its little endian byte representation.
+     * Creates a Long from its big endian byte representation.
      */
     static fromBytesLE(bytes: number[], unsigned?: boolean): Long;
 
@@ -404,3 +402,5 @@ declare class Long {
      */
     xor(other: Long | number | string): Long;
 }
+
+export { Long };
