@@ -152,6 +152,59 @@ function testUnsignedMsbUnsigned() {
     assert.strictEqual(Long.fromString("9223372036854775808", true).toString(), "9223372036854775808");
 },
 
+function testPower() {
+    var a = Long.fromNumber(11);
+    var b = a.power(12);
+    var res = Long.fromNumber(3138428376721);
+    assert.deepEqual(b, res);
+    // check negative, which will probably always be zero since we can't store fractional result?
+    b = a.power(-3);
+    assert.deepEqual(b, Long.ZERO);
+    // except perhaps one which has a short circuit condition anyway?
+    b = Long.ONE.power(-1);
+    assert.deepEqual(b, Long.ONE);
+    b = Long.UONE.power(-1);
+    //if (!b.eq(Long.ONE)) throw new Error('Power failed to compute UONE to -1');
+    assert.deepEqual(b, Long.UONE);
+    // negative number
+    a = Long.fromNumber(-11);
+    b = a.power(11);
+    res = Long.fromNumber(-285311670611);
+    assert.deepEqual(b, res);
+    // check as unsigned
+    a = Long.fromNumber(11, true);
+    b = a.power(12);
+    res = Long.fromNumber(3138428376721, true);
+    assert.deepEqual(b, res);
+    // max exp
+    a = Long.fromNumber(2, true);
+    b = a.power(64); // technically overflows to zero
+    b = b.sub(1);
+    //if (!b.eq(Long.MAX_UNSIGNED_VALUE)) throw new Error('Power failed to compute 2^64-1');
+    assert.deepEqual(b, Long.MAX_UNSIGNED_VALUE);
+    // zero base
+    b = Long.ZERO.power(123);
+    assert.deepEqual(b, Long.ZERO);
+    // one base
+    b = Long.ONE.power(123);
+    assert.deepEqual(b, Long.ONE);
+    // zero power
+    a = Long.fromNumber(123);
+    b = a.power(Long.ZERO);
+    assert.deepEqual(b, Long.ONE);
+    // one power
+    b = a.power(Long.ONE);
+    assert.deepEqual(b, a);
+    // zero to zero power
+    b = Long.ZERO.power(Long.ZERO);
+    assert.deepEqual(b, Long.ONE);
+    // zero to negative power
+    a = false;
+    try { b = Long.ZERO.power(-3); }
+    catch (e) { a = true }
+    if (a===false) throw new Error('Zero to negative power should throw error');
+},
+
 function testIssue31() {
     var a = new Long(0, 8, true);
     var b = Long.fromNumber(2656901066, true);

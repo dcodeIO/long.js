@@ -357,6 +357,23 @@ Long.prototype.divide = function(other) {};
 Long.prototype.div = function(other) {};
 
 /**
+ * @return {!Long}
+ */
+Long.prototype.clone = function() {};
+
+/**
+ * @param {!Long|number} other
+ * @return {!Long}
+ */
+Long.prototype.power = function(other) {};
+
+/**
+ * @param {!Long|number} other
+ * @return {!Long}
+ */
+Long.prototype.pow = function(other) {};
+
+/**
  * @param {!Long|number|string} other
  * @return {!Long}
  */

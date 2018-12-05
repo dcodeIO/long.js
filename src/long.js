@@ -863,7 +863,7 @@ LongPrototype.sub = LongPrototype.subtract;
  */
 LongPrototype.multiply = function multiply(multiplier) {
     if (this.isZero())
-        return ZERO;
+        return this;
     if (!isLong(multiplier))
         multiplier = fromValue(multiplier);
 
@@ -877,11 +877,11 @@ LongPrototype.multiply = function multiply(multiplier) {
     }
 
     if (multiplier.isZero())
-        return ZERO;
+        return (this.unsigned?UZERO:ZERO);
     if (this.eq(MIN_VALUE))
-        return multiplier.isOdd() ? MIN_VALUE : ZERO;
+        return multiplier.isOdd() ? MIN_VALUE : (this.unsigned?UZERO:ZERO);
     if (multiplier.eq(MIN_VALUE))
-        return this.isOdd() ? MIN_VALUE : ZERO;
+        return this.isOdd() ? MIN_VALUE : (this.unsigned?UZERO:ZERO);
 
     if (this.isNegative()) {
         if (multiplier.isNegative())
@@ -1085,6 +1085,47 @@ LongPrototype.modulo = function modulo(divisor) {
 
     return this.sub(this.div(divisor).mul(divisor));
 };
+
+/**
+ * Returns a deep copy of this Long.
+ * @this {!Long}
+ * @returns {!Long} Deep copy of this Long
+ */
+LongPrototype.clone = function clone() {
+    return new Long(this.low, this.high, this.unsigned);
+};
+
+/**
+ * Returns this Long to given 32bit integer power.
+ * @this {!Long}
+ * @param {!Long|number} exp Integer power (32bit)
+ * @returns {!Long} This Long to given integer power
+ */
+LongPrototype.power = function power(exp) {
+    var a = this;
+    if (a.eq(Long.ONE)) return a;
+    if (isLong(exp)) exp = exp.toInt();
+    if (exp===0) return (a.unsigned?UONE:ONE); // zero to zero is treated as one by many languages
+    if (a.isZero()) {
+        if (exp < 0) throw Error('Zero to negative power is undefined'); // or return Infinity?
+        return a;
+    }
+    if (exp===1) return a;
+    if (exp < 0) return (a.unsigned?UZERO:ZERO); // Long.ONE.div(a.pow(-exp)); // being only integers, this will probably always be zero?
+    while ((exp & 1)===0) {
+      exp >>>= 1;
+      a = a.mul(a);
+    }
+    return (exp===1 ? a : a.pow(exp-1).mul(a));
+};
+
+/**
+ * Returns this Long to given 32bit integer power. This is an alias of {@link Long#power}.
+ * @function
+ * @param {!Long|number} exp Power
+ * @returns {!Long} This Long to given integer power
+ */
+LongPrototype.pow = LongPrototype.power;
 
 /**
  * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
