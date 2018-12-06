@@ -145,12 +145,12 @@ declare class Long {
     clone(): Long;
 
     /**
-     * Returns this Long to given 32bit integer power.
+     * Returns this Long to given integer power.
      */
     power(exp: Long | number): Long;
 
     /**
-     * Returns this Long to given 32bit integer power.
+     * Returns this Long to given integer power.
      */
     pow(exp: Long | number): Long;
 

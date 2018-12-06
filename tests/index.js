@@ -156,6 +156,7 @@ function testPower() {
     var a = Long.fromNumber(11);
     var b = a.power(12);
     var res = Long.fromNumber(3138428376721);
+    var err;
     assert.deepEqual(b, res);
     // check negative, which will probably always be zero since we can't store fractional result?
     b = a.power(-3);
@@ -176,12 +177,6 @@ function testPower() {
     b = a.power(12);
     res = Long.fromNumber(3138428376721, true);
     assert.deepEqual(b, res);
-    // max exp
-    a = Long.fromNumber(2, true);
-    b = a.power(64); // technically overflows to zero
-    b = b.sub(1);
-    //if (!b.eq(Long.MAX_UNSIGNED_VALUE)) throw new Error('Power failed to compute 2^64-1');
-    assert.deepEqual(b, Long.MAX_UNSIGNED_VALUE);
     // zero base
     b = Long.ZERO.power(123);
     assert.deepEqual(b, Long.ZERO);
@@ -199,10 +194,56 @@ function testPower() {
     b = Long.ZERO.power(Long.ZERO);
     assert.deepEqual(b, Long.ONE);
     // zero to negative power
-    a = false;
+    err = null;
     try { b = Long.ZERO.power(-3); }
-    catch (e) { a = true }
-    if (a===false) throw new Error('Zero to negative power should throw error');
+    catch (e) { err = e; }
+    if (err==null) throw new Error('Zero to negative power should throw error');
+    // overflow edge case - 8 is max base for a power of 20
+    a = Long.fromNumber(8);
+    b = a.power(20);
+    assert.deepEqual(b, Long.fromString('1152921504606846976'));
+    // overflow edge case - -8 is max base for a power of 20
+    a = Long.fromNumber(-8);
+    b = a.power(20);
+    assert.deepEqual(b, Long.fromString('1152921504606846976'));
+    // overflow negative edge case
+    a = Long.fromNumber(-2097152);
+    b = a.power(3);
+    assert.deepEqual(b, Long.MIN_VALUE);
+    // overflow negative edge case
+    a = Long.fromNumber(-2);
+    b = a.power(63);
+    assert.deepEqual(b, Long.MIN_VALUE);
+    // overflow error - 64bit bound
+    err = null;
+    a = Long.fromNumber(2, true);
+    try { b = a.power(Long.fromNumber(64)); }
+    catch (e) { err = e; }
+    if (err==null) throw new Error('2 ** 64 should throw overflow error (as max is 2**64-1)');
+    // overflow error - arbitrary number
+    err = null;
+    a = Long.fromNumber(33);
+    try { b = a.power(Long.fromNumber(19)); }
+    catch (e) { err = e; }
+    if (err==null) throw new Error('33 ** 19 should throw overflow error');
+    // overflow error negative case
+    err = null;
+    a = Long.fromNumber(-2097153);
+    try { b = a.power(3); }
+    catch (e) { err = e; }
+    if (err==null) throw new Error('-2097153 ** 3 should throw overflow error');
+    // overflow error negative case with even power
+    err = null;
+    a = Long.fromNumber(-2097153);
+    try { b = a.power(4); }
+    catch (e) { err = e; }
+    if (err==null) throw new Error('-2097153 ** 4 should throw overflow error');
+    // error on float power
+    err = null;
+    a = Long.fromNumber(2);
+    try { b = a.power(4.5); }
+    catch (e) { err = e; }
+    if (err==null) throw new Error('2 ** 4.5 should throw error');
 },
 
 function testIssue31() {

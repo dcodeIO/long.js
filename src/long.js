@@ -1095,23 +1095,72 @@ LongPrototype.clone = function clone() {
     return new Long(this.low, this.high, this.unsigned);
 };
 
+/* Index is exponent-2, value is maximum base that fits in 64 bits */
+var bases_u64 = [
+    4294967295,2642245,65535,7131,1625,565,
+    255,138,84,56,40,30,23,19,
+    15,13,11,10,9,8,7,6,
+    6,5,5,5,4,4,4,4,
+    3,3,3,3,3,3,3,3,
+    3,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2
+];
+/* Index is exponent-2, value is maximum base that fits in 63 bits */
+var bases_s64 = [
+    3037000499,2097151,55108,6208,1448,511,
+    234,127,78,52,38,28,22,18,
+    15,13,11,9,8,7,7,6,
+    6,5,5,5,4,4,4,4,
+    3,3,3,3,3,3,3,3,
+    2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,1
+];
+/* Index is exponent-2, value is minimum base that fits in 63 bits */
+var bases_s64n = [
+    -3037000499,-2097152,-55108,-6208,-1448,-512,
+    -234,-128,-78,-52,-38,-28,-22,-18,
+    -15,-13,-11,-9,-8,-8,-7,-6,
+    -6,-5,-5,-5,-4,-4,-4,-4,
+    -3,-3,-3,-3,-3,-3,-3,-3,
+    -2,-2,-2,-2,-2,-2,-2,-2,
+    -2,-2,-2,-2,-2,-2,-2,-2,
+    -2,-2,-2,-2,-2,-2,-2,-2
+];
+/* Determine if b ** e will over/under flow (b=Long,e=number) */
+function isPowerOverflow(b,e)
+{
+    // Each look up table has 62 items, making 63 the max exp (index=exp-2). Anything else including floats are undefined.
+    if (b.isNegative()) {
+        var m = bases_s64n[e-2];
+        if (m==undefined || b.lt(m)) return true;
+    }
+    else {
+        var m = (b.unsigned?bases_u64:bases_s64)[e-2];
+        if (m==undefined || b.gt(m)) return true;
+    }
+    return false;
+}
+
 /**
- * Returns this Long to given 32bit integer power.
+ * Returns this Long to given integer power.
  * @this {!Long}
- * @param {!Long|number} exp Integer power (32bit)
+ * @param {!Long|number} exp Integer power
  * @returns {!Long} This Long to given integer power
  */
 LongPrototype.power = function power(exp) {
     var a = this;
     if (a.eq(Long.ONE)) return a;
-    if (isLong(exp)) exp = exp.toInt();
+    if (isLong(exp)) exp = (exp.gt(63) ? 64 : exp.toInt()); // if long is >63, make sure it stays that way until the overflow check catches it
     if (exp===0) return (a.unsigned?UONE:ONE); // zero to zero is treated as one by many languages
     if (a.isZero()) {
         if (exp < 0) throw Error('Zero to negative power is undefined'); // or return Infinity?
         return a;
     }
     if (exp===1) return a;
-    if (exp < 0) return (a.unsigned?UZERO:ZERO); // Long.ONE.div(a.pow(-exp)); // being only integers, this will probably always be zero?
+    if (exp < 0) return (a.unsigned?UZERO:ZERO); // Long.ONE.div(a.pow(-exp)); // being only integers, this will probably always be zero via truncation?
+    if (isPowerOverflow(a,exp)) throw Error('Overflow: ' + a.toString() + ' ** ' + exp);
     while ((exp & 1)===0) {
       exp >>>= 1;
       a = a.mul(a);
@@ -1120,7 +1169,7 @@ LongPrototype.power = function power(exp) {
 };
 
 /**
- * Returns this Long to given 32bit integer power. This is an alias of {@link Long#power}.
+ * Returns this Long to given integer power. This is an alias of {@link Long#power}.
  * @function
  * @param {!Long|number} exp Power
  * @returns {!Long} This Long to given integer power
