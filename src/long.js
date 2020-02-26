@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright 2009 The Closure Library Authors.
+ * Copyright 2020 Daniel Wirtz / The long.js Contributors.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 module.exports = Long;
 
 /**
