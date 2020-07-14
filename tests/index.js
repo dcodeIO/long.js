@@ -220,15 +220,15 @@ function runClosureTests() {
     goog.math.Long = Long;
     require("./goog/recent/long_test");
     Object.keys(goog.global).forEach(function(key) {
-    if (typeof goog.global[key] === "function") {
-        console.log("- " + key);
-        try {
-            goog.global[key]();
-        } catch (e) {
-            console.log("\nERROR: " + e + "\n");
-            process.exitCode = 1;
+        if (typeof goog.global[key] === "function") {
+            console.log("- " + key);
+            try {
+                goog.global[key]();
+            } catch (e) {
+                console.log("\nERROR: " + e + "\n");
+                process.exitCode = 1;
+            }
         }
-    }
     });
 }
 
