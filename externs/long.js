@@ -345,6 +345,20 @@ Long.prototype.multiply = function(other) {};
 Long.prototype.mul = function(other) {};
 
 /**
+ * @param {!Long|number|string} second
+ * @param {!Long|number|string} third
+ * @return {!Long}
+ */
+Long.prototype.multiplyAdd = function(second, third) {};
+
+/**
+ * @param {!Long|number|string} second
+ * @param {!Long|number|string} third
+ * @return {!Long}
+ */
+Long.prototype.madd = function(second, third) {};
+
+/**
  * @param {!Long|number|string} other
  * @return {!Long}
  */

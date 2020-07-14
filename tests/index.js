@@ -191,6 +191,13 @@ function testRotateRight() {
     // swap
     v = longVal.rotateRight(32);
     assert.deepEqual(v, longValS);
+},
+function testMultiplyAdd() {
+    var a = Long.fromBits(0x01234567, 0x89ABCDEF);
+    var b = Long.fromBits(0x12345678, 0x9ABCDEF0);
+    var c = Long.fromBits(0x00000002, 0x00000000);
+    var v = a.madd(b, c);
+    assert.deepEqual(v, a.mul(b).add(c));
 }
 
 ]; // END TEST CASES
