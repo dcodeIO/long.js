@@ -174,7 +174,7 @@ function fromNumber(value, unsigned) {
     }
     if (value < 0)
         return fromNumber(-value, unsigned).neg();
-    return fromBits((value % TWO_PWR_32_DBL) | 0, (value / TWO_PWR_32_DBL) | 0, unsigned);
+    return fromBits((value >>> 0) | 0, (value / TWO_PWR_32_DBL) | 0, unsigned);
 }
 
 /**
@@ -225,16 +225,17 @@ var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
  * @inner
  */
 function fromString(str, unsigned, radix) {
-    if (str.length === 0)
+    var len = str.length;
+    if (len === 0)
         throw Error('empty string');
-    if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
+    if (str === 'NaN' || str === 'Infinity' || str === '+Infinity' || str === '-Infinity')
         return ZERO;
     if (typeof unsigned === 'number') {
         // For goog.math.long compatibility
         radix = unsigned,
         unsigned = false;
     } else {
-        unsigned = !! unsigned;
+        unsigned = !!unsigned;
     }
     radix = radix || 10;
     if (radix < 2 || 36 < radix)
@@ -252,8 +253,8 @@ function fromString(str, unsigned, radix) {
     var radixToPower = fromNumber(pow_dbl(radix, 8));
 
     var result = ZERO;
-    for (var i = 0; i < str.length; i += 8) {
-        var size = Math.min(8, str.length - i),
+    for (var i = 0; i < len; i += 8) {
+        var size = Math.min(8, len - i),
             value = parseInt(str.substring(i, i + size), radix);
         if (size < 8) {
             var power = fromNumber(pow_dbl(radix, size));
@@ -572,7 +573,7 @@ LongPrototype.getNumBitsAbs = function getNumBitsAbs() {
  * @returns {boolean}
  */
 LongPrototype.isZero = function isZero() {
-    return this.high === 0 && this.low === 0;
+    return (this.high | this.low) === 0;
 };
 
 /**
@@ -596,7 +597,7 @@ LongPrototype.isNegative = function isNegative() {
  * @returns {boolean}
  */
 LongPrototype.isPositive = function isPositive() {
-    return this.unsigned || this.high >= 0;
+    return !this.isNegative();
 };
 
 /**
@@ -605,7 +606,7 @@ LongPrototype.isPositive = function isPositive() {
  * @returns {boolean}
  */
 LongPrototype.isOdd = function isOdd() {
-    return (this.low & 1) === 1;
+    return !this.isEven();
 };
 
 /**
@@ -614,7 +615,7 @@ LongPrototype.isOdd = function isOdd() {
  * @returns {boolean}
  */
 LongPrototype.isEven = function isEven() {
-    return (this.low & 1) === 0;
+    return !(this.low & 1);
 };
 
 /**
@@ -626,7 +627,7 @@ LongPrototype.isEven = function isEven() {
 LongPrototype.equals = function equals(other) {
     if (!isLong(other))
         other = fromValue(other);
-    if (this.unsigned !== other.unsigned && (this.high >>> 31) === 1 && (other.high >>> 31) === 1)
+    if (this.unsigned !== other.unsigned && ((this.high & other.high) >>> 31))
         return false;
     return this.high === other.high && this.low === other.low;
 };
