@@ -359,6 +359,20 @@ Long.prototype.multiplyAdd = function(second, third) {};
 Long.prototype.madd = function(second, third) {};
 
 /**
+ * @param {!Long|number|string} second
+ * @param {!Long|number|string} third
+ * @return {!Long}
+ */
+Long.prototype.multiplySubtract = function(second, third) {};
+
+/**
+ * @param {!Long|number|string} second
+ * @param {!Long|number|string} third
+ * @return {!Long}
+ */
+Long.prototype.msub = function(second, third) {};
+
+/**
  * @param {!Long|number|string} other
  * @return {!Long}
  */
