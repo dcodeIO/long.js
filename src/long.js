@@ -14,7 +14,7 @@ var wasm = null;
 
 try {
   wasm = new WebAssembly.Instance(new WebAssembly.Module(new Uint8Array([
-    0, 97, 115, 109, 1, 0, 0, 0, 1, 13, 2, 96, 0, 1, 127, 96, 4, 127, 127, 127, 127, 1, 127, 3, 7, 6, 0, 1, 1, 1, 1, 1, 6, 6, 1, 127, 1, 65, 0, 11, 7, 50, 6, 3, 109, 117, 108, 0, 1, 5, 100, 105, 118, 95, 115, 0, 2, 5, 100, 105, 118, 95, 117, 0, 3, 5, 114, 101, 109, 95, 115, 0, 4, 5, 114, 101, 109, 95, 117, 0, 5, 8, 103, 101, 116, 95, 104, 105, 103, 104, 0, 0, 10, 191, 1, 6, 4, 0, 35, 0, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 126, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 127, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 128, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 129, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 130, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11
+    0, 97, 115, 109, 1, 0, 0, 0, 1, 23, 3, 96, 0, 1, 127, 96, 4, 127, 127, 127, 127, 1, 127, 96, 6, 127, 127, 127, 127, 127, 127, 1, 127, 3, 11, 10, 0, 1, 1, 1, 2, 2, 1, 1, 1, 1, 6, 6, 1, 127, 1, 65, 0, 11, 7, 76, 10, 3, 97, 100, 100, 0, 1, 3, 115, 117, 98, 0, 2, 3, 109, 117, 108, 0, 3, 4, 109, 97, 100, 100, 0, 4, 4, 109, 115, 117, 98, 0, 5, 5, 100, 105, 118, 95, 115, 0, 6, 5, 100, 105, 118, 95, 117, 0, 7, 5, 114, 101, 109, 95, 115, 0, 8, 5, 114, 101, 109, 95, 117, 0, 9, 8, 103, 101, 116, 95, 104, 105, 103, 104, 0, 0, 10, 251, 2, 10, 4, 0, 35, 0, 11, 38, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 124, 33, 4, 32, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 38, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 125, 33, 4, 32, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 38, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 126, 33, 4, 32, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 49, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 126, 32, 4, 173, 32, 5, 173, 66, 32, 134, 132, 124, 33, 6, 32, 6, 66, 32, 135, 167, 36, 0, 32, 6, 167, 11, 49, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 126, 32, 4, 173, 32, 5, 173, 66, 32, 134, 132, 125, 33, 6, 32, 6, 66, 32, 135, 167, 36, 0, 32, 6, 167, 11, 38, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 127, 33, 4, 32, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 38, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 128, 33, 4, 32, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 38, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 129, 33, 4, 32, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 38, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 130, 33, 4, 32, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11
   ])), {}).exports;
 } catch (e) {
   // no wasm support :(
@@ -815,6 +815,14 @@ LongPrototype.add = function add(addend) {
     if (!isLong(addend))
         addend = fromValue(addend);
 
+    if (wasm) {
+        var low = wasm["add"](this.low,
+                              this.high,
+                              addend.low,
+                              addend.high);
+        return fromBits(low, wasm["get_high"](), this.unsigned);
+    }
+
     // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
 
     var a48 = this.high >>> 16;
@@ -851,6 +859,13 @@ LongPrototype.add = function add(addend) {
 LongPrototype.subtract = function subtract(subtrahend) {
     if (!isLong(subtrahend))
         subtrahend = fromValue(subtrahend);
+    if (wasm) {
+        var low = wasm["sub"](this.low,
+                              this.high,
+                              subtrahend.low,
+                              subtrahend.high);
+        return fromBits(low, wasm["get_high"](), this.unsigned);
+    }
     return this.add(subtrahend.neg());
 };
 
@@ -946,6 +961,72 @@ LongPrototype.multiply = function multiply(multiplier) {
  * @returns {!Long} Product
  */
 LongPrototype.mul = LongPrototype.multiply;
+
+/**
+ * Returns the product of this and second argument and sum with third argument.
+ * @this {!Long}
+ * @param {!Long|number|string} multiplier Multiplier
+ * @param {!Long|number|string} addend Addend
+ * @returns {!Long} ProductSum
+ */
+LongPrototype.multiplyAdd = function multiplyAdd(multiplier, addend) {
+    if (!isLong(multiplier))
+        multiplier = fromValue(multiplier);
+    if (!isLong(addend))
+        addend = fromValue(addend);
+    if (wasm) {
+        var low = wasm["madd"](this.low,
+                               this.high,
+                               multiplier.low,
+                               multiplier.high,
+                               addend.low,
+                               addend.high);
+        return fromBits(low, wasm["get_high"](), this.unsigned);
+    }
+    return this.mul(multiplier).add(addend);
+};
+
+/**
+ * Returns the product of this and second argument and sum with third argument. This is an alias of {@link Long#multiplyAdd}.
+ * @function
+ * @param {!Long|number|string} multiplier Multiplier
+ * @param {!Long|number|string} addend Addend
+ * @returns {!Long} ProductSum
+ */
+LongPrototype.madd = LongPrototype.multiplyAdd;
+
+/**
+ * Returns the product of this and second argument and subtruct with third argument.
+ * @this {!Long}
+ * @param {!Long|number|string} multiplier Multiplier
+ * @param {!Long|number|string} subtrahend Subtrahend
+ * @returns {!Long} ProductSub
+ */
+LongPrototype.multiplySubtract = function multiplySubtract(multiplier, subtrahend) {
+    if (!isLong(multiplier))
+        multiplier = fromValue(multiplier);
+    if (!isLong(subtrahend))
+        addend = fromValue(subtrahend);
+    if (wasm) {
+        var low = wasm["msub"](this.low,
+                               this.high,
+                               multiplier.low,
+                               multiplier.high,
+                               subtrahend.low,
+                               subtrahend.high);
+        return fromBits(low, wasm["get_high"](), this.unsigned);
+    }
+    return this.mul(multiplier).sub(subtrahend);
+};
+
+/**
+ * Returns the product of this and second argument and subtruct with third argument. This is an alias of {@link Long#multiplySubtract}.
+ * @function
+ * @param {!Long|number|string} multiplier Multiplier
+ * @param {!Long|number|string} subtrahend Subtrahend
+ * @returns {!Long} ProductSub
+ */
+LongPrototype.msub = LongPrototype.multiplySubtract;
 
 /**
  * Returns this Long divided by the specified. The result is signed if this Long is signed or

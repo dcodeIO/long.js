@@ -191,6 +191,20 @@ function testRotateRight() {
     // swap
     v = longVal.rotateRight(32);
     assert.deepEqual(v, longValS);
+},
+function testMultiplyAdd() {
+    var a = Long.fromBits(0x01234567, 0x89ABCDEF);
+    var b = Long.fromBits(0x12345678, 0x9ABCDEF0);
+    var c = Long.fromBits(0x00000002, 0x00000000);
+    var v = a.madd(b, c);
+    assert.deepEqual(v, a.mul(b).add(c));
+},
+function testMultiplySub() {
+    var a = Long.fromBits(0x01234567, 0x89ABCDEF);
+    var b = Long.fromBits(0x12345678, 0x9ABCDEF0);
+    var c = Long.fromBits(0x00000012, 0xFFFFFFFF);
+    var v = a.msub(b, c);
+    assert.deepEqual(v, a.mul(b).sub(c));
 }
 
 ]; // END TEST CASES
@@ -213,15 +227,15 @@ function runClosureTests() {
     goog.math.Long = Long;
     require("./goog/recent/long_test");
     Object.keys(goog.global).forEach(function(key) {
-    if (typeof goog.global[key] === "function") {
-        console.log("- " + key);
-        try {
-            goog.global[key]();
-        } catch (e) {
-            console.log("\nERROR: " + e + "\n");
-            process.exitCode = 1;
+        if (typeof goog.global[key] === "function") {
+            console.log("- " + key);
+            try {
+                goog.global[key]();
+            } catch (e) {
+                console.log("\nERROR: " + e + "\n");
+                process.exitCode = 1;
+            }
         }
-    }
     });
 }
 
