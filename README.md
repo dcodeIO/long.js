@@ -43,7 +43,7 @@ API
 
 ### Constructor
 
-* new **Long**(low: `number`, high: `number`, unsigned?: `boolean`)<br />
+* new **Long**(low: `number`, high?: `number`, unsigned?: `boolean`)<br />
   Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as *signed* integers. See the from* functions below for more convenient ways of constructing Longs.
 
 ### Fields
