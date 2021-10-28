@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import goog from "./base.js";
+
 goog.provide('goog.math.LongTest');
 goog.setTestOnly('goog.math.LongTest');
 
