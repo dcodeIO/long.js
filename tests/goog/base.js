@@ -23,7 +23,8 @@ goog.provide("goog.global");
 
 goog.provide("goog.asserts");
 
-var assert = require("assert");
+import assert from "assert";
+
 goog.asserts.assert = function(condition, opt_message, var_args) {
   assert(condition, opt_message, Array.prototype.slice.call(arguments, 2));
 };
@@ -43,3 +44,5 @@ goog.reflect.cache = function(cacheObj, key, valueFn, opt_keyFn) {
   }
   return (cacheObj[storedKey] = valueFn(key));
 };
+
+export default goog;
