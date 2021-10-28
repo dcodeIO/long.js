@@ -235,15 +235,15 @@ var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
 function fromString(str, unsigned, radix) {
   if (str.length === 0)
     throw Error('empty string');
-  if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
-    return unsigned ? UZERO : ZERO;
   if (typeof unsigned === 'number') {
     // For goog.math.long compatibility
-    radix = unsigned,
-      unsigned = false;
+    radix = unsigned;
+    unsigned = false;
   } else {
     unsigned = !!unsigned;
   }
+  if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
+    return unsigned ? UZERO : ZERO;
   radix = radix || 10;
   if (radix < 2 || 36 < radix)
     throw RangeError('radix');
