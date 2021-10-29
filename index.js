@@ -133,7 +133,7 @@ function fromInt(value, unsigned) {
       if (cachedObj)
         return cachedObj;
     }
-    obj = fromBits(value, (value | 0) < 0 ? -1 : 0, true);
+    obj = fromBits(value, -((value | 0) < 0), true);
     if (cache)
       UINT_CACHE[value] = obj;
     return obj;
@@ -144,7 +144,7 @@ function fromInt(value, unsigned) {
       if (cachedObj)
           return cachedObj;
     }
-    obj = fromBits(value, value < 0 ? -1 : 0, false);
+    obj = fromBits(value, -(value < 0), false);
     if (cache)
         INT_CACHE[value] = obj;
     return obj;
