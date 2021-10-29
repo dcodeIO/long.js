@@ -1,5 +1,5 @@
-var assert = require("assert");
-var Long = require("..");
+import assert from "assert";
+import Long from "../index.js";
 
 var tests = [ // BEGIN TEST CASES
 
@@ -63,10 +63,10 @@ function testUnsignedMinMax() {
 function testUnsignedConstructNegint() {
     var longVal = Long.fromInt(-1, true);
     assert.strictEqual(longVal.low, -1);
-    assert.strictEqual(longVal.high, -1);
+    assert.strictEqual(longVal.high, 0);
     assert.strictEqual(longVal.unsigned, true);
-    assert.strictEqual(longVal.toNumber(), 18446744073709551615);
-    assert.strictEqual(longVal.toString(), "18446744073709551615");
+    assert.strictEqual(longVal.toNumber(), 4294967295);
+    assert.strictEqual(longVal.toString(), "4294967295");
 },
 
 function testUnsignedConstructHighLow() {
@@ -207,11 +207,11 @@ function runOurTests() {
     });
 }
 
-function runClosureTests() {
-    require("./goog/base");
+async function runClosureTests() {
+    var goog = (await import("./goog/base.js")).default;
     goog.provide("goog.math");
     goog.math.Long = Long;
-    require("./goog/recent/long_test");
+    await import("./goog/long_test.js");
     Object.keys(goog.global).forEach(function(key) {
     if (typeof goog.global[key] === "function") {
         console.log("- " + key);
@@ -231,4 +231,4 @@ runOurTests();
 console.log();
 
 console.log("Running closure library tests");
-runClosureTests();
+await runClosureTests();
