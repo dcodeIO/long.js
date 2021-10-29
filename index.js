@@ -1059,11 +1059,10 @@ LongPrototype.divide = function divide(divisor) {
     let
       log2 = Math.ceil(Math.log(approx) / Math.LN2),
       delta = (log2 <= 48) ? 1 : pow_dbl(2, log2 - 48),
-
-    // Decrease the approximation until it is smaller than the remainder.  Note
-    // that if it is too large, the product overflows and is negative.
-    approxRes = fromNumber(approx),
-    approxRem = approxRes.mul(divisor);
+      // Decrease the approximation until it is smaller than the remainder.  Note
+      // that if it is too large, the product overflows and is negative.
+      approxRes = fromNumber(approx),
+      approxRem = approxRes.mul(divisor);
 
     while (approxRem.isNegative() || approxRem.gt(rem)) {
       approx -= delta;
