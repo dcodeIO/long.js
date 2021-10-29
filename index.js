@@ -19,7 +19,7 @@
  */
 
 // WebAssembly optimizations to do native i64 multiplication and divide
-var wasm = null;
+let wasm = null;
 try {
   wasm = new WebAssembly.Instance(new WebAssembly.Module(new Uint8Array([
     0, 97, 115, 109, 1, 0, 0, 0, 1, 13, 2, 96, 0, 1, 127, 96, 4, 127, 127, 127, 127, 1, 127, 3, 7, 6, 0, 1, 1, 1, 1, 1, 6, 6, 1, 127, 1, 65, 0, 11, 7, 50, 6, 3, 109, 117, 108, 0, 1, 5, 100, 105, 118, 95, 115, 0, 2, 5, 100, 105, 118, 95, 117, 0, 3, 5, 114, 101, 109, 95, 115, 0, 4, 5, 114, 101, 109, 95, 117, 0, 5, 8, 103, 101, 116, 95, 104, 105, 103, 104, 0, 0, 10, 191, 1, 6, 4, 0, 35, 0, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 126, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 127, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 128, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 129, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 130, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11
@@ -109,14 +109,14 @@ Long.isLong = isLong;
 * @type {!Object}
 * @inner
 */
-var INT_CACHE = {};
+let INT_CACHE = {};
 
 /**
 * A cache of the Long representations of small unsigned integer values.
 * @type {!Object}
 * @inner
 */
-var UINT_CACHE = {};
+let UINT_CACHE = {};
 
 /**
 * @param {number} value
@@ -223,7 +223,7 @@ Long.fromBits = fromBits;
 * @returns {number}
 * @inner
 */
-var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
+const pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
 
 /**
 * @param {string} str
@@ -233,7 +233,7 @@ var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
 * @inner
 */
 function fromString(str, unsigned, radix) {
-  var len = str.length;
+  const len = str.length;
   if (len === 0)
     throw Error('empty string');
   if (str === 'NaN' || str === 'Infinity' || str === '+Infinity' || str === '-Infinity')
@@ -249,7 +249,7 @@ function fromString(str, unsigned, radix) {
   if (radix < 2 || 36 < radix)
     throw RangeError('radix');
 
-  var p;
+  let p;
   if ((p = str.indexOf('-')) > 0) {
     throw Error('interior hyphen');
   } else if (p === 0) {
@@ -261,12 +261,12 @@ function fromString(str, unsigned, radix) {
   let radixToPower = fromNumber(pow_dbl(radix, 8));
 
   let result = ZERO;
-  for (var i = 0; i < len; i += 8) {
+  for (let i = 0; i < len; i += 8) {
     let
       size = Math.min(8, len - i),
       value = parseInt(str.substring(i, i + size), radix);
     if (size < 8) {
-      var power = fromNumber(pow_dbl(radix, size));
+      let power = fromNumber(pow_dbl(radix, size));
       result = result.mul(power).add(fromNumber(value));
     } else {
       result = result.mul(radixToPower);
@@ -320,48 +320,48 @@ Long.fromValue = fromValue;
 * @const
 * @inner
 */
-var TWO_PWR_16_DBL = 1 << 16;
+const TWO_PWR_16_DBL = 1 << 16;
 
 /**
 * @type {number}
 * @const
 * @inner
 */
-var TWO_PWR_24_DBL = 1 << 24;
+const TWO_PWR_24_DBL = 1 << 24;
 
 /**
 * @type {number}
 * @const
 * @inner
 */
-var TWO_PWR_32_DBL = TWO_PWR_16_DBL * TWO_PWR_16_DBL;
+const TWO_PWR_32_DBL = TWO_PWR_16_DBL * TWO_PWR_16_DBL;
 
 /**
 * @type {number}
 * @const
 * @inner
 */
-var TWO_PWR_64_DBL = TWO_PWR_32_DBL * TWO_PWR_32_DBL;
+const TWO_PWR_64_DBL = TWO_PWR_32_DBL * TWO_PWR_32_DBL;
 
 /**
 * @type {number}
 * @const
 * @inner
 */
-var TWO_PWR_63_DBL = TWO_PWR_64_DBL / 2;
+const TWO_PWR_63_DBL = TWO_PWR_64_DBL / 2;
 
 /**
 * @type {!Long}
 * @const
 * @inner
 */
-var TWO_PWR_24 = fromInt(TWO_PWR_24_DBL);
+const TWO_PWR_24 = fromInt(TWO_PWR_24_DBL);
 
 /**
 * @type {!Long}
 * @inner
 */
-var ZERO = fromInt(0);
+const ZERO = fromInt(0);
 
 /**
 * Signed zero.
@@ -373,7 +373,7 @@ Long.ZERO = ZERO;
 * @type {!Long}
 * @inner
 */
-var UZERO = fromInt(0, true);
+const UZERO = fromInt(0, true);
 
 /**
 * Unsigned zero.
@@ -385,7 +385,7 @@ Long.UZERO = UZERO;
 * @type {!Long}
 * @inner
 */
-var ONE = fromInt(1);
+const ONE = fromInt(1);
 
 /**
 * Signed one.
@@ -397,7 +397,7 @@ Long.ONE = ONE;
 * @type {!Long}
 * @inner
 */
-var UONE = fromInt(1, true);
+const UONE = fromInt(1, true);
 
 /**
 * Unsigned one.
@@ -409,7 +409,7 @@ Long.UONE = UONE;
 * @type {!Long}
 * @inner
 */
-var NEG_ONE = fromInt(-1);
+const NEG_ONE = fromInt(-1);
 
 /**
 * Signed negative one.
@@ -421,7 +421,7 @@ Long.NEG_ONE = NEG_ONE;
 * @type {!Long}
 * @inner
 */
-var MAX_VALUE = fromBits(0xFFFFFFFF|0, 0x7FFFFFFF|0, false);
+const MAX_VALUE = fromBits(0xFFFFFFFF|0, 0x7FFFFFFF|0, false);
 
 /**
 * Maximum signed value.
@@ -433,7 +433,7 @@ Long.MAX_VALUE = MAX_VALUE;
 * @type {!Long}
 * @inner
 */
-var MAX_UNSIGNED_VALUE = fromBits(0xFFFFFFFF|0, 0xFFFFFFFF|0, true);
+const MAX_UNSIGNED_VALUE = fromBits(0xFFFFFFFF|0, 0xFFFFFFFF|0, true);
 
 /**
 * Maximum unsigned value.
@@ -445,7 +445,7 @@ Long.MAX_UNSIGNED_VALUE = MAX_UNSIGNED_VALUE;
 * @type {!Long}
 * @inner
 */
-var MIN_VALUE = fromBits(0, 0x80000000|0, false);
+const MIN_VALUE = fromBits(0, 0x80000000|0, false);
 
 /**
 * Minimum signed value.
@@ -457,7 +457,7 @@ Long.MIN_VALUE = MIN_VALUE;
 * @alias Long.prototype
 * @inner
 */
-var LongPrototype = Long.prototype;
+const LongPrototype = Long.prototype;
 
 /**
 * Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
@@ -780,7 +780,7 @@ LongPrototype.compare = function compare(other) {
     other = fromValue(other);
   if (this.eq(other))
     return 0;
-  var thisNeg = this.isNegative(),
+  let thisNeg = this.isNegative(),
     otherNeg = other.isNegative();
   if (thisNeg && !otherNeg)
     return -1;
