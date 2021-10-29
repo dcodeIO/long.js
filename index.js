@@ -421,7 +421,7 @@ Long.NEG_ONE = NEG_ONE;
 * @type {!Long}
 * @inner
 */
-const MAX_VALUE = fromBits(0xFFFFFFFF|0, 0x7FFFFFFF|0, false);
+const MAX_VALUE = fromBits(0xFFFFFFFF | 0, 0x7FFFFFFF | 0, false);
 
 /**
 * Maximum signed value.
@@ -433,7 +433,7 @@ Long.MAX_VALUE = MAX_VALUE;
 * @type {!Long}
 * @inner
 */
-const MAX_UNSIGNED_VALUE = fromBits(0xFFFFFFFF|0, 0xFFFFFFFF|0, true);
+const MAX_UNSIGNED_VALUE = fromBits(0xFFFFFFFF | 0, 0xFFFFFFFF | 0, true);
 
 /**
 * Maximum unsigned value.
@@ -445,7 +445,7 @@ Long.MAX_UNSIGNED_VALUE = MAX_UNSIGNED_VALUE;
 * @type {!Long}
 * @inner
 */
-const MIN_VALUE = fromBits(0, 0x80000000|0, false);
+const MIN_VALUE = fromBits(0, 0x80000000 | 0, false);
 
 /**
 * Minimum signed value.
