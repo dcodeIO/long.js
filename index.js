@@ -474,9 +474,7 @@ LongPrototype.toInt = function toInt() {
 * @returns {number}
 */
 LongPrototype.toNumber = function toNumber() {
-  if (this.unsigned)
-    return ((this.high >>> 0) * TWO_PWR_32_DBL) + (this.low >>> 0);
-  return this.high * TWO_PWR_32_DBL + (this.low >>> 0);
+  return (this.unsigned ? this.high >>> 0 : this.high) * TWO_PWR_32_DBL + (this.low >>> 0);
 };
 
 /**
