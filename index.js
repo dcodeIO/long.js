@@ -892,10 +892,12 @@ LongPrototype.multiply = function multiply(multiplier) {
 
   // use wasm support if present
   if (wasm) {
-    let low = wasm["mul"](this.low,
-                          this.high,
-                          multiplier.low,
-                          multiplier.high);
+    let low = wasm["mul"](
+      this.low,
+      this.high,
+      multiplier.low,
+      multiplier.high
+    );
     return fromBits(low, wasm["get_high"](), this.unsigned);
   }
 
