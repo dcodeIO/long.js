@@ -3,7 +3,7 @@ import Long from "../index.js";
 
 var tests = [ // BEGIN TEST CASES
 
-function testBasic() {
+  function testBasic() {
     var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
     assert.strictEqual(longVal.toNumber(), 9223372036854775807);
     assert.strictEqual(longVal.toString(), "9223372036854775807");
@@ -12,16 +12,16 @@ function testBasic() {
     assert.strictEqual(longVal2.toNumber(), 9223372036854775807);
     assert.strictEqual(longVal2.toString(), "9223372036854775807");
     assert.strictEqual(longVal2.unsigned, longVal.unsigned);
-},
+  },
 
-function testIsLong() {
+  function testIsLong() {
     var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
     assert.strictEqual(Long.isLong(longVal), true);
-    longVal = {"__isLong__": true};
+    longVal = { "__isLong__": true };
     assert.strictEqual(Long.isLong(longVal), true);
-},
+  },
 
-function testToString() {
+  function testToString() {
     var longVal = Long.fromBits(0xFFFFFFFF, 0xFFFFFFFF, true);
     // #10
     assert.strictEqual(longVal.toString(16), "ffffffffffffffff");
@@ -30,21 +30,21 @@ function testToString() {
     // #7, obviously wrong in goog.math.Long
     assert.strictEqual(Long.fromString("zzzzzz", 36).toString(36), "zzzzzz");
     assert.strictEqual(Long.fromString("-zzzzzz", 36).toString(36), "-zzzzzz");
-},
+  },
 
-function testToBytes() {
+  function testToBytes() {
     var longVal = Long.fromBits(0x01234567, 0x12345678);
     assert.deepEqual(longVal.toBytesBE(), [
-        0x12, 0x34, 0x56, 0x78,
-        0x01, 0x23, 0x45, 0x67
+      0x12, 0x34, 0x56, 0x78,
+      0x01, 0x23, 0x45, 0x67
     ]);
     assert.deepEqual(longVal.toBytesLE(), [
-        0x67, 0x45, 0x23, 0x01,
-        0x78, 0x56, 0x34, 0x12
+      0x67, 0x45, 0x23, 0x01,
+      0x78, 0x56, 0x34, 0x12
     ]);
-},
+  },
 
-function testFromBytes() {
+  function testFromBytes() {
     var longVal = Long.fromBits(0x01234567, 0x12345678);
     var ulongVal = Long.fromBits(0x01234567, 0x12345678, true);
     assert.deepEqual(Long.fromBytes(longVal.toBytes()), longVal);
@@ -52,42 +52,42 @@ function testFromBytes() {
     assert.deepEqual(Long.fromBytes([0x12, 0x34, 0x56, 0x78, 0x01, 0x23, 0x45, 0x67], false, false), longVal);
     assert.deepEqual(Long.fromBytes([0x67, 0x45, 0x23, 0x01, 0x78, 0x56, 0x34, 0x12], false, true), longVal);
     assert.deepEqual(Long.fromBytes([0x67, 0x45, 0x23, 0x01, 0x78, 0x56, 0x34, 0x12], true, true), ulongVal);
-},
+  },
 
-function testUnsignedMinMax() {
+  function testUnsignedMinMax() {
     assert.strictEqual(Long.MIN_VALUE.toString(), "-9223372036854775808");
     assert.strictEqual(Long.MAX_VALUE.toString(), "9223372036854775807");
     assert.strictEqual(Long.MAX_UNSIGNED_VALUE.toString(), "18446744073709551615");
-},
+  },
 
-function testUnsignedConstructNegint() {
+  function testUnsignedConstructNegint() {
     var longVal = Long.fromInt(-1, true);
     assert.strictEqual(longVal.low, -1);
     assert.strictEqual(longVal.high, 0);
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 4294967295);
     assert.strictEqual(longVal.toString(), "4294967295");
-},
+  },
 
-function testUnsignedConstructHighLow() {
+  function testUnsignedConstructHighLow() {
     var longVal = new Long(0xFFFFFFFF, 0xFFFFFFFF, true);
     assert.strictEqual(longVal.low, -1);
     assert.strictEqual(longVal.high, -1);
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 18446744073709551615);
     assert.strictEqual(longVal.toString(), "18446744073709551615");
-},
+  },
 
-function testUnsignedConstructNumber() {
+  function testUnsignedConstructNumber() {
     var longVal = Long.fromNumber(0xFFFFFFFFFFFFFFFF, true);
     assert.strictEqual(longVal.low, -1);
     assert.strictEqual(longVal.high, -1);
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 18446744073709551615);
     assert.strictEqual(longVal.toString(), "18446744073709551615");
-},
+  },
 
-function testUnsignedToSignedUnsigned() {
+  function testUnsignedToSignedUnsigned() {
     var longVal = Long.fromNumber(-1, false);
     assert.strictEqual(longVal.toNumber(), -1);
     longVal = longVal.toUnsigned();
@@ -95,64 +95,64 @@ function testUnsignedToSignedUnsigned() {
     assert.strictEqual(longVal.toString(16), 'ffffffffffffffff');
     longVal = longVal.toSigned();
     assert.strictEqual(longVal.toNumber(), -1);
-},
+  },
 
-function testUnsignedMaxSubMaxSigned() {
+  function testUnsignedMaxSubMaxSigned() {
     var longVal = Long.MAX_UNSIGNED_VALUE.subtract(Long.MAX_VALUE).subtract(Long.ONE);
     assert.strictEqual(longVal.toNumber(), Long.MAX_VALUE.toNumber());
     assert.strictEqual(longVal.toString(), Long.MAX_VALUE.toString());
-},
+  },
 
-function testUnsignedMaxSubMax() {
+  function testUnsignedMaxSubMax() {
     var longVal = Long.MAX_UNSIGNED_VALUE.subtract(Long.MAX_UNSIGNED_VALUE);
     assert.strictEqual(longVal.low, 0);
     assert.strictEqual(longVal.high, 0);
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 0);
     assert.strictEqual(longVal.toString(), "0");
-},
+  },
 
-function testUnsignedZeroSubSigned() {
+  function testUnsignedZeroSubSigned() {
     var longVal = Long.fromInt(0, true).add(Long.fromInt(-1, false));
     assert.strictEqual(longVal.low, -1);
     assert.strictEqual(longVal.high, -1);
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 18446744073709551615);
     assert.strictEqual(longVal.toString(), "18446744073709551615");
-},
+  },
 
-function testUnsignedMaxDivMaxSigned() {
+  function testUnsignedMaxDivMaxSigned() {
     var longVal = Long.MAX_UNSIGNED_VALUE.div(Long.MAX_VALUE);
     assert.strictEqual(longVal.toNumber(), 2);
     assert.strictEqual(longVal.toString(), "2");
-},
+  },
 
-function testUnsignedDivMaxUnsigned() {
+  function testUnsignedDivMaxUnsigned() {
     var longVal = Long.MAX_UNSIGNED_VALUE;
     assert.strictEqual(longVal.div(longVal).toString(), '1');
-},
+  },
 
-function testUnsignedDivNegSigned() {
+  function testUnsignedDivNegSigned() {
     var a = Long.MAX_UNSIGNED_VALUE;
     var b = Long.fromInt(-2);
     assert.strictEqual(b.toUnsigned().toString(), Long.MAX_UNSIGNED_VALUE.sub(1).toString());
     var longVal = a.div(b);
     assert.strictEqual(longVal.toString(), '1');
-},
+  },
 
-function testUnsignedMinSignedDivOne() {
+  function testUnsignedMinSignedDivOne() {
     var longVal = Long.MIN_VALUE.div(Long.ONE);
     assert.strictEqual(longVal.toString(), Long.MIN_VALUE.toString());
-},
+  },
 
-function testUnsignedMsbUnsigned() {
+  function testUnsignedMsbUnsigned() {
     var longVal = Long.UONE.shiftLeft(63);
     assert.strictEqual(longVal.notEquals(Long.MIN_VALUE), true);
     assert.strictEqual(longVal.toString(), "9223372036854775808");
     assert.strictEqual(Long.fromString("9223372036854775808", true).toString(), "9223372036854775808");
-},
+  },
 
-function testIssue31() {
+  function testIssue31() {
     var a = new Long(0, 8, true);
     var b = Long.fromNumber(2656901066, true);
     assert.strictEqual(a.unsigned, true);
@@ -160,9 +160,9 @@ function testIssue31() {
     var x = a.div(b);
     assert.strictEqual(x.toString(), '12');
     assert.strictEqual(x.unsigned, true);
-},
+  },
 
-function testRotateLeft() {
+  function testRotateLeft() {
     var longVal = Long.fromBits(0x01234567, 0x89ABCDEF);
     var longValL = Long.fromBits(0x12345678, 0x9ABCDEF0);
     var longValR = Long.fromBits(0xF0123456, 0x789ABCDE);
@@ -176,14 +176,14 @@ function testRotateLeft() {
     // swap
     v = longVal.rotateLeft(32);
     assert.deepEqual(v, longValS);
-},
-function testRotateRight() {
+  },
+  function testRotateRight() {
     var longVal = Long.fromBits(0x01234567, 0x89ABCDEF);
     var longValL = Long.fromBits(0x12345678, 0x9ABCDEF0);
     var longValR = Long.fromBits(0xF0123456, 0x789ABCDE);
     var longValS = Long.fromBits(0x89ABCDEF, 0x01234567);
     // little rotate
-    var v =  longVal.rotateRight(4);
+    var v = longVal.rotateRight(4);
     assert.deepEqual(v, longValR);
     // big rotate
     v = longVal.rotateRight(60);
@@ -191,44 +191,47 @@ function testRotateRight() {
     // swap
     v = longVal.rotateRight(32);
     assert.deepEqual(v, longValS);
-}
+  }
 
 ]; // END TEST CASES
 
-function runOurTests() {
-    tests.forEach(function(fn) {
-        console.log("- " + fn.name);
-        try {
-            fn();
-        } catch (e) {
-            console.log("\nERROR: " + e + "\n");
-            process.exitCode = 1;
-        }
-    });
-}
-
-async function runClosureTests() {
-    var goog = (await import("./goog/base.js")).default;
-    goog.provide("goog.math");
-    goog.math.Long = Long;
-    await import("./goog/long_test.js");
-    Object.keys(goog.global).forEach(function(key) {
-    if (typeof goog.global[key] === "function") {
-        console.log("- " + key);
-        try {
-            goog.global[key]();
-        } catch (e) {
-            console.log("\nERROR: " + e + "\n");
-            process.exitCode = 1;
-        }
-    }
-    });
-}
-
 console.log("Running our tests");
-runOurTests();
-
+tests.forEach(function (fn) {
+  console.log("- " + fn.name);
+  try {
+    fn();
+  } catch (e) {
+    console.log("\nERROR: " + e + "\n");
+    process.exitCode = 1;
+  }
+});
 console.log();
 
 console.log("Running closure library tests");
-await runClosureTests();
+await (async function runClosureTests() {
+  var goog = (await import("./goog/base.js")).default;
+  goog.provide("goog.math");
+  goog.math.Long = Long;
+  await import("./goog/long_test.js");
+  Object.keys(goog.global).forEach(function (key) {
+    if (typeof goog.global[key] === "function") {
+      console.log("- " + key);
+      try {
+        goog.global[key]();
+      } catch (e) {
+        console.log("\nERROR: " + e + "\n");
+        process.exitCode = 1;
+      }
+    }
+  });
+})();
+console.log();
+
+console.log("Check UMD fallback");
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const LongUMD = require("../umd/");
+assert(typeof LongUMD == "function");
+assert("fromInt" in LongUMD);
+console.log(LongUMD);
