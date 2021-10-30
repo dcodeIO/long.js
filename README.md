@@ -29,7 +29,7 @@ Usage
 
 The package exports an ECMAScript module with an UMD fallback.
 
-```sh
+```
 $> npm install long
 ```
 
@@ -260,6 +260,12 @@ WebAssembly support
 
 Building
 --------
+
+Building the UMD fallback:
+
+```
+$> npm run build
+```
 
 Running the [tests](./tests):
 
