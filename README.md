@@ -48,10 +48,10 @@ Note that mixing ESM and CommonJS is not recommended as it yields different clas
   * From GitHub via [jsDelivr](https://www.jsdelivr.com):<br />
     `https://cdn.jsdelivr.net/gh/dcodeIO/long.js@TAG/index.js` (ESM)
   * From npm via [jsDelivr](https://www.jsdelivr.com):<br />
-    `https://cdn.jsdelivr.net/npm/long@VERSION/index.js` (ESM)
+    `https://cdn.jsdelivr.net/npm/long@VERSION/index.js` (ESM)<br />
     `https://cdn.jsdelivr.net/npm/long@VERSION/umd/index.js` (UMD)
   * From npm via [unpkg](https://unpkg.com):<br />
-    `https://unpkg.com/long@VERSION/index.js` (ESM)
+    `https://unpkg.com/long@VERSION/index.js` (ESM)<br />
     `https://unpkg.com/long@VERSION/umd/index.js` (UMD)
 
   Replace `TAG` respectively `VERSION` with a [specific version](https://github.com/AssemblyScript/binaryen.js/releases) or omit it (not recommended in production) to use main/latest.
