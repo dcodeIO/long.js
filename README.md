@@ -54,7 +54,7 @@ Note that mixing ESM and CommonJS is not recommended as it yields different clas
     `https://unpkg.com/long@VERSION/index.js` (ESM)<br />
     `https://unpkg.com/long@VERSION/umd/index.js` (UMD)
 
-  Replace `TAG` respectively `VERSION` with a [specific version](https://github.com/AssemblyScript/binaryen.js/releases) or omit it (not recommended in production) to use main/latest.
+  Replace `TAG` respectively `VERSION` with a [specific version](https://github.com/dcodeIO/long.js/releases) or omit it (not recommended in production) to use main/latest.
 
 API
 ---
