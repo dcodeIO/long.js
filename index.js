@@ -599,7 +599,7 @@ LongPrototype.isNegative = function isNegative() {
 };
 
 /**
- * Tests if this Long's value is positive.
+ * Tests if this Long's value is positive or zero.
  * @this {!Long}
  * @returns {boolean}
  */

@@ -163,7 +163,7 @@ API
   Tests if this Long's value is odd.
 
 * Long#**isPositive**(): `boolean`<br />
-  Tests if this Long's value is positive.
+  Tests if this Long's value is positive or zero.
 
 * Long#**isZero**/**eqz**(): `boolean`<br />
   Tests if this Long's value equals zero.

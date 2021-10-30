@@ -210,7 +210,7 @@ declare class Long {
   isOdd(): boolean;
 
   /**
-   * Tests if this Long's value is positive.
+   * Tests if this Long's value is positive or zero.
    */
   isPositive(): boolean;
 
