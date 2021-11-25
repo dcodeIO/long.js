@@ -2,7 +2,7 @@
  * @license
  * Copyright 2009 The Closure Library Authors
  * Copyright 2020 Daniel Wirtz / The long.js Authors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -94,6 +94,17 @@ Object.defineProperty(Long.prototype, "__isLong__", { value: true });
  */
 function isLong(obj) {
   return (obj && obj["__isLong__"]) === true;
+}
+
+/**
+ * @function
+ * @param {*} value number
+ * @returns {number}
+ * @inner
+ */
+function ctz32(value) {
+  var c = Math.clz32(value & -value);
+  return value ? 31 - c : c;
 }
 
 /**
@@ -1125,6 +1136,40 @@ LongPrototype.rem = LongPrototype.modulo;
 LongPrototype.not = function not() {
   return fromBits(~this.low, ~this.high, this.unsigned);
 };
+
+/**
+ * Returns count leading zeros of this Long.
+ * @this {!Long}
+ * @returns {!number}
+ */
+LongPrototype.countLeadingZeros = function countLeadingZeros() {
+  return this.high ? Math.clz32(this.high) : Math.clz32(this.low) + 32;
+};
+
+/**
+ * Returns count leading zeros. This is an alias of {@link Long#countLeadingZeros}.
+ * @function
+ * @param {!Long}
+ * @returns {!number}
+ */
+LongPrototype.clz = LongPrototype.countLeadingZeros;
+
+/**
+ * Returns count trailing zeros of this Long.
+ * @this {!Long}
+ * @returns {!number}
+ */
+LongPrototype.countTrailingZeros = function countTrailingZeros() {
+  return this.low ? ctz32(this.low) : ctz32(this.high) + 32;
+};
+
+/**
+ * Returns count trailing zeros. This is an alias of {@link Long#countTrailingZeros}.
+ * @function
+ * @param {!Long}
+ * @returns {!number}
+ */
+LongPrototype.ctz = LongPrototype.countTrailingZeros;
 
 /**
  * Returns the bitwise AND of this Long and the specified.

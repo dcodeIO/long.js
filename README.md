@@ -202,6 +202,12 @@ API
 * Long#**not**(): `Long`<br />
   Returns the bitwise NOT of this Long.
 
+* Long#**countLeadingZeros**/**clz**(): `number`<br />
+  Returns count leading zeros of this Long.
+
+* Long#**countTrailingZeros**/**ctz**(): `number`<br />
+  Returns count trailing zeros of this Long.
+
 * Long#**notEquals**/**neq**/**ne**(other: `Long | number | string`): `boolean`<br />
   Tests if this Long's value differs from the specified's.
 

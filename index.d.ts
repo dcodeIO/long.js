@@ -290,6 +290,26 @@ declare class Long {
   not(): Long;
 
   /**
+   * Returns count leading zeros of this Long.
+   */
+  countLeadingZeros(): number;
+
+  /**
+   * Returns count leading zeros of this Long.
+   */
+  clz(): number;
+
+  /**
+   * Returns count trailing zeros of this Long.
+   */
+  countTrailingZeros(): number;
+
+  /**
+   * Returns count trailing zeros of this Long.
+   */
+  ctz(): number;
+
+  /**
    * Tests if this Long's value differs from the specified's.
    */
   notEquals(other: Long | number | string): boolean;
