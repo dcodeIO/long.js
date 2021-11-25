@@ -177,6 +177,7 @@ var tests = [ // BEGIN TEST CASES
     v = longVal.rotateLeft(32);
     assert.deepEqual(v, longValS);
   },
+
   function testRotateRight() {
     var longVal = Long.fromBits(0x01234567, 0x89ABCDEF);
     var longValL = Long.fromBits(0x12345678, 0x9ABCDEF0);
@@ -191,6 +192,23 @@ var tests = [ // BEGIN TEST CASES
     // swap
     v = longVal.rotateRight(32);
     assert.deepEqual(v, longValS);
+  },
+
+  function testClzAndCtz() {
+    var longVal0 = Long.fromBits(0, 0);
+    var longVal1 = Long.fromBits(1, 0);
+    var longVal2 = Long.fromBits(0, 1);
+    var longVal3 = Long.fromBits(1, 1);
+
+    assert.deepEqual(longVal0.clz(), 64);
+    assert.deepEqual(longVal1.clz(), 63);
+    assert.deepEqual(longVal2.clz(), 31);
+    assert.deepEqual(longVal3.clz(), 31);
+
+    assert.deepEqual(longVal0.ctz(), 64);
+    assert.deepEqual(longVal1.ctz(),  0);
+    assert.deepEqual(longVal2.ctz(), 32);
+    assert.deepEqual(longVal3.ctz(),  0);
   }
 
 ]; // END TEST CASES
