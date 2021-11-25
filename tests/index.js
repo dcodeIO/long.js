@@ -203,7 +203,7 @@ var tests = [ // BEGIN TEST CASES
     assert.deepEqual(longVal0.clz(), 64);
     assert.deepEqual(longVal1.clz(), 63);
     assert.deepEqual(longVal2.clz(), 31);
-    assert.deepEqual(longVal3.clz(),  0);
+    assert.deepEqual(longVal3.clz(), 31);
 
     assert.deepEqual(longVal0.ctz(), 64);
     assert.deepEqual(longVal1.ctz(),  0);
