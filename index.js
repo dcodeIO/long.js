@@ -297,8 +297,27 @@ function fromString(str, unsigned, radix) {
 Long.fromString = fromString;
 
 /**
+ * @param {bigint} value
+ * @param {(boolean|number)=} unsigned
+ * @returns {!Long}
+ * @inner
+ */
+function fromBigInt(value, unsigned) {
+  return fromString(value.toString(), unsigned, 10)
+}
+
+/**
+ * Returns a Long representing the given BigInt.
  * @function
- * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val
+ * @param {bigint} value The BigInt representation of the Long
+ * @param {(boolean|number)=} unsigned Whether unsigned or not, defaults to signed
+ * @returns {!Long} The corresponding Long value
+ */
+Long.fromBigInt = fromBigInt;
+
+/**
+ * @function
+ * @param {!Long|number|string|bigint|!{low: number, high: number, unsigned: boolean}} val
  * @param {boolean=} unsigned
  * @returns {!Long}
  * @inner
@@ -308,6 +327,8 @@ function fromValue(val, unsigned) {
     return fromNumber(val, unsigned);
   if (typeof val === 'string')
     return fromString(val, unsigned);
+  if (typeof val === 'bigint')
+    return fromBigInt(val, unsigned);
   // Throws for non-objects, converts non-instanceof Long:
   return fromBits(val.low, val.high, typeof unsigned === 'boolean' ? unsigned : val.unsigned);
 }
@@ -315,7 +336,7 @@ function fromValue(val, unsigned) {
 /**
  * Converts the specified value to a Long using the appropriate from* function for its type.
  * @function
- * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val Value
+ * @param {!Long|number|string|bigint|!{low: number, high: number, unsigned: boolean}} val Value
  * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
  * @returns {!Long}
  */
@@ -475,6 +496,15 @@ var LongPrototype = Long.prototype;
  */
 LongPrototype.toInt = function toInt() {
   return this.unsigned ? this.low >>> 0 : this.low;
+};
+
+/**
+ * Converts the Long to a BigInt.
+ * @this {!Long}
+ * @returns {bigint}
+ */
+ LongPrototype.toBigInt = function toBigInt() {
+  return BigInt(this.toString())
 };
 
 /**
@@ -639,7 +669,7 @@ LongPrototype.isEven = function isEven() {
 /**
  * Tests if this Long's value equals the specified's.
  * @this {!Long}
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.equals = function equals(other) {
@@ -653,7 +683,7 @@ LongPrototype.equals = function equals(other) {
 /**
  * Tests if this Long's value equals the specified's. This is an alias of {@link Long#equals}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.eq = LongPrototype.equals;
@@ -661,7 +691,7 @@ LongPrototype.eq = LongPrototype.equals;
 /**
  * Tests if this Long's value differs from the specified's.
  * @this {!Long}
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.notEquals = function notEquals(other) {
@@ -671,7 +701,7 @@ LongPrototype.notEquals = function notEquals(other) {
 /**
  * Tests if this Long's value differs from the specified's. This is an alias of {@link Long#notEquals}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.neq = LongPrototype.notEquals;
@@ -679,7 +709,7 @@ LongPrototype.neq = LongPrototype.notEquals;
 /**
  * Tests if this Long's value differs from the specified's. This is an alias of {@link Long#notEquals}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.ne = LongPrototype.notEquals;
@@ -687,7 +717,7 @@ LongPrototype.ne = LongPrototype.notEquals;
 /**
  * Tests if this Long's value is less than the specified's.
  * @this {!Long}
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.lessThan = function lessThan(other) {
@@ -697,7 +727,7 @@ LongPrototype.lessThan = function lessThan(other) {
 /**
  * Tests if this Long's value is less than the specified's. This is an alias of {@link Long#lessThan}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.lt = LongPrototype.lessThan;
@@ -705,7 +735,7 @@ LongPrototype.lt = LongPrototype.lessThan;
 /**
  * Tests if this Long's value is less than or equal the specified's.
  * @this {!Long}
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.lessThanOrEqual = function lessThanOrEqual(other) {
@@ -715,7 +745,7 @@ LongPrototype.lessThanOrEqual = function lessThanOrEqual(other) {
 /**
  * Tests if this Long's value is less than or equal the specified's. This is an alias of {@link Long#lessThanOrEqual}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.lte = LongPrototype.lessThanOrEqual;
@@ -723,7 +753,7 @@ LongPrototype.lte = LongPrototype.lessThanOrEqual;
 /**
  * Tests if this Long's value is less than or equal the specified's. This is an alias of {@link Long#lessThanOrEqual}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.le = LongPrototype.lessThanOrEqual;
@@ -731,7 +761,7 @@ LongPrototype.le = LongPrototype.lessThanOrEqual;
 /**
  * Tests if this Long's value is greater than the specified's.
  * @this {!Long}
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.greaterThan = function greaterThan(other) {
@@ -741,7 +771,7 @@ LongPrototype.greaterThan = function greaterThan(other) {
 /**
  * Tests if this Long's value is greater than the specified's. This is an alias of {@link Long#greaterThan}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.gt = LongPrototype.greaterThan;
@@ -749,7 +779,7 @@ LongPrototype.gt = LongPrototype.greaterThan;
 /**
  * Tests if this Long's value is greater than or equal the specified's.
  * @this {!Long}
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
@@ -759,7 +789,7 @@ LongPrototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
 /**
  * Tests if this Long's value is greater than or equal the specified's. This is an alias of {@link Long#greaterThanOrEqual}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.gte = LongPrototype.greaterThanOrEqual;
@@ -767,7 +797,7 @@ LongPrototype.gte = LongPrototype.greaterThanOrEqual;
 /**
  * Tests if this Long's value is greater than or equal the specified's. This is an alias of {@link Long#greaterThanOrEqual}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {boolean}
  */
 LongPrototype.ge = LongPrototype.greaterThanOrEqual;
@@ -775,7 +805,7 @@ LongPrototype.ge = LongPrototype.greaterThanOrEqual;
 /**
  * Compares this Long's value with the specified's.
  * @this {!Long}
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {number} 0 if they are the same, 1 if the this is greater and -1
  *  if the given one is greater
  */
@@ -800,7 +830,7 @@ LongPrototype.compare = function compare(other) {
 /**
  * Compares this Long's value with the specified's. This is an alias of {@link Long#compare}.
  * @function
- * @param {!Long|number|string} other Other value
+ * @param {!Long|number|string|bigint} other Other value
  * @returns {number} 0 if they are the same, 1 if the this is greater and -1
  *  if the given one is greater
  */
@@ -827,7 +857,7 @@ LongPrototype.neg = LongPrototype.negate;
 /**
  * Returns the sum of this and the specified Long.
  * @this {!Long}
- * @param {!Long|number|string} addend Addend
+ * @param {!Long|number|string|bigint} addend Addend
  * @returns {!Long} Sum
  */
 LongPrototype.add = function add(addend) {
@@ -864,7 +894,7 @@ LongPrototype.add = function add(addend) {
 /**
  * Returns the difference of this and the specified Long.
  * @this {!Long}
- * @param {!Long|number|string} subtrahend Subtrahend
+ * @param {!Long|number|string|bigint} subtrahend Subtrahend
  * @returns {!Long} Difference
  */
 LongPrototype.subtract = function subtract(subtrahend) {
@@ -876,7 +906,7 @@ LongPrototype.subtract = function subtract(subtrahend) {
 /**
  * Returns the difference of this and the specified Long. This is an alias of {@link Long#subtract}.
  * @function
- * @param {!Long|number|string} subtrahend Subtrahend
+ * @param {!Long|number|string|bigint} subtrahend Subtrahend
  * @returns {!Long} Difference
  */
 LongPrototype.sub = LongPrototype.subtract;
@@ -884,7 +914,7 @@ LongPrototype.sub = LongPrototype.subtract;
 /**
  * Returns the product of this and the specified Long.
  * @this {!Long}
- * @param {!Long|number|string} multiplier Multiplier
+ * @param {!Long|number|string|bigint} multiplier Multiplier
  * @returns {!Long} Product
  */
 LongPrototype.multiply = function multiply(multiplier) {
@@ -961,7 +991,7 @@ LongPrototype.multiply = function multiply(multiplier) {
 /**
  * Returns the product of this and the specified Long. This is an alias of {@link Long#multiply}.
  * @function
- * @param {!Long|number|string} multiplier Multiplier
+ * @param {!Long|number|string|bigint} multiplier Multiplier
  * @returns {!Long} Product
  */
 LongPrototype.mul = LongPrototype.multiply;
@@ -970,7 +1000,7 @@ LongPrototype.mul = LongPrototype.multiply;
  * Returns this Long divided by the specified. The result is signed if this Long is signed or
  *  unsigned if this Long is unsigned.
  * @this {!Long}
- * @param {!Long|number|string} divisor Divisor
+ * @param {!Long|number|string|bigint} divisor Divisor
  * @returns {!Long} Quotient
  */
 LongPrototype.divide = function divide(divisor) {
@@ -1083,7 +1113,7 @@ LongPrototype.divide = function divide(divisor) {
 /**
  * Returns this Long divided by the specified. This is an alias of {@link Long#divide}.
  * @function
- * @param {!Long|number|string} divisor Divisor
+ * @param {!Long|number|string|bigint} divisor Divisor
  * @returns {!Long} Quotient
  */
 LongPrototype.div = LongPrototype.divide;
@@ -1091,7 +1121,7 @@ LongPrototype.div = LongPrototype.divide;
 /**
  * Returns this Long modulo the specified.
  * @this {!Long}
- * @param {!Long|number|string} divisor Divisor
+ * @param {!Long|number|string|bigint} divisor Divisor
  * @returns {!Long} Remainder
  */
 LongPrototype.modulo = function modulo(divisor) {
@@ -1115,7 +1145,7 @@ LongPrototype.modulo = function modulo(divisor) {
 /**
  * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
  * @function
- * @param {!Long|number|string} divisor Divisor
+ * @param {!Long|number|string|bigint} divisor Divisor
  * @returns {!Long} Remainder
  */
 LongPrototype.mod = LongPrototype.modulo;
@@ -1123,7 +1153,7 @@ LongPrototype.mod = LongPrototype.modulo;
 /**
  * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
  * @function
- * @param {!Long|number|string} divisor Divisor
+ * @param {!Long|number|string|bigint} divisor Divisor
  * @returns {!Long} Remainder
  */
 LongPrototype.rem = LongPrototype.modulo;
@@ -1174,7 +1204,7 @@ LongPrototype.ctz = LongPrototype.countTrailingZeros;
 /**
  * Returns the bitwise AND of this Long and the specified.
  * @this {!Long}
- * @param {!Long|number|string} other Other Long
+ * @param {!Long|number|string|bigint} other Other Long
  * @returns {!Long}
  */
 LongPrototype.and = function and(other) {
@@ -1186,7 +1216,7 @@ LongPrototype.and = function and(other) {
 /**
  * Returns the bitwise OR of this Long and the specified.
  * @this {!Long}
- * @param {!Long|number|string} other Other Long
+ * @param {!Long|number|string|bigint} other Other Long
  * @returns {!Long}
  */
 LongPrototype.or = function or(other) {
@@ -1198,7 +1228,7 @@ LongPrototype.or = function or(other) {
 /**
  * Returns the bitwise XOR of this Long and the given one.
  * @this {!Long}
- * @param {!Long|number|string} other Other Long
+ * @param {!Long|number|string|bigint} other Other Long
  * @returns {!Long}
  */
 LongPrototype.xor = function xor(other) {

@@ -7,10 +7,12 @@ var tests = [ // BEGIN TEST CASES
     var longVal = new Long(0xFFFFFFFF, 0x7FFFFFFF);
     assert.strictEqual(longVal.toNumber(), 9223372036854775807);
     assert.strictEqual(longVal.toString(), "9223372036854775807");
+    assert.strictEqual(longVal.toBigInt(), 9223372036854775807n);
 
     var longVal2 = Long.fromValue(longVal);
     assert.strictEqual(longVal2.toNumber(), 9223372036854775807);
     assert.strictEqual(longVal2.toString(), "9223372036854775807");
+    assert.strictEqual(longVal2.toBigInt(), 9223372036854775807n);
     assert.strictEqual(longVal2.unsigned, longVal.unsigned);
   },
 
@@ -30,6 +32,21 @@ var tests = [ // BEGIN TEST CASES
     // #7, obviously wrong in goog.math.Long
     assert.strictEqual(Long.fromString("zzzzzz", 36).toString(36), "zzzzzz");
     assert.strictEqual(Long.fromString("-zzzzzz", 36).toString(36), "-zzzzzz");
+  },
+
+  function testToBigInt() {
+    var longVal = Long.fromBits(0xFFFFFFFF, 0xFFFFFFFF, true);
+    assert.strictEqual(longVal.toBigInt(), 18446744073709551615n);
+  },
+
+  function testFromBigInt() {
+    var longVal = Long.fromBigInt(1311768464886809959n);
+    var ulongVal = Long.fromBigInt(1311768464886809959n, true);
+    assert.deepEqual(Long.fromBigInt(longVal.toBigInt()), longVal);
+    assert.deepEqual(Long.fromBytes([0x12, 0x34, 0x56, 0x78, 0x01, 0x23, 0x45, 0x67]), longVal);
+    assert.deepEqual(Long.fromBytes([0x12, 0x34, 0x56, 0x78, 0x01, 0x23, 0x45, 0x67], false, false), longVal);
+    assert.deepEqual(Long.fromBytes([0x67, 0x45, 0x23, 0x01, 0x78, 0x56, 0x34, 0x12], false, true), longVal);
+    assert.deepEqual(Long.fromBytes([0x67, 0x45, 0x23, 0x01, 0x78, 0x56, 0x34, 0x12], true, true), ulongVal);
   },
 
   function testToBytes() {
@@ -67,6 +84,7 @@ var tests = [ // BEGIN TEST CASES
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 4294967295);
     assert.strictEqual(longVal.toString(), "4294967295");
+    assert.strictEqual(longVal.toBigInt(), 4294967295n);
   },
 
   function testUnsignedConstructHighLow() {
@@ -76,6 +94,7 @@ var tests = [ // BEGIN TEST CASES
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 18446744073709551615);
     assert.strictEqual(longVal.toString(), "18446744073709551615");
+    assert.strictEqual(longVal.toBigInt(), 18446744073709551615n);
   },
 
   function testUnsignedConstructNumber() {
@@ -85,6 +104,7 @@ var tests = [ // BEGIN TEST CASES
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 18446744073709551615);
     assert.strictEqual(longVal.toString(), "18446744073709551615");
+    assert.strictEqual(longVal.toBigInt(), 18446744073709551615n);
   },
 
   function testUnsignedToSignedUnsigned() {
@@ -110,6 +130,7 @@ var tests = [ // BEGIN TEST CASES
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 0);
     assert.strictEqual(longVal.toString(), "0");
+    assert.strictEqual(longVal.toBigInt(), 0n);
   },
 
   function testUnsignedZeroSubSigned() {
@@ -119,12 +140,14 @@ var tests = [ // BEGIN TEST CASES
     assert.strictEqual(longVal.unsigned, true);
     assert.strictEqual(longVal.toNumber(), 18446744073709551615);
     assert.strictEqual(longVal.toString(), "18446744073709551615");
+    assert.strictEqual(longVal.toBigInt(), 18446744073709551615n);
   },
 
   function testUnsignedMaxDivMaxSigned() {
     var longVal = Long.MAX_UNSIGNED_VALUE.div(Long.MAX_VALUE);
     assert.strictEqual(longVal.toNumber(), 2);
     assert.strictEqual(longVal.toString(), "2");
+    assert.strictEqual(longVal.toBigInt(), 2n);
   },
 
   function testUnsignedDivMaxUnsigned() {

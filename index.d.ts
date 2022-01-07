@@ -70,6 +70,11 @@ declare class Long {
   static fromInt(value: number, unsigned?: boolean): Long;
 
   /**
+   * Returns a Long representing the given BigInt.
+   */
+  static fromBigInt(value: bigint, unsigned?: boolean): Long;
+
+  /**
    * Returns a Long representing the given value, provided that it is a finite number. Otherwise, zero is returned.
    */
   static fromNumber(value: number, unsigned?: boolean): Long;
@@ -102,47 +107,47 @@ declare class Long {
   /**
    * Converts the specified value to a Long.
    */
-  static fromValue(val: Long | number | string | { low: number, high: number, unsigned: boolean }, unsigned?: boolean): Long;
+  static fromValue(val: Long | number | string | bigint | { low: number, high: number, unsigned: boolean }, unsigned?: boolean): Long;
 
   /**
    * Returns the sum of this and the specified Long.
    */
-  add(addend: number | Long | string): Long;
+  add(addend: number | Long | string | bigint): Long;
 
   /**
    * Returns the bitwise AND of this Long and the specified.
    */
-  and(other: Long | number | string): Long;
+  and(other: Long | number | string | bigint): Long;
 
   /**
    * Compares this Long's value with the specified's.
    */
-  compare(other: Long | number | string): number;
+  compare(other: Long | number | string | bigint): number;
 
   /**
    * Compares this Long's value with the specified's.
    */
-  comp(other: Long | number | string): number;
+  comp(other: Long | number | string | bigint): number;
 
   /**
    * Returns this Long divided by the specified.
    */
-  divide(divisor: Long | number | string): Long;
+  divide(divisor: Long | number | string | bigint): Long;
 
   /**
    * Returns this Long divided by the specified.
    */
-  div(divisor: Long | number | string): Long;
+  div(divisor: Long | number | string | bigint): Long;
 
   /**
    * Tests if this Long's value equals the specified's.
    */
-  equals(other: Long | number | string): boolean;
+  equals(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value equals the specified's.
    */
-  eq(other: Long | number | string): boolean;
+  eq(other: Long | number | string | bigint): boolean;
 
   /**
    * Gets the high 32 bits as a signed integer.
@@ -172,27 +177,27 @@ declare class Long {
   /**
    * Tests if this Long's value is greater than the specified's.
    */
-  greaterThan(other: Long | number | string): boolean;
+  greaterThan(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is greater than the specified's.
    */
-  gt(other: Long | number | string): boolean;
+  gt(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is greater than or equal the specified's.
    */
-  greaterThanOrEqual(other: Long | number | string): boolean;
+  greaterThanOrEqual(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is greater than or equal the specified's.
    */
-  gte(other: Long | number | string): boolean;
+  gte(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is greater than or equal the specified's.
    */
-  ge(other: Long | number | string): boolean;
+  ge(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is even.
@@ -227,52 +232,52 @@ declare class Long {
   /**
    * Tests if this Long's value is less than the specified's.
    */
-  lessThan(other: Long | number | string): boolean;
+  lessThan(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is less than the specified's.
    */
-  lt(other: Long | number | string): boolean;
+  lt(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is less than or equal the specified's.
    */
-  lessThanOrEqual(other: Long | number | string): boolean;
+  lessThanOrEqual(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is less than or equal the specified's.
    */
-  lte(other: Long | number | string): boolean;
+  lte(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value is less than or equal the specified's.
    */
-  le(other: Long | number | string): boolean;
+  le(other: Long | number | string | bigint): boolean;
 
   /**
    * Returns this Long modulo the specified.
    */
-  modulo(other: Long | number | string): Long;
+  modulo(other: Long | number | string | bigint): Long;
 
   /**
    * Returns this Long modulo the specified.
    */
-  mod(other: Long | number | string): Long;
+  mod(other: Long | number | string | bigint): Long;
 
   /**
    * Returns this Long modulo the specified.
    */
-  rem(other: Long | number | string): Long;
+  rem(other: Long | number | string | bigint): Long;
 
   /**
    * Returns the product of this and the specified Long.
    */
-  multiply(multiplier: Long | number | string): Long;
+  multiply(multiplier: Long | number | string | bigint): Long;
 
   /**
    * Returns the product of this and the specified Long.
    */
-  mul(multiplier: Long | number | string): Long;
+  mul(multiplier: Long | number | string | bigint): Long;
 
   /**
    * Negates this Long's value.
@@ -312,22 +317,22 @@ declare class Long {
   /**
    * Tests if this Long's value differs from the specified's.
    */
-  notEquals(other: Long | number | string): boolean;
+  notEquals(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value differs from the specified's.
    */
-  neq(other: Long | number | string): boolean;
+  neq(other: Long | number | string | bigint): boolean;
 
   /**
    * Tests if this Long's value differs from the specified's.
    */
-  ne(other: Long | number | string): boolean;
+  ne(other: Long | number | string | bigint): boolean;
 
   /**
    * Returns the bitwise OR of this Long and the specified.
    */
-  or(other: Long | number | string): Long;
+  or(other: Long | number | string | bigint): Long;
 
   /**
    * Returns this Long with bits shifted to the left by the given amount.
@@ -387,17 +392,22 @@ declare class Long {
   /**
    * Returns the difference of this and the specified Long.
    */
-  subtract(subtrahend: number | Long | string): Long;
+  subtract(subtrahend: number | Long | string | bigint): Long;
 
   /**
    * Returns the difference of this and the specified Long.
    */
-  sub(subtrahend: number | Long | string): Long;
+  sub(subtrahend: number | Long | string | bigint): Long;
 
   /**
    * Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
    */
   toInt(): number;
+
+  /**
+   * Converts the Long to a BigInt.
+   */
+  toBigInt(): bigint;
 
   /**
    * Converts the Long to a the nearest floating-point representation of this value (double, 53 bit mantissa).
@@ -440,7 +450,7 @@ declare class Long {
   /**
    * Returns the bitwise XOR of this Long and the given one.
    */
-  xor(other: Long | number | string): Long;
+  xor(other: Long | number | string | bigint): Long;
 }
 
 export = Long; // compatible with `import Long from "long"`
