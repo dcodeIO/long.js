@@ -121,6 +121,9 @@ API
 * Long.**fromInt**(value: `number`, unsigned?: `boolean`): `Long`<br />
   Returns a Long representing the given 32 bit integer value.
 
+* Long.**fromBigInt**(value: `bigint`, unsigned?: `boolean`): `Long`<br />
+  Returns a Long representing the given BigInt.
+
 * Long.**fromNumber**(value: `number`, unsigned?: `boolean`): `Long`<br />
   Returns a Long representing the given value, provided that it is a finite number. Otherwise, zero is returned.
 
@@ -133,19 +136,19 @@ API
 
 ### Methods
 
-* Long#**add**(addend: `Long | number | string`): `Long`<br />
+* Long#**add**(addend: `Long | number | string | bigint`): `Long`<br />
   Returns the sum of this and the specified Long.
 
-* Long#**and**(other: `Long | number | string`): `Long`<br />
+* Long#**and**(other: `Long | number | string | bigint`): `Long`<br />
   Returns the bitwise AND of this Long and the specified.
 
-* Long#**compare**/**comp**(other: `Long | number | string`): `number`<br />
+* Long#**compare**/**comp**(other: `Long | number | string | bigint`): `number`<br />
   Compares this Long's value with the specified's. Returns `0` if they are the same, `1` if the this is greater and `-1` if the given one is greater.
 
-* Long#**divide**/**div**(divisor: `Long | number | string`): `Long`<br />
+* Long#**divide**/**div**(divisor: `Long | number | string | bigint`): `Long`<br />
   Returns this Long divided by the specified.
 
-* Long#**equals**/**eq**(other: `Long | number | string`): `boolean`<br />
+* Long#**equals**/**eq**(other: `Long | number | string | bigint`): `boolean`<br />
   Tests if this Long's value equals the specified's.
 
 * Long#**getHighBits**(): `number`<br />
@@ -163,10 +166,10 @@ API
 * Long#**getNumBitsAbs**(): `number`<br />
   Gets the number of bits needed to represent the absolute value of this Long.
 
-* Long#**greaterThan**/**gt**(other: `Long | number | string`): `boolean`<br />
+* Long#**greaterThan**/**gt**(other: `Long | number | string | bigint`): `boolean`<br />
   Tests if this Long's value is greater than the specified's.
 
-* Long#**greaterThanOrEqual**/**gte**/**ge**(other: `Long | number | string`): `boolean`<br />
+* Long#**greaterThanOrEqual**/**gte**/**ge**(other: `Long | number | string | bigint`): `boolean`<br />
   Tests if this Long's value is greater than or equal the specified's.
 
 * Long#**isEven**(): `boolean`<br />
@@ -184,16 +187,16 @@ API
 * Long#**isZero**/**eqz**(): `boolean`<br />
   Tests if this Long's value equals zero.
 
-* Long#**lessThan**/**lt**(other: `Long | number | string`): `boolean`<br />
+* Long#**lessThan**/**lt**(other: `Long | number | string | bigint`): `boolean`<br />
   Tests if this Long's value is less than the specified's.
 
-* Long#**lessThanOrEqual**/**lte**/**le**(other: `Long | number | string`): `boolean`<br />
+* Long#**lessThanOrEqual**/**lte**/**le**(other: `Long | number | string | bigint`): `boolean`<br />
   Tests if this Long's value is less than or equal the specified's.
 
-* Long#**modulo**/**mod**/**rem**(divisor: `Long | number | string`): `Long`<br />
+* Long#**modulo**/**mod**/**rem**(divisor: `Long | number | string | bigint`): `Long`<br />
   Returns this Long modulo the specified.
 
-* Long#**multiply**/**mul**(multiplier: `Long | number | string`): `Long`<br />
+* Long#**multiply**/**mul**(multiplier: `Long | number | string | bigint`): `Long`<br />
   Returns the product of this and the specified Long.
 
 * Long#**negate**/**neg**(): `Long`<br />
@@ -208,28 +211,28 @@ API
 * Long#**countTrailingZeros**/**ctz**(): `number`<br />
   Returns count trailing zeros of this Long.
 
-* Long#**notEquals**/**neq**/**ne**(other: `Long | number | string`): `boolean`<br />
+* Long#**notEquals**/**neq**/**ne**(other: `Long | number | string | bigint`): `boolean`<br />
   Tests if this Long's value differs from the specified's.
 
-* Long#**or**(other: `Long | number | string`): `Long`<br />
+* Long#**or**(other: `Long | number | string | bigint`): `Long`<br />
   Returns the bitwise OR of this Long and the specified.
 
-* Long#**shiftLeft**/**shl**(numBits: `Long | number | string`): `Long`<br />
+* Long#**shiftLeft**/**shl**(numBits: `Long | number | string | bigint`): `Long`<br />
   Returns this Long with bits shifted to the left by the given amount.
 
-* Long#**shiftRight**/**shr**(numBits: `Long | number | string`): `Long`<br />
+* Long#**shiftRight**/**shr**(numBits: `Long | number | string | bigint`): `Long`<br />
   Returns this Long with bits arithmetically shifted to the right by the given amount.
 
-* Long#**shiftRightUnsigned**/**shru**/**shr_u**(numBits: `Long | number | string`): `Long`<br />
+* Long#**shiftRightUnsigned**/**shru**/**shr_u**(numBits: `Long | number | string | bigint`): `Long`<br />
   Returns this Long with bits logically shifted to the right by the given amount.
 
-* Long#**rotateLeft**/**rotl**(numBits: `Long | number | string`): `Long`<br />
+* Long#**rotateLeft**/**rotl**(numBits: `Long | number | string | bigint`): `Long`<br />
   Returns this Long with bits rotated to the left by the given amount.
 
-* Long#**rotateRight**/**rotr**(numBits: `Long | number | string`): `Long`<br />
+* Long#**rotateRight**/**rotr**(numBits: `Long | number | string | bigint`): `Long`<br />
   Returns this Long with bits rotated to the right by the given amount.
 
-* Long#**subtract**/**sub**(subtrahend: `Long | number | string`): `Long`<br />
+* Long#**subtract**/**sub**(subtrahend: `Long | number | string | bigint`): `Long`<br />
   Returns the difference of this and the specified Long.
 
 * Long#**toBytes**(le?: `boolean`): `number[]`<br />
@@ -244,6 +247,9 @@ API
 * Long#**toInt**(): `number`<br />
   Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
 
+* Long#**toBigInt**(): `bigint`<br />
+  Converts the Long to a BigInt.
+
 * Long#**toNumber**(): `number`<br />
   Converts the Long to a the nearest floating-point representation of this value (double, 53 bit mantissa).
 
@@ -256,7 +262,7 @@ API
 * Long#**toUnsigned**(): `Long`<br />
   Converts this Long to unsigned.
 
-* Long#**xor**(other: `Long | number | string`): `Long`<br />
+* Long#**xor**(other: `Long | number | string | bigint`): `Long`<br />
   Returns the bitwise XOR of this Long and the given one.
 
 WebAssembly support
