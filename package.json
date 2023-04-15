@@ -18,12 +18,17 @@
   "license": "Apache-2.0",
   "type": "module",
   "main": "umd/index.js",
-  "types": "index.d.ts",
+  "types": "umd/index.d.ts",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js",
-      "require": "./umd/index.js"
+      "import": {
+        "default": "./index.js",
+        "types": "./index.d.ts"
+      },
+      "require": {
+        "default": "./umd/index.js",
+        "types": "./umd/index.d.ts"
+      }
     }
   },
   "scripts": {
@@ -40,6 +45,6 @@
     "README.md"
   ],
   "devDependencies": {
-    "esm2umd": "^0.2.0"
+    "esm2umd": "^0.2.1"
   }
 }
