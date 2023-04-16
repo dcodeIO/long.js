@@ -22,12 +22,12 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./index.js",
-        "types": "./index.d.ts"
+        "types": "./index.d.ts",
+        "default": "./index.js"
       },
       "require": {
-        "default": "./umd/index.js",
-        "types": "./umd/index.d.ts"
+        "types": "./umd/index.d.ts",
+        "default": "./umd/index.js"
       }
     }
   },
