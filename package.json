@@ -29,7 +29,8 @@
         "types": "./umd/index.d.ts",
         "default": "./umd/index.js"
       }
-    }
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "esm2umd Long index.js > umd/index.js",
