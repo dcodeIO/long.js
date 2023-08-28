@@ -32,6 +32,20 @@ var tests = [ // BEGIN TEST CASES
     assert.strictEqual(Long.fromString("-zzzzzz", 36).toString(36), "-zzzzzz");
   },
 
+  function testToBigInt() {
+    var longVal = Long.fromString("9223372036854775807");
+    assert.strictEqual(longVal.toBigInt().toString(), "9223372036854775807");
+    assert.strictEqual(Long.fromBigInt(longVal.toBigInt()).toString(), "9223372036854775807");
+
+    longVal = Long.fromString("-9223372036854775808");
+    assert.strictEqual(longVal.toBigInt().toString(), "-9223372036854775808");
+    assert.strictEqual(Long.fromBigInt(longVal.toBigInt()).toString(), "-9223372036854775808");
+
+    longVal = Long.fromString("0");
+    assert.strictEqual(longVal.toBigInt().toString(), "0");
+    assert.strictEqual(Long.fromBigInt(longVal.toBigInt()).toString(), "0");
+  },
+
   function testToBytes() {
     var longVal = Long.fromBits(0x01234567, 0x12345678);
     assert.deepEqual(longVal.toBytesBE(), [

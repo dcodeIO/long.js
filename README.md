@@ -128,6 +128,9 @@ API
   Long.**fromString**(str: `string`, radix: `number`)<br />
   Returns a Long representation of the given string, written using the specified radix.
 
+* Long.**fromBigInt**(value: `bigint`): `Long`<br />
+  Returns a Long representation of the given bigint.
+
 * Long.**fromValue**(val: `*`, unsigned?: `boolean`): `Long`<br />
   Converts the specified value to a Long using the appropriate from* function for its type.
 
@@ -252,6 +255,9 @@ API
 
 * Long#**toString**(radix?: `number`): `string`<br />
   Converts the Long to a string written in the specified radix.
+
+* Long#**toBigInt**(): `bigint`<br />
+  Converts the Long to a bigint.
 
 * Long#**toUnsigned**(): `Long`<br />
   Converts this Long to unsigned.

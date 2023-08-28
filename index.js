@@ -296,6 +296,13 @@ function fromString(str, unsigned, radix) {
  */
 Long.fromString = fromString;
 
+Long.fromBigInt = function fromBigInt(big) {
+  if (big < BigInt(Number.MIN_SAFE_INTEGER) || big > BigInt(Number.MAX_SAFE_INTEGER)) {
+    throw new Error("bigint out of range");
+  }
+  return Long.fromString(big.toString());
+};
+
 /**
  * @function
  * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val
@@ -532,6 +539,10 @@ LongPrototype.toString = function toString(radix) {
       result = '' + digits + result;
     }
   }
+};
+
+LongPrototype.toBigInt = function toBigInt() {
+  return BigInt(this.toString());
 };
 
 /**
