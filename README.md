@@ -4,7 +4,7 @@ long.js
 A Long class for representing a 64 bit two's-complement integer value derived from the [Closure Library](https://github.com/google/closure-library)
 for stand-alone use and extended with unsigned support.
 
-[![Build Status](https://img.shields.io/github/workflow/status/dcodeIO/long.js/Test/main?label=test&logo=github)](https://github.com/dcodeIO/long.js/actions?query=workflow%3ATest) [![Publish Status](https://img.shields.io/github/workflow/status/dcodeIO/long.js/Publish/main?label=publish&logo=github)](https://github.com/dcodeIO/long.js/actions?query=workflow%3APublish) [![npm](https://img.shields.io/npm/v/long.svg?label=npm&color=007acc&logo=npm)](https://www.npmjs.com/package/long)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/dcodeIO/long.js/test.yml?branch=main&label=test&logo=github)](https://github.com/dcodeIO/long.js/actions/workflows/test.yml) [![Publish Status](https://img.shields.io/github/actions/workflow/status/dcodeIO/long.js/publish.yml?branch=main&label=publish&logo=github)](https://github.com/dcodeIO/long.js/actions/workflows/publish.yml) [![npm](https://img.shields.io/npm/v/long.svg?label=npm&color=007acc&logo=npm)](https://www.npmjs.com/package/long)
 
 Background
 ----------
