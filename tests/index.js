@@ -271,7 +271,6 @@ console.log();
 console.log("Check UMD fallback");
 
 import { createRequire } from "module";
-import { sign } from "crypto";
 const require = createRequire(import.meta.url);
 const LongUMD = require("../umd/");
 assert(typeof LongUMD == "function");
