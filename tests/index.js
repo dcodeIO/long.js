@@ -209,6 +209,29 @@ var tests = [ // BEGIN TEST CASES
     assert.deepEqual(longVal1.ctz(),  0);
     assert.deepEqual(longVal2.ctz(), 32);
     assert.deepEqual(longVal3.ctz(),  0);
+  },
+
+  function testBigInt() {
+    if (typeof BigInt !== "function") return
+
+    var values = [
+      { signed: 0n, unsigned: 0n },
+      { signed: 1n, unsigned: 1n },
+      { signed: -1n, unsigned: 18446744073709551615n },
+      { signed: 9223372036854775807n, unsigned: 9223372036854775807n },
+      { signed: -9223372036854775808n, unsigned: 9223372036854775808n }
+    ];
+
+    for (var i = 0; i < values.length; i++) {
+      var signedFromSigned = Long.fromBigInt(values[i].signed);
+      assert.strictEqual(signedFromSigned.toBigInt(), values[i].signed);
+      var unsignedFromSigned = Long.fromBigInt(values[i].signed, true);
+      assert.strictEqual(unsignedFromSigned.toBigInt(), values[i].unsigned);
+      var unsignedFromUnsigned = Long.fromBigInt(values[i].unsigned, true);
+      assert.strictEqual(unsignedFromUnsigned.toBigInt(), values[i].unsigned);
+      var signedFromUnsigned = Long.fromBigInt(values[i].unsigned);
+      assert.strictEqual(signedFromUnsigned.toBigInt(), values[i].signed);
+    }
   }
 
 ]; // END TEST CASES
@@ -248,6 +271,7 @@ console.log();
 console.log("Check UMD fallback");
 
 import { createRequire } from "module";
+import { sign } from "crypto";
 const require = createRequire(import.meta.url);
 const LongUMD = require("../umd/");
 assert(typeof LongUMD == "function");
