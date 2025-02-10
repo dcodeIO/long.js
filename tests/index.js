@@ -232,6 +232,19 @@ var tests = [ // BEGIN TEST CASES
       var signedFromUnsigned = Long.fromBigInt(values[i].unsigned);
       assert.strictEqual(signedFromUnsigned.toBigInt(), values[i].signed);
     }
+  },
+
+  function testSafeInteger() {
+    assert(Long.fromNumber(0).isSafeInteger());
+    assert(Long.fromNumber(1).isSafeInteger());
+    assert(Long.fromNumber(-1).isSafeInteger());
+    assert(!Long.fromNumber(-1).toUnsigned().isSafeInteger());
+    assert(Long.fromNumber(Math.pow(2, 32)).isSafeInteger());
+    assert(Long.fromNumber(-Math.pow(2, 32)).isSafeInteger());
+    assert(Long.fromNumber(Math.pow(2, 53) - 1).isSafeInteger());
+    assert(Long.fromNumber(-Math.pow(2, 53) + 1).isSafeInteger());
+    assert(!Long.fromNumber(Math.pow(2, 53)).isSafeInteger());
+    assert(!Long.fromNumber(-Math.pow(2, 53)).isSafeInteger());
   }
 
 ]; // END TEST CASES

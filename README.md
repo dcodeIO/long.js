@@ -187,6 +187,9 @@ API
 * Long#**isPositive**(): `boolean`<br />
   Tests if this Long's value is positive or zero.
 
+* Long#**isSafeInteger**(): `boolean`<br />
+  Tests if this Long can be safely represented as a JavaScript number.
+
 * Long#**isZero**/**eqz**(): `boolean`<br />
   Tests if this Long's value equals zero.
 

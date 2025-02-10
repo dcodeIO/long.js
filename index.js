@@ -646,6 +646,22 @@ LongPrototype.getNumBitsAbs = function getNumBitsAbs() {
 };
 
 /**
+ * Tests if this Long can be safely represented as a JavaScript number.
+ * @this {!Long}
+ * @returns {boolean}
+ */
+LongPrototype.isSafeInteger = function isSafeInteger() {
+  // 2^53-1 is the maximum safe value
+  var top11Bits = this.high >> 21;
+  // [0, 2^53-1]
+  if (!top11Bits) return true;
+  // > 2^53-1
+  if (this.unsigned) return false;
+  // [-2^53, -1] except -2^53
+  return top11Bits === -1 && !(this.low === 0 && this.high === -0x200000);
+};
+
+/**
  * Tests if this Long's value equals zero.
  * @this {!Long}
  * @returns {boolean}

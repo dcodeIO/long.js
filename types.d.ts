@@ -226,6 +226,11 @@ export declare class Long {
   isPositive(): boolean;
 
   /**
+   * Tests if this Long can be safely represented as a JavaScript number.
+   */
+  isSafeInteger(): boolean;
+
+  /**
    * Tests if this Long's value equals zero.
    */
   isZero(): boolean;
