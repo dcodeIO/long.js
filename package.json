@@ -33,6 +33,8 @@
   },
   "scripts": {
     "build": "esm2umd Long index.js > umd/index.js",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
     "test": "npm run test:unit && npm run test:typescript",
     "test:unit": "node tests",
     "test:typescript": "tsc --project tests/typescript/tsconfig.esnext.json && tsc --project tests/typescript/tsconfig.nodenext.json && tsc --project tests/typescript/tsconfig.commonjs.json"
@@ -49,6 +51,7 @@
   ],
   "devDependencies": {
     "esm2umd": "^0.2.2",
+    "prettier": "^3.5.0",
     "typescript": "^5.7.3"
   }
 }

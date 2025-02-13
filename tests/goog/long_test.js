@@ -14,18 +14,18 @@
 
 import goog from "./base.js";
 
-goog.provide('goog.math.LongTest');
-goog.setTestOnly('goog.math.LongTest');
+goog.provide("goog.math.LongTest");
+goog.setTestOnly("goog.math.LongTest");
 
-goog.require('goog.asserts');
-goog.require('goog.math.Long');
-goog.require('goog.testing.jsunit');
+goog.require("goog.asserts");
+goog.require("goog.math.Long");
+goog.require("goog.testing.jsunit");
 
 // Interprets the given numbers as the bits of a 32-bit int.  In particular,
 // this takes care of the 32-bit being interpretted as the sign.
 function toInt32s(arr) {
   for (var i = 0; i < arr.length; ++i) {
-    arr[i] = arr[i] & 0xFFFFFFFF;
+    arr[i] = arr[i] & 0xffffffff;
   }
 }
 
@@ -42,7 +42,7 @@ var TEST_BITS = [
   0x00000000, 0x01000000, 0x00000000, 0x5634e2db, 0x00000000, 0xb776d5f5,
   0x00000000, 0xffffffff, 0x00000001, 0x00000000, 0x0000ffff, 0xffffffff,
   0x00010000, 0x00000000, 0x000fffff, 0xffffffff, 0x00100000, 0x00000000,
-  0x5634e2db, 0xb776d5f5, 0x7fffffff, 0xffffffff
+  0x5634e2db, 0xb776d5f5, 0x7fffffff, 0xffffffff,
 ];
 toInt32s(TEST_BITS);
 
@@ -245,7 +245,7 @@ var TEST_ADD_BITS = [
   0x80000000, 0x00ffffff, 0x80000000, 0x5634e2da, 0x80000000, 0xb776d5f4,
   0x80000000, 0xfffffffe, 0x80000000, 0xffffffff, 0x8000ffff, 0xfffffffe,
   0x8000ffff, 0xffffffff, 0x800fffff, 0xfffffffe, 0x800fffff, 0xffffffff,
-  0xd634e2db, 0xb776d5f4
+  0xd634e2db, 0xb776d5f4,
 ];
 toInt32s(TEST_ADD_BITS);
 
@@ -658,7 +658,7 @@ var TEST_SUB_BITS = [
   0x7fffffff, 0xa9cb1d24, 0x7fffffff, 0x48892a0a, 0x7fffffff, 0x00000000,
   0x7ffffffe, 0xffffffff, 0x7fff0000, 0x00000000, 0x7ffeffff, 0xffffffff,
   0x7ff00000, 0x00000000, 0x7fefffff, 0xffffffff, 0x29cb1d24, 0x48892a0a,
-  0x00000000, 0x00000000
+  0x00000000, 0x00000000,
 ];
 toInt32s(TEST_SUB_BITS);
 
@@ -861,7 +861,7 @@ var TEST_MUL_BITS = [
   0xffffffff, 0xff000000, 0x7fffffff, 0xa9cb1d25, 0x7fffffff, 0x48892a0b,
   0x7fffffff, 0x00000001, 0xffffffff, 0x00000000, 0x7fff0000, 0x00000001,
   0xffff0000, 0x00000000, 0x7ff00000, 0x00000001, 0xfff00000, 0x00000000,
-  0x29cb1d24, 0x48892a0b
+  0x29cb1d24, 0x48892a0b,
 ];
 toInt32s(TEST_MUL_BITS);
 
@@ -1262,46 +1262,46 @@ var TEST_DIV_BITS = [
   0x0000007f, 0xffffffff, 0x00000001, 0x7c1c33e6, 0x00000000, 0xb29b67a6,
   0x00000000, 0x80000000, 0x00000000, 0x7fffffff, 0x00000000, 0x00008000,
   0x00000000, 0x00007fff, 0x00000000, 0x00000800, 0x00000000, 0x000007ff,
-  0x00000000, 0x00000001, 0x00000000, 0x00000001
+  0x00000000, 0x00000001, 0x00000000, 0x00000001,
 ];
 toInt32s(TEST_DIV_BITS);
 
 var TEST_STRINGS = [
-  '-9223372036854775808',
-  '-5226755067826871589',
-  '-4503599627370497',
-  '-4503599627370496',
-  '-281474976710657',
-  '-281474976710656',
-  '-4294967297',
-  '-4294967296',
-  '-16777217',
-  '-16777216',
-  '-65537',
-  '-65536',
-  '-32769',
-  '-32768',
-  '-2',
-  '-1',
-  '0',
-  '1',
-  '2',
-  '32767',
-  '32768',
-  '65535',
-  '65536',
-  '16777215',
-  '16777216',
-  '1446306523',
-  '3078018549',
-  '4294967295',
-  '4294967296',
-  '281474976710655',
-  '281474976710656',
-  '4503599627370495',
-  '4503599627370496',
-  '6211839219354490357',
-  '9223372036854775807'
+  "-9223372036854775808",
+  "-5226755067826871589",
+  "-4503599627370497",
+  "-4503599627370496",
+  "-281474976710657",
+  "-281474976710656",
+  "-4294967297",
+  "-4294967296",
+  "-16777217",
+  "-16777216",
+  "-65537",
+  "-65536",
+  "-32769",
+  "-32768",
+  "-2",
+  "-1",
+  "0",
+  "1",
+  "2",
+  "32767",
+  "32768",
+  "65535",
+  "65536",
+  "16777215",
+  "16777216",
+  "1446306523",
+  "3078018549",
+  "4294967295",
+  "4294967296",
+  "281474976710655",
+  "281474976710656",
+  "4503599627370495",
+  "4503599627370496",
+  "6211839219354490357",
+  "9223372036854775807",
 ];
 
 function setUp() {
@@ -1336,27 +1336,33 @@ function testToFromInt() {
 
 function testToFromNumber() {
   for (var i = 0; i < TEST_BITS.length; i += 2) {
-    var num = TEST_BITS[i] * Math.pow(2, 32) + TEST_BITS[i + 1] >= 0 ?
-        TEST_BITS[i + 1] :
-        Math.pow(2, 32) + TEST_BITS[i + 1];
+    var num =
+      TEST_BITS[i] * Math.pow(2, 32) + TEST_BITS[i + 1] >= 0
+        ? TEST_BITS[i + 1]
+        : Math.pow(2, 32) + TEST_BITS[i + 1];
     var val = goog.math.Long.fromNumber(num);
     assertEquals(num, val.toNumber());
   }
   // Test edge cases
   assertEquals(goog.math.Long.getZero(), goog.math.Long.fromNumber(NaN));
   assertEquals(
-      goog.math.Long.getMaxValue(), goog.math.Long.fromNumber(Infinity));
+    goog.math.Long.getMaxValue(),
+    goog.math.Long.fromNumber(Infinity),
+  );
   assertEquals(
-      goog.math.Long.getMinValue(), goog.math.Long.fromNumber(-Infinity));
+    goog.math.Long.getMinValue(),
+    goog.math.Long.fromNumber(-Infinity),
+  );
 }
-
 
 // Make sure we are not leaking longs by incorrect caching of decimal numbers
 // and failing-fast in debug mode.
 function testFromDecimalCachedValues() {
   try {
     var handledException;
-    goog.asserts.setErrorHandler(function(e) { handledException = e; });
+    goog.asserts.setErrorHandler(function (e) {
+      handledException = e;
+    });
 
     assertEquals(goog.math.Long.getZero(), goog.math.Long.fromInt(0.1));
     assertTrue(handledException != null);
@@ -1383,7 +1389,7 @@ function testIsZero() {
 function testIsNegative() {
   for (var i = 0; i < TEST_BITS.length; i += 2) {
     var val = goog.math.Long.fromBits(TEST_BITS[i + 1], TEST_BITS[i]);
-    assertEquals((TEST_BITS[i] >> 31) != 0, val.isNegative());
+    assertEquals(TEST_BITS[i] >> 31 != 0, val.isNegative());
   }
 }
 
@@ -1395,7 +1401,7 @@ function testIsOdd() {
 }
 
 function createTestComparisons(i) {
-  return function() {
+  return function () {
     var vi = goog.math.Long.fromBits(TEST_BITS[i + 1], TEST_BITS[i]);
     for (var j = 0; j < TEST_BITS.length; j += 2) {
       var vj = goog.math.Long.fromBits(TEST_BITS[j + 1], TEST_BITS[j]);
@@ -1414,11 +1420,11 @@ function createTestComparisons(i) {
 // is necessary because, in some testing configurations, the full combined test
 // can take so long that it times out. These smaller tests run much faster.
 for (var i = 0; i < TEST_BITS.length; i += 2) {
-  goog.global['testComparisons' + i] = createTestComparisons(i);
+  goog.global["testComparisons" + i] = createTestComparisons(i);
 }
 
 function createTestBitOperations(i) {
-  return function() {
+  return function () {
     var vi = goog.math.Long.fromBits(TEST_BITS[i + 1], TEST_BITS[i]);
     assertEquals(~TEST_BITS[i], vi.not().getHighBits());
     assertEquals(~TEST_BITS[i + 1], vi.not().getLowBits());
@@ -1427,12 +1433,16 @@ function createTestBitOperations(i) {
       var vj = goog.math.Long.fromBits(TEST_BITS[j + 1], TEST_BITS[j]);
       assertEquals(TEST_BITS[i] & TEST_BITS[j], vi.and(vj).getHighBits());
       assertEquals(
-          TEST_BITS[i + 1] & TEST_BITS[j + 1], vi.and(vj).getLowBits());
+        TEST_BITS[i + 1] & TEST_BITS[j + 1],
+        vi.and(vj).getLowBits(),
+      );
       assertEquals(TEST_BITS[i] | TEST_BITS[j], vi.or(vj).getHighBits());
       assertEquals(TEST_BITS[i + 1] | TEST_BITS[j + 1], vi.or(vj).getLowBits());
       assertEquals(TEST_BITS[i] ^ TEST_BITS[j], vi.xor(vj).getHighBits());
       assertEquals(
-          TEST_BITS[i + 1] ^ TEST_BITS[j + 1], vi.xor(vj).getLowBits());
+        TEST_BITS[i + 1] ^ TEST_BITS[j + 1],
+        vi.xor(vj).getLowBits(),
+      );
     }
 
     assertEquals(TEST_BITS[i], vi.shiftLeft(0).getHighBits());
@@ -1445,37 +1455,49 @@ function createTestBitOperations(i) {
     for (var len = 1; len < 64; ++len) {
       if (len < 32) {
         assertEquals(
-            (TEST_BITS[i] << len) | (TEST_BITS[i + 1] >>> (32 - len)),
-            vi.shiftLeft(len).getHighBits());
+          (TEST_BITS[i] << len) | (TEST_BITS[i + 1] >>> (32 - len)),
+          vi.shiftLeft(len).getHighBits(),
+        );
         assertEquals(TEST_BITS[i + 1] << len, vi.shiftLeft(len).getLowBits());
 
         assertEquals(TEST_BITS[i] >> len, vi.shiftRight(len).getHighBits());
         assertEquals(
-            (TEST_BITS[i + 1] >>> len) | (TEST_BITS[i] << (32 - len)),
-            vi.shiftRight(len).getLowBits());
+          (TEST_BITS[i + 1] >>> len) | (TEST_BITS[i] << (32 - len)),
+          vi.shiftRight(len).getLowBits(),
+        );
 
         assertEquals(
-            TEST_BITS[i] >>> len, vi.shiftRightUnsigned(len).getHighBits());
+          TEST_BITS[i] >>> len,
+          vi.shiftRightUnsigned(len).getHighBits(),
+        );
         assertEquals(
-            (TEST_BITS[i + 1] >>> len) | (TEST_BITS[i] << (32 - len)),
-            vi.shiftRightUnsigned(len).getLowBits());
+          (TEST_BITS[i + 1] >>> len) | (TEST_BITS[i] << (32 - len)),
+          vi.shiftRightUnsigned(len).getLowBits(),
+        );
       } else {
         assertEquals(
-            TEST_BITS[i + 1] << (len - 32), vi.shiftLeft(len).getHighBits());
+          TEST_BITS[i + 1] << (len - 32),
+          vi.shiftLeft(len).getHighBits(),
+        );
         assertEquals(0, vi.shiftLeft(len).getLowBits());
 
         assertEquals(
-            TEST_BITS[i] >= 0 ? 0 : -1, vi.shiftRight(len).getHighBits());
+          TEST_BITS[i] >= 0 ? 0 : -1,
+          vi.shiftRight(len).getHighBits(),
+        );
         assertEquals(
-            TEST_BITS[i] >> (len - 32), vi.shiftRight(len).getLowBits());
+          TEST_BITS[i] >> (len - 32),
+          vi.shiftRight(len).getLowBits(),
+        );
 
         assertEquals(0, vi.shiftRightUnsigned(len).getHighBits());
         if (len == 32) {
           assertEquals(TEST_BITS[i], vi.shiftRightUnsigned(len).getLowBits());
         } else {
           assertEquals(
-              TEST_BITS[i] >>> (len - 32),
-              vi.shiftRightUnsigned(len).getLowBits());
+            TEST_BITS[i] >>> (len - 32),
+            vi.shiftRightUnsigned(len).getLowBits(),
+          );
         }
       }
     }
@@ -1490,7 +1512,7 @@ function createTestBitOperations(i) {
 }
 
 for (var i = 0; i < TEST_BITS.length; i += 2) {
-  goog.global['testBitOperations' + i] = createTestBitOperations(i);
+  goog.global["testBitOperations" + i] = createTestBitOperations(i);
 }
 
 function testNegation() {
@@ -1546,7 +1568,7 @@ function testMultiply() {
 }
 
 function createTestDivMod(i, count) {
-  return function() {
+  return function () {
     var vi = goog.math.Long.fromBits(TEST_BITS[i + 1], TEST_BITS[i]);
     for (var j = 0; j < TEST_BITS.length; j += 2) {
       var vj = goog.math.Long.fromBits(TEST_BITS[j + 1], TEST_BITS[j]);
@@ -1560,7 +1582,7 @@ function createTestDivMod(i, count) {
         assertTrue(vi.equals(combinedResult));
       }
     }
-  }
+  };
 }
 
 var countPerDivModCall = 0;
@@ -1573,40 +1595,47 @@ for (var j = 0; j < TEST_BITS.length; j += 2) {
 
 var countDivMod = 0;
 for (var i = 0; i < TEST_BITS.length; i += 2) {
-  goog.global['testDivMod' + i] = createTestDivMod(i, countDivMod);
+  goog.global["testDivMod" + i] = createTestDivMod(i, countDivMod);
   countDivMod += countPerDivModCall;
 }
 
 function createTestToFromString(i) {
-  return function() {
+  return function () {
     var vi = goog.math.Long.fromBits(TEST_BITS[i + 1], TEST_BITS[i]);
     var str = vi.toString(10);
     assertEquals(TEST_STRINGS[i / 2], str);
     assertEquals(
-        TEST_BITS[i], goog.math.Long.fromString(str, 10).getHighBits());
+      TEST_BITS[i],
+      goog.math.Long.fromString(str, 10).getHighBits(),
+    );
     assertEquals(
-        TEST_BITS[i + 1], goog.math.Long.fromString(str, 10).getLowBits());
+      TEST_BITS[i + 1],
+      goog.math.Long.fromString(str, 10).getLowBits(),
+    );
 
     for (var radix = 2; radix <= 36; ++radix) {
       var result = vi.toString(radix);
       assertEquals(
-          TEST_BITS[i], goog.math.Long.fromString(result, radix).getHighBits());
+        TEST_BITS[i],
+        goog.math.Long.fromString(result, radix).getHighBits(),
+      );
       assertEquals(
-          TEST_BITS[i + 1],
-          goog.math.Long.fromString(result, radix).getLowBits());
+        TEST_BITS[i + 1],
+        goog.math.Long.fromString(result, radix).getLowBits(),
+      );
     }
-  }
+  };
 }
 
 for (var i = 0; i < TEST_BITS.length; i += 2) {
-  goog.global['testToFromString' + i] = createTestToFromString(i);
+  goog.global["testToFromString" + i] = createTestToFromString(i);
 }
 
 function testIsStringInRange() {
-  var string1 = '9223372036854775808';
-  var string2 = '1000000000000000000000000';
-  var string3 = '-9223372036854775809';
-  var string4 = '-1000000000000000000000000';
+  var string1 = "9223372036854775808";
+  var string2 = "1000000000000000000000000";
+  var string3 = "-9223372036854775809";
+  var string4 = "-1000000000000000000000000";
   assertEquals(false, goog.math.Long.isStringInRange(string1, 10));
   assertEquals(false, goog.math.Long.isStringInRange(string2, 10));
   assertEquals(false, goog.math.Long.isStringInRange(string3, 10));
@@ -1620,17 +1649,25 @@ function testIsStringInRange() {
 // Regression test for
 // https://github.com/google/closure-library/pull/498
 function testBase36ToString() {
-  assertEquals('zzzzzz', goog.math.Long.fromString('zzzzzz', 36).toString(36));
+  assertEquals("zzzzzz", goog.math.Long.fromString("zzzzzz", 36).toString(36));
 }
 
 // BEGIN MONKEY PATCH
 
 // long.js doesn't have getZero etc. but instead ZERO
 if (goog.math.Long.ZERO) {
-  goog.math.Long.getZero = function() { return this.ZERO; };
-  goog.math.Long.getOne = function() { return this.ONE; };
-  goog.math.Long.getMaxValue = function() { return this.MAX_VALUE; };
-  goog.math.Long.getMinValue = function() { return this.MIN_VALUE; };
+  goog.math.Long.getZero = function () {
+    return this.ZERO;
+  };
+  goog.math.Long.getOne = function () {
+    return this.ONE;
+  };
+  goog.math.Long.getMaxValue = function () {
+    return this.MAX_VALUE;
+  };
+  goog.math.Long.getMinValue = function () {
+    return this.MIN_VALUE;
+  };
 }
 
 // the test runner can't just 'see' these functions, so add them explicitly
@@ -1645,7 +1682,9 @@ if (goog.math.Long.ZERO) {
   testAdd,
   testSubtract,
   testMultiply,
-  testBase36ToString
-].forEach(function(fn) { goog.global[fn.name] = fn; });
+  testBase36ToString,
+].forEach(function (fn) {
+  goog.global[fn.name] = fn;
+});
 
 // END MONKEY PATCH

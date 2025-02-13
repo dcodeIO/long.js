@@ -1,4 +1,9 @@
-type LongLike = Long | number | bigint | string | { low: number; high: number; unsigned: boolean };
+type LongLike =
+  | Long
+  | number
+  | bigint
+  | string
+  | { low: number; high: number; unsigned: boolean };
 
 export declare class Long {
   /**
@@ -87,7 +92,7 @@ export declare class Long {
   static fromString(
     str: string,
     unsigned?: boolean | number,
-    radix?: number
+    radix?: number,
   ): Long;
 
   /**

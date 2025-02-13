@@ -2,14 +2,14 @@
 
 if (typeof global === "undefined") global = window;
 
-var goog = global.goog = {};
+var goog = (global.goog = {});
 
-goog.require = function(pkg) {};
+goog.require = function (pkg) {};
 
-goog.setTestOnly = function() {};
+goog.setTestOnly = function () {};
 
-goog.provide = function(pkg) {
-  var parts = pkg.split('.');
+goog.provide = function (pkg) {
+  var parts = pkg.split(".");
   var current = global;
   while (parts.length) {
     var part = parts.shift();
@@ -25,19 +25,25 @@ goog.provide("goog.asserts");
 
 import assert from "assert";
 
-goog.asserts.assert = function(condition, opt_message, var_args) {
+goog.asserts.assert = function (condition, opt_message, var_args) {
   assert(condition, opt_message, Array.prototype.slice.call(arguments, 2));
 };
 
-global.assertEquals = function(expected, actual) { goog.asserts.assert(expected === actual); }
+global.assertEquals = function (expected, actual) {
+  goog.asserts.assert(expected === actual);
+};
 
-global.assertTrue = function(value) { goog.asserts.assert(value === true); }
+global.assertTrue = function (value) {
+  goog.asserts.assert(value === true);
+};
 
-global.assertNotNull = function(value) { goog.asserts.assert(value !== null); }
+global.assertNotNull = function (value) {
+  goog.asserts.assert(value !== null);
+};
 
 goog.provide("goog.reflect");
 
-goog.reflect.cache = function(cacheObj, key, valueFn, opt_keyFn) {
+goog.reflect.cache = function (cacheObj, key, valueFn, opt_keyFn) {
   var storedKey = opt_keyFn ? opt_keyFn(key) : key;
   if (Object.prototype.hasOwnProperty.call(cacheObj, storedKey)) {
     return cacheObj[storedKey];

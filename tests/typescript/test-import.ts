@@ -1,4 +1,4 @@
-import Long from '../../index.js';
+import Long from "../../index.js";
 
 Long.fromValue(1);
 
