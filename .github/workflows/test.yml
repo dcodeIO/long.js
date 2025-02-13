@@ -23,8 +23,8 @@ jobs:
       matrix:
         node_version: ["current", "lts_latest"]
     steps:
-      - uses: actions/checkout@v1.0.0
-      - uses: dcodeIO/setup-node-nvm@master
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
       - name: Install dependencies

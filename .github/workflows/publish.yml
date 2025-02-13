@@ -7,10 +7,11 @@ jobs:
     if: github.repository == 'dcodeIO/long.js'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
         with:
           ref: main
-      - uses: dcodeIO/setup-node-nvm@master
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
         with:
           node-version: current
       - name: Install dependencies
