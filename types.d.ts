@@ -1,3 +1,7 @@
+// Common type definitions for both the ESM and UMD variants. The ESM variant
+// reexports the Long class as its default export, whereas the UMD variant makes
+// the Long class a whole-module export with a global variable fallback.
+
 type LongLike =
   | Long
   | number
