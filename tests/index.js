@@ -267,6 +267,15 @@ var tests = [
       assert.strictEqual(unsignedFromUnsigned.toBigInt(), values[i].unsigned);
       var signedFromUnsigned = Long.fromBigInt(values[i].unsigned);
       assert.strictEqual(signedFromUnsigned.toBigInt(), values[i].signed);
+
+      var signedFromSigned = Long.fromValue(values[i].signed);
+      assert.strictEqual(signedFromSigned.toBigInt(), values[i].signed);
+      var unsignedFromSigned = Long.fromValue(values[i].signed, true);
+      assert.strictEqual(unsignedFromSigned.toBigInt(), values[i].unsigned);
+      var unsignedFromUnsigned = Long.fromValue(values[i].unsigned, true);
+      assert.strictEqual(unsignedFromUnsigned.toBigInt(), values[i].unsigned);
+      var signedFromUnsigned = Long.fromValue(values[i].unsigned);
+      assert.strictEqual(signedFromUnsigned.toBigInt(), values[i].signed);
     }
   },
 
