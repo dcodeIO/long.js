@@ -1060,6 +1060,7 @@ LongPrototype.divide = function divide(divisor) {
     // positive number, due to two's complement.
     if (
       !this.unsigned &&
+      this.low === 0 &&
       this.high === -0x80000000 &&
       divisor.low === -1 &&
       divisor.high === -1
