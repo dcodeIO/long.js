@@ -178,6 +178,23 @@ var tests = [
     assert.strictEqual(longVal.toString(), Long.MIN_VALUE.toString());
   },
 
+  function testSignedNegHighWordDivNegOne() {
+    // A negative dividend whose high word is 0x80000000 but whose low word is
+    // non-zero must negate correctly when divided by -1. Only the exact
+    // MIN_VALUE / -1 is a true two's-complement overflow.
+    assert.strictEqual(
+      Long.fromString("-9223372036854775807").div(Long.fromInt(-1)).toString(),
+      "9223372036854775807",
+    );
+    assert.strictEqual(
+      Long.fromString("-9223372036854775296").div(Long.fromInt(-1)).toString(),
+      "9223372036854775296",
+    );
+    // The exact MIN_VALUE / -1 overflow still wraps to MIN_VALUE.
+    var overflow = Long.MIN_VALUE.div(Long.fromInt(-1));
+    assert.strictEqual(overflow.toString(), Long.MIN_VALUE.toString());
+  },
+
   function testUnsignedMsbUnsigned() {
     var longVal = Long.UONE.shiftLeft(63);
     assert.strictEqual(longVal.notEquals(Long.MIN_VALUE), true);
