@@ -368,12 +368,13 @@ Long.fromString = fromString;
 
 /**
  * @function
- * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val
+ * @param {!Long|number|bigint|string|!{low: number, high: number, unsigned: boolean}} val
  * @param {boolean=} unsigned
  * @returns {!Long}
  * @inner
  */
 function fromValue(val, unsigned) {
+  if (typeof val === "bigint") return Long.fromBigInt(val, unsigned);
   if (typeof val === "number") return fromNumber(val, unsigned);
   if (typeof val === "string") return fromString(val, unsigned);
   // Throws for non-objects, converts non-instanceof Long:
@@ -1558,12 +1559,6 @@ if (typeof BigInt === "function") {
     var lowBits = Number(BigInt.asIntN(32, value));
     var highBits = Number(BigInt.asIntN(32, value >> BigInt(32)));
     return fromBits(lowBits, highBits, unsigned);
-  };
-
-  // Override
-  Long.fromValue = function fromValueWithBigInt(value, unsigned) {
-    if (typeof value === "bigint") return Long.fromBigInt(value, unsigned);
-    return fromValue(value, unsigned);
   };
 
   /**

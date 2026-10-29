@@ -279,6 +279,79 @@ var tests = [
     }
   },
 
+  function testBigIntOperands() {
+    if (typeof BigInt !== "function") return;
+
+    var values = [7n, -7n, 9007199254740993n];
+    var operands = [
+      0n,
+      1n,
+      -1n,
+      2n,
+      -2n,
+      7n,
+      9007199254740993n,
+      18446744073709551615n,
+      (1n << 80n) + 3n,
+    ];
+    for (var i = 0; i < values.length; i++) {
+      var a = values[i];
+      var value = Long.fromBigInt(a);
+      for (var j = 0; j < operands.length; j++) {
+        var operand = operands[j];
+        var b = BigInt.asIntN(64, operand);
+        assert.strictEqual(
+          value.add(operand).toBigInt(),
+          BigInt.asIntN(64, a + b),
+        );
+        assert.strictEqual(
+          value.sub(operand).toBigInt(),
+          BigInt.asIntN(64, a - b),
+        );
+        assert.strictEqual(
+          value.mul(operand).toBigInt(),
+          BigInt.asIntN(64, a * b),
+        );
+        assert.strictEqual(
+          value.and(operand).toBigInt(),
+          BigInt.asIntN(64, a & b),
+        );
+        assert.strictEqual(
+          value.or(operand).toBigInt(),
+          BigInt.asIntN(64, a | b),
+        );
+        assert.strictEqual(
+          value.xor(operand).toBigInt(),
+          BigInt.asIntN(64, a ^ b),
+        );
+        assert.strictEqual(value.eq(operand), a === b);
+        assert.strictEqual(value.neq(operand), a !== b);
+        assert.strictEqual(value.lt(operand), a < b);
+        assert.strictEqual(value.lte(operand), a <= b);
+        assert.strictEqual(value.gt(operand), a > b);
+        assert.strictEqual(value.gte(operand), a >= b);
+        assert.strictEqual(value.comp(operand), a < b ? -1 : a > b ? 1 : 0);
+        if (b === 0n) {
+          assert.throws(function () {
+            value.div(operand);
+          });
+          assert.throws(function () {
+            value.mod(operand);
+          });
+        } else {
+          assert.strictEqual(
+            value.div(operand).toBigInt(),
+            BigInt.asIntN(64, a / b),
+          );
+          assert.strictEqual(
+            value.mod(operand).toBigInt(),
+            BigInt.asIntN(64, a % b),
+          );
+        }
+      }
+    }
+  },
+
   function testSafeInteger() {
     assert(Long.fromNumber(0).isSafeInteger());
     assert(Long.fromNumber(1).isSafeInteger());
