@@ -1,4 +1,6 @@
 import assert from "assert";
+import fs from "fs";
+import vm from "vm";
 import Long from "../index.js";
 
 var tests = [
@@ -196,6 +198,28 @@ var tests = [
     var x = a.div(b);
     assert.strictEqual(x.toString(), "12");
     assert.strictEqual(x.unsigned, true);
+  },
+
+  function testUnsignedMinValueMultiplication() {
+    var context = { module: { exports: {} }, WebAssembly: undefined };
+    context.exports = context.module.exports;
+    vm.runInNewContext(
+      fs.readFileSync(new URL("../umd/index.js", import.meta.url), "utf8"),
+      context,
+    );
+    var implementations = [Long, context.module.exports];
+    var expected = ["0", "9223372036854775808", "0", "9223372036854775808"];
+    for (var i = 0; i < implementations.length; i++) {
+      var LongImpl = implementations[i];
+      for (var n = 0; n < expected.length; n++) {
+        var product = LongImpl.fromInt(n, true).mul(LongImpl.MIN_VALUE);
+        assert.strictEqual(product.unsigned, true);
+        assert.strictEqual(product.toString(), expected[n]);
+      }
+      var signedProduct = LongImpl.ONE.mul(LongImpl.MIN_VALUE);
+      assert.strictEqual(signedProduct.unsigned, false);
+      assert.strictEqual(signedProduct.toString(), "-9223372036854775808");
+    }
   },
 
   function testRotateLeft() {

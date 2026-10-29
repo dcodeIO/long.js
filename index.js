@@ -983,7 +983,10 @@ LongPrototype.multiply = function multiply(multiplier) {
 
   if (multiplier.isZero()) return this.unsigned ? UZERO : ZERO;
   if (this.eq(MIN_VALUE)) return multiplier.isOdd() ? MIN_VALUE : ZERO;
-  if (multiplier.eq(MIN_VALUE)) return this.isOdd() ? MIN_VALUE : ZERO;
+  if (multiplier.eq(MIN_VALUE)) {
+    if (this.isOdd()) return this.unsigned ? MIN_VALUE.toUnsigned() : MIN_VALUE;
+    return this.unsigned ? UZERO : ZERO;
+  }
 
   if (this.isNegative()) {
     if (multiplier.isNegative()) return this.neg().mul(multiplier.neg());
